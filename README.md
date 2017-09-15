@@ -1,2 +1,3 @@
 # Saker
-ctf web intelligent tool
+
+a ctf web intelligent tool, can help you scan website, fuzz it with some payloads
