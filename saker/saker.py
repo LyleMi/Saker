@@ -5,9 +5,10 @@ import sys
 import argparse
 
 from data.banner import banner
-from classes.ctfbase import CTFBase
+from classes.saker import Saker
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser(
         description='ctf web intelligent tool',
         usage='%(prog)s [options]',
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 
     print banner
 
-    c = CTFBase(url)
+    c = Saker(url)
 
     if opts.scan:
         c.scan(filename=opts.file,

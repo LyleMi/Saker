@@ -11,20 +11,23 @@ from utils.mprint import printHeader
 from utils.paths import fuzztxt
 
 
-class CTFBase(object):
+class Saker(object):
 
     cookie = ""
     proxies = {}
     timeout = 20
     verify = False
 
-    def __init__(self, url=""):
+    def __init__(self, url="", session=None):
         """
         :param s: store requests session
         :param url: main url
         """
-        super(CTFBase, self).__init__()
-        self.s = requests.Session()
+        super(Saker, self).__init__()
+        if session is not None:
+            self.s = session
+        else:
+            self.s = requests.Session()
         self.url = parseUrl(url)
         self.loglevel = "debug"
         self.logger = logger
@@ -143,3 +146,4 @@ class CTFBase(object):
         print x.get_string()
         self.log("exists")
         self.log(exists)
+

@@ -8,3 +8,4 @@ libPath = os.path.realpath(
 )
 
 fuzztxt = os.path.join(libPath, "data", "fuzz.txt")
+passwordstxt = os.path.join(libPath, "data", "passwords.txt")
