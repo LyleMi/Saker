@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 
-from os.path import join
 from utils.mtime import today
 
+logpath = os.path.join(".", "logs")
+
+if not os.path.exists(logpath):
+    os.mkdir(logpath)
+
 CONSOLE_PRINT = logging.DEBUG
-commonlogpath = join(".", "logs", "ctf-"+today()+".log")
+commonlogpath = os.path.join(logpath, "ctf-"+today()+".log")
 
 formatter_str = '[%(asctime)s] [%(levelname)s] %(message)s'
 

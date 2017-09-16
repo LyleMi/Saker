@@ -8,6 +8,7 @@ from classes.prettytable import PrettyTable
 from utils.domain import parseUrl
 from utils.logger import logger
 from utils.mprint import printHeader
+from utils.paths import fuzztxt
 
 
 class CTFBase(object):
@@ -30,20 +31,28 @@ class CTFBase(object):
 
     def get(self, path, params={}, headers={}, proxies={},
             timeout=None, verify=None, useSession=True,
-            pHeader=False, pContent=False):
+            pCode=False, pHeader=False, pContent=False):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
             verify = self.verify
-        if useSession:
-            r = self.s.get(self.url + path, params=params,
-                           headers=headers, timeout=timeout,
-                           proxies=proxies, verify=verify)
-        else:
-            r = requests.get(self.url + path, params=params,
-                             headers=headers, timeout=timeout,
-                             verify=verify)
 
+        try:
+            if useSession:
+                r = self.s.get(self.url + path, params=params,
+                               headers=headers, timeout=timeout,
+                               proxies=proxies, verify=verify)
+            else:
+                r = requests.get(self.url + path, params=params,
+                                 headers=headers, timeout=timeout,
+                                 verify=verify)
+        except Exception as e:
+            self.log(e, "error")
+            self.s = requests.Session()
+            return e
+
+        if pCode:
+            print r.status_code
         if pHeader:
             printHeader(r.headers)
         if pContent:
@@ -117,7 +126,7 @@ class CTFBase(object):
         x = PrettyTable()
         x._set_field_names(["Path", "Status", "Len"])
         x.align["Path"] = "l"
-        with open("./data/pathes.txt") as pathes:
+        with open(fuzztxt) as pathes:
             for p in pathes:
                 path = p.strip("\n")
                 if "%ext%" in path:
