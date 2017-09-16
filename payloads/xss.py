@@ -23,7 +23,10 @@ class XSS(Payload):
         return payload
 
     def event(self, element, src, event, js):
-        payload = "<%s src=" % s" %s=" % s"/>" % (element, src, event, js)
+        payload = "<%s src=" % element
+        payload += '"%s" ' % src
+        payload += event
+        payload += "=%s >" % js
         return payload
 
     def cspBypass(self):

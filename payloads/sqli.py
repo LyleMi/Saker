@@ -14,8 +14,11 @@ class SQLi(Payload):
     def __init__(self):
         super(SQLi, self).__init__()
 
-    def timeInjection():
+    def fuzz(self):
+        return "'\""
+
+    def timeInjection(self):
         pass
 
-    def boolInjection():
+    def boolInjection(self):
         pass
