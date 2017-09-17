@@ -15,10 +15,12 @@ class SFile(object):
         # linux max dir length
         self.linuxmax = 4096
 
-    def traverse(self, cnt=5, path="../"):
+    @staticmethod
+    def traverse(cnt=5, path="../"):
         return path * cnt
 
-    def fakeProtocol(self, type, msg=""):
+    @staticmethod
+    def fakeProtocol(type, msg=""):
         if type == "php":
             return "php://input"
         elif type == "phpb64":
@@ -26,11 +28,13 @@ class SFile(object):
         elif type == "text":
             return "data://text/plain;base64," + msg.encode("base64")
 
-    def sourceCode(self, ext):
+    @staticmethod
+    def sourceCode(ext):
         l = ["app", "index", "main"]
         return list(map(lambda i: i+"."+ext, l))
 
-    def list(self):
+    @staticmethod
+    def list():
         return [
             "/etc/passwd",
             ".bash_history",

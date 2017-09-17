@@ -14,8 +14,18 @@ class SQLi(Payload):
     def __init__(self):
         super(SQLi, self).__init__()
 
-    def fuzz(self):
-        return "'\""
+    @staticmethod
+    def fuzz():
+        l = []
+        l.append('"')
+        l.append('a" -- +')
+        l.append('a" or "1"="1')
+        l.extend(map(lambda i: i.replace('"', "'"), l))
+        return l
+
+    @staticmethod
+    def keyword():
+        return ["@version", "@user"]
 
     def timeInjection(self):
         pass
