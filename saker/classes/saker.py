@@ -18,7 +18,7 @@ class Saker(object):
     timeout = 20
     verify = False
 
-    def __init__(self, url="", session=None):
+    def __init__(self, url="", session=None, timeout=0):
         """
         :param s: store requests session
         :param url: main url
@@ -28,6 +28,8 @@ class Saker(object):
             self.s = session
         else:
             self.s = requests.Session()
+        if not timeout:
+            self.timeout = timeout
         self.url = parseUrl(url)
         self.loglevel = "debug"
         self.logger = logger
