@@ -10,9 +10,9 @@ from classes.saker import Saker
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(
-        description='ctf web intelligent tool',
+        description='CTF Web framework and fuzz tool',
         usage='%(prog)s [options]',
-        epilog='This is a ctf web intelligent tool')
+        epilog='CTF Web framework and fuzz tool')
     parser.add_argument('-s', '--scan', action="store_true",
                         help='run with list model')
     parser.add_argument('-f', '--file', metavar='file',
