@@ -4,27 +4,24 @@ CTF Web framework and fuzz tool, can help you scan website, fuzz it with some pa
 
 ## install
 
-``shell
+```
 git clone https://github.com/LyleMi/Saker.git
 python setup.py install
-``
+```
 
 ## usage
 
 ### scan website
 
-``python
+```python
 from saker.classes.saker import Saker
 s = Saker("http://127.0.0.1")
 s.scan(filename="index.php", ext="php")
-``
+```
 
-or by cmd line
+or by shell
 
-``
-``
-
-``shell
+```
 usage: saker.py [options]
 CTF Web framework and fuzz tool
 
@@ -37,11 +34,11 @@ optional arguments:
   -u URL, --url URL     define specific url
   -t INTERVAL, --timeinterval INTERVAL
                         set time interval
-``
+```
 
 ### generate fuzz payload
 
-``python
+```python
 >>> from saker.payloads.misc import Misc
 >>> payload = Misc.fuzzErrorUnicode(payload)
-``
+```
