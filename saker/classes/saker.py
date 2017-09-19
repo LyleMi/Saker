@@ -28,7 +28,7 @@ class Saker(object):
             self.s = session
         else:
             self.s = requests.Session()
-        if not timeout:
+        if timeout != 0:
             self.timeout = timeout
         self.url = parseUrl(url)
         self.loglevel = "debug"
