@@ -4,10 +4,10 @@
 from time import time
 
 
-from payloads.payload import Payload
+from fuzzers.fuzzer import Fuzzer
 
 
-class SQLi(Payload):
+class SQLi(Fuzzer):
 
     """generate SQLi payload and test"""
 

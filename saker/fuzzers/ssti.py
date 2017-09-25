@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-from payloads.payload import Payload
+from fuzzers.fuzzer import Fuzzer
 
 
-class SSTI(Payload):
+class SSTI(Fuzzer):
     """Server Side Template Injection"""
 
     def __init__(self, engine=""):

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from payloads.payload import Payload
+from fuzzers.fuzzer import Fuzzer
 
 
-class SFile(object):
+class SFile(Fuzzer):
 
     """sensitive File"""
 

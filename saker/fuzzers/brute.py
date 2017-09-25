@@ -4,10 +4,10 @@
 import string
 import itertools
 
-from payloads.payload import Payload
+from fuzzers.fuzzer import Fuzzer
 
 
-class Brute(Payload):
+class Brute(Fuzzer):
 
     def __init__(self):
         super(Brute, self).__init__()
