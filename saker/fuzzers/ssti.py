@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from fuzzers.fuzzer import Fuzzer
+from saker.fuzzers.fuzzer import Fuzzer
 
 
 class SSTI(Fuzzer):

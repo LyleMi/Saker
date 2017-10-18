@@ -4,7 +4,7 @@
 import string
 import itertools
 
-from fuzzers.fuzzer import Fuzzer
+from saker.fuzzers.fuzzer import Fuzzer
 
 
 class Brute(Fuzzer):

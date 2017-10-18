@@ -42,19 +42,14 @@ class Saker(object):
         if verify is None:
             verify = self.verify
 
-        try:
-            if useSession:
-                r = self.s.get(self.url + path, params=params,
-                               headers=headers, timeout=timeout,
-                               proxies=proxies, verify=verify)
-            else:
-                r = requests.get(self.url + path, params=params,
-                                 headers=headers, timeout=timeout,
-                                 verify=verify)
-        except Exception as e:
-            self.log(e, "error")
-            self.s = requests.Session()
-            return e
+        if useSession:
+            r = self.s.get(self.url + path, params=params,
+                           headers=headers, timeout=timeout,
+                           proxies=proxies, verify=verify)
+        else:
+            r = requests.get(self.url + path, params=params,
+                             headers=headers, timeout=timeout,
+                             verify=verify)
 
         if pCode:
             print r.status_code
@@ -141,10 +136,13 @@ class Saker(object):
                         continue
                     path = path.replace("%filename%", filename)
                 time.sleep(interval)
-                r = self.get(path)
-                x.add_row([path, r.status_code, len(r.content)])
-                if r.status_code < 400:
-                    exists.append(path)
+                try:
+                    r = self.get(path)
+                    x.add_row([path, r.status_code, len(r.content)])
+                    if r.status_code < 400:
+                        exists.append(path)
+                except Exception as e:
+                    print(e)
         print x.get_string()
         self.log("exists")
         self.log(exists)

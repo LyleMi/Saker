@@ -3,7 +3,7 @@
 
 import random
 import string
-from fuzzers.fuzzer import Fuzzer
+from saker.fuzzers.fuzzer import Fuzzer
 
 
 class Misc(Fuzzer):

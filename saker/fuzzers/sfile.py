@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from fuzzers.fuzzer import Fuzzer
+from saker.fuzzers.fuzzer import Fuzzer
 
 
 class SFile(Fuzzer):
@@ -25,8 +25,12 @@ class SFile(Fuzzer):
             return "php://input"
         elif type == "phpb64":
             return "php://filter/convert.base64-encode/resource=" + msg
-        elif type == "text":
+        elif type == "textb64":
             return "data://text/plain;base64," + msg.encode("base64")
+        elif type == "text":
+            return "data://text/plain;" + msg
+        elif type == "zip":
+            return ["zip://", "bzip2://", "zlib://"][0] + msg
 
     @staticmethod
     def sourceCode(ext):
@@ -47,3 +51,6 @@ class SFile(Fuzzer):
             "/var/log/apache2/access.log",
             "/var/log/nginx/access.log"
         ]
+
+    def phpByPassext():
+        return ["pht", "php3", "php5", "phtml"]

@@ -4,7 +4,7 @@
 from time import time
 
 
-from fuzzers.fuzzer import Fuzzer
+from saker.fuzzers.fuzzer import Fuzzer
 
 
 class SQLi(Fuzzer):
@@ -15,17 +15,21 @@ class SQLi(Fuzzer):
         super(SQLi, self).__init__()
 
     @staticmethod
-    def fuzz():
+    def fuzz(quote=["'", '"']):
         l = []
+        l.append('\\')
         l.append('"')
+        l.append('")')
         l.append('a" -- +')
+        l.append('a") -- +')
+        l.append('a") #')
         l.append('a" or "1"="1')
         l.extend(map(lambda i: i.replace('"', "'"), l))
         return l
 
     @staticmethod
     def keyword():
-        return ["@version", "@user"]
+        return ["@version", "@user", "@@datadir"]
 
     def timeInjection(self):
         pass
