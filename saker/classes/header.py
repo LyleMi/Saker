@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from utils.common import randua
+from saker.utils.common import randua
 
 
 class HeaderHelper(object):

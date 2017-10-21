@@ -4,11 +4,11 @@
 import time
 import requests
 
-from classes.prettytable import PrettyTable
-from utils.domain import parseUrl
-from utils.logger import logger
-from utils.mprint import printHeader
-from utils.paths import fuzztxt
+from saker.classes.prettytable import PrettyTable
+from saker.utils.domain import parseUrl
+from saker.utils.logger import logger
+from saker.utils.mprint import printHeader
+from saker.utils.paths import fuzztxt
 
 
 class Saker(object):
@@ -142,7 +142,7 @@ class Saker(object):
                     if r.status_code < 400:
                         exists.append(path)
                 except Exception as e:
-                    print(e)
+                    print "error while scan", e
         print x.get_string()
         self.log("exists")
         self.log(exists)

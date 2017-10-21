@@ -41,16 +41,18 @@ class SFile(Fuzzer):
     def list():
         return [
             "/etc/passwd",
-            ".bash_history",
-            ".zsh_history",
-            ".profile",
-            ".bashrc",
-            ".gitconfig",
             "/etc/apache2/apache2.conf",
             "/etc/nginx/nginx.conf",
             "/var/log/apache2/access.log",
-            "/var/log/nginx/access.log"
+            "/var/log/nginx/access.log",
+            "/proc/cpuinfo",
+            ".gitconfig",
+            ".bashrc",
+            ".bash_history",
+            ".zsh_history",
+            ".profile",
         ]
 
+    @staticmethod
     def phpByPassext():
         return ["pht", "php3", "php5", "phtml"]

@@ -4,8 +4,8 @@
 import sys
 import argparse
 
-from data.banner import banner
-from classes.saker import Saker
+from saker.data.banner import banner
+from saker.classes.sakerClass import Saker
 
 if __name__ == '__main__':
 

@@ -14,5 +14,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     platforms="any",
-    scripts=["./saker/classes/saker.py"],
+    package_data={'saker': ['data/*']},
+    scripts=["./saker/sakerCmd.py"],
 )
