@@ -8,9 +8,6 @@ from saker.utils.mtime import today
 
 logpath = os.path.join(".", "logs")
 
-if not os.path.exists(logpath):
-    os.mkdir(logpath)
-
 CONSOLE_PRINT = logging.DEBUG
 commonlogpath = os.path.join(logpath, "ctf-"+today()+".log")
 
@@ -19,18 +16,18 @@ formatter_str = '[%(asctime)s] [%(levelname)s] %(message)s'
 logger = logging.getLogger("logger")
 
 logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter(formatter_str)
 
-fh = logging.FileHandler(commonlogpath)
-fh.setLevel(logging.DEBUG)
+if False:
+    if not os.path.exists(logpath):
+        os.mkdir(logpath)
+    fh = logging.FileHandler(commonlogpath)
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
 
 ch = logging.StreamHandler()
 chformatter = logging.Formatter(formatter_str)
-
 ch.setLevel(CONSOLE_PRINT)
-
-formatter = logging.Formatter(formatter_str)
-fh.setFormatter(formatter)
 ch.setFormatter(chformatter)
-
-logger.addHandler(fh)
 logger.addHandler(ch)
