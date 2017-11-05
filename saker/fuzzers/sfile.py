@@ -8,6 +8,9 @@ class SFile(Fuzzer):
 
     """sensitive File"""
 
+    generalports = [20, 21, 80]
+    phpext = ['php', 'php3', 'php4', 'php5', 'php7', 'pht', 'phtml', 'shtml']
+
     def __init__(self):
         super(SFile, self).__init__()
         # windows max dir length
@@ -40,19 +43,26 @@ class SFile(Fuzzer):
     @staticmethod
     def list():
         return [
+            "/dev/mem",
             "/etc/passwd",
+            "/etc/crontab",
+            "/etc/hosts",
             "/etc/apache2/apache2.conf",
             "/etc/nginx/nginx.conf",
+            "/var/log/syslog",
+            "/var/log/syslog.1",
             "/var/log/apache2/access.log",
+            "/var/log/apache2/error.log",
             "/var/log/nginx/access.log",
+            "/var/log/nginx/error.log",
+            "/var/www/html/index.php",
             "/proc/cpuinfo",
-            ".gitconfig",
+            "/proc/1/root",
+            "/proc/1/status",
             ".bashrc",
             ".bash_history",
-            ".zsh_history",
+            ".gitconfig",
             ".profile",
+            ".viminfo",
+            ".zsh_history",
         ]
-
-    @staticmethod
-    def phpByPassext():
-        return ["pht", "php3", "php5", "phtml"]
