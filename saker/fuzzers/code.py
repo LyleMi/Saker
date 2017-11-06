@@ -6,12 +6,12 @@ import string
 from saker.fuzzers.fuzzer import Fuzzer
 
 
-class Misc(Fuzzer):
+class Code(Fuzzer):
 
-    """Misc Payload"""
+    """Code Payload"""
 
     def __init__(self):
-        super(Misc, self).__init__()
+        super(Code, self).__init__()
 
     @staticmethod
     def fuzzAscii():
