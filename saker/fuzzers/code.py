@@ -24,19 +24,17 @@ class Code(Fuzzer):
             yield unichr(random.randint(0, 0xffff))
 
     @staticmethod
-    def fuzzUnicodeReplace(s, type, cnt=1):
-        if type == 0:
-            # Greek letter
-            s = s.replace("a", "α", cnt)
-        elif type == 1:
-            # Russian letter 1-4
-            s = s.replace("e", "е", cnt)
-        elif type == 2:
-            s = s.replace("a", "а", cnt)
-        elif type == 3:
-            s = s.replace("e", "ё", cnt)
-        elif type == 4:
-            s = s.replace("o", "о", cnt)
+    def fuzzUnicodeReplace(s, cnt=1):
+        # Greek letter
+        s = s.replace("A", "Ā", cnt)
+        s = s.replace("A", "Ă", cnt)
+        s = s.replace("A", "Ą", cnt)
+        s = s.replace("a", "α", cnt)
+        # Russian letter 1-4
+        s = s.replace("e", "е", cnt)
+        s = s.replace("a", "а", cnt)
+        s = s.replace("e", "ё", cnt)
+        s = s.replace("o", "о", cnt)
         return s
 
     @staticmethod

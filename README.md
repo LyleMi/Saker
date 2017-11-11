@@ -1,6 +1,6 @@
 # Saker
 
-CTF Web framework and fuzz tool, can help you scan website, fuzz it with some payloads
+CTF Web fuzz framework
 
 ## install
 
@@ -14,7 +14,7 @@ python setup.py install
 ### scan website
 
 ```python
-from saker.classes.saker import Saker
+from saker.classes.sakerClass import Saker
 s = Saker("http://127.0.0.1")
 s.scan(filename="index.php", ext="php")
 ```
@@ -22,8 +22,8 @@ s.scan(filename="index.php", ext="php")
 or by shell
 
 ```
-usage: saker.py [options]
-CTF Web framework and fuzz tool
+usage: sakerCmd.py [options]
+CTF Web fuzz framework
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -39,6 +39,6 @@ optional arguments:
 ### generate fuzz payload
 
 ```python
->>> from saker.payloads.misc import Misc
+>>> from saker.fuzzer.misc import Misc
 >>> payload = Misc.fuzzErrorUnicode(payload)
 ```
