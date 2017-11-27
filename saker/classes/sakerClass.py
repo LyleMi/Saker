@@ -4,7 +4,6 @@
 import time
 import requests
 
-from saker.classes.prettytable import PrettyTable
 from saker.utils.domain import parseUrl
 from saker.utils.logger import logger
 from saker.utils.mprint import printHeader
@@ -56,7 +55,7 @@ class Saker(object):
         if pHeader:
             printHeader(r.headers)
         if pContent:
-            print r.content
+            self.logger.info(r.content)
         return r
 
     def post(self, path, params={}, data={},
@@ -78,7 +77,7 @@ class Saker(object):
         if pHeader:
             printHeader(r.headers)
         if pContent:
-            self.log(r.content)
+            self.logger.info(r.content)
         return r
 
     def interactive(self):
@@ -123,9 +122,6 @@ class Saker(object):
 
     def scan(self, ext="php", filename="", interval=0):
         exists = []
-        x = PrettyTable()
-        x._set_field_names(["Path", "Status", "Len"])
-        x.align["Path"] = "l"
         with open(fuzztxt) as pathes:
             for p in pathes:
                 path = p.strip("\n")
@@ -138,11 +134,9 @@ class Saker(object):
                 time.sleep(interval)
                 try:
                     r = self.get(path)
-                    x.add_row([path, r.status_code, len(r.content)])
+                    print "%s - %sKB - /%s" % (r.status_code, (len(r.content)/1000), path)
                     if r.status_code < 400:
                         exists.append(path)
                 except Exception as e:
                     print "error while scan", e
-        print x.get_string()
-        self.log("exists")
-        self.log(exists)
+        self.logger.info("exists %s" % exists)

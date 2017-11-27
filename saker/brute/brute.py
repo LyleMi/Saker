@@ -4,10 +4,8 @@
 import string
 import itertools
 
-from saker.fuzzers.fuzzer import Fuzzer
 
-
-class Brute(Fuzzer):
+class Brute(object):
 
     def __init__(self):
         super(Brute, self).__init__()

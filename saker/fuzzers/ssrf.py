@@ -6,6 +6,7 @@ from saker.fuzzers.fuzzer import Fuzzer
 
 
 class SSRF(Fuzzer):
+
     """Server-Side Request Forgery"""
 
     def __init__(self):
