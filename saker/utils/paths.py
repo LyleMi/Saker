@@ -7,5 +7,5 @@ libPath = os.path.realpath(
     os.path.dirname(os.path.dirname(__file__))
 )
 
-fuzztxt = os.path.join(libPath, "data", "fuzz.txt")
+fuzzpath = os.path.join(libPath, "data", "path.txt")
 passwordstxt = os.path.join(libPath, "data", "passwords.txt")

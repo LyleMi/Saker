@@ -9,5 +9,4 @@ def printHeader(headers):
             tmp = tmp[:95] + "..."
         tmp = tmp.ljust(98, " ") + " |"
         print tmp
-
     print "-" * 100

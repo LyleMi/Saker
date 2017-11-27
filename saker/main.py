@@ -4,10 +4,11 @@
 import time
 import requests
 
+from saker.brute.dir import DirBrute
+from saker.handler.headerHandler import HeaderHandler
+from saker.handler.htmlHandler import HTMLHandler
 from saker.utils.domain import parseUrl
 from saker.utils.logger import logger
-from saker.utils.mprint import printHeader
-from saker.utils.paths import fuzztxt
 
 
 class Saker(object):
@@ -53,7 +54,7 @@ class Saker(object):
         if pCode:
             print r.status_code
         if pHeader:
-            printHeader(r.headers)
+            HeaderHandler(r.headers).show()
         if pContent:
             self.logger.info(r.content)
         return r
@@ -75,7 +76,7 @@ class Saker(object):
                               headers=headers, timeout=timeout,
                               verify=verify)
         if pHeader:
-            printHeader(r.headers)
+            HeaderHandler(r.headers).show()
         if pContent:
             self.logger.info(r.content)
         return r
@@ -122,21 +123,66 @@ class Saker(object):
 
     def scan(self, ext="php", filename="", interval=0):
         exists = []
-        with open(fuzztxt) as pathes:
-            for p in pathes:
-                path = p.strip("\n")
-                if "%ext%" in path:
-                    path = path.replace("%ext%", ext)
-                elif "%filename%" in path:
-                    if not filename:
-                        continue
-                    path = path.replace("%filename%", filename)
-                time.sleep(interval)
-                try:
-                    r = self.get(path)
-                    print "%s - %sKB - /%s" % (r.status_code, (len(r.content)/1000), path)
-                    if r.status_code < 400:
-                        exists.append(path)
-                except Exception as e:
-                    print "error while scan", e
+        dirBrute = DirBrute(ext, filename)
+        for path in dirBrute.brute():
+            time.sleep(interval)
+            try:
+                r = self.get(path)
+                content = HTMLHandler(r.content)
+                print "%s - %s - /%s\t%s" % (
+                    r.status_code,
+                    content.size,
+                    path,
+                    content.title
+                )
+                if r.status_code < 400:
+                    exists.append(path)
+            except Exception as e:
+                print "error while scan", e
         self.logger.info("exists %s" % exists)
+
+if __name__ == '__main__':
+
+    import sys
+    import argparse
+
+    from saker.data.banner import banner
+
+    parser = argparse.ArgumentParser(
+        description='CTF Web fuzz framework',
+        usage='%(prog)s [options]',
+        epilog='CTF Web fuzz framework')
+    parser.add_argument('-s', '--scan', action="store_true",
+                        help='run with list model')
+    parser.add_argument('-f', '--file', metavar='file',
+                        default='',
+                        help='scan specific file')
+    parser.add_argument('-e', '--ext', metavar='ext',
+                        default='php',
+                        help='scan specific ext')
+    parser.add_argument('-i', '--interactive', action="store_true",
+                        help='run with interactive model')
+    parser.add_argument("-u", '--url',
+                        dest="url", help="define specific url")
+    parser.add_argument("-t", '--timeinterval', type=int,
+                        dest="interval", help="set time interval", default=0)
+
+    opts = parser.parse_args()
+
+    url = opts.url
+
+    if not url:
+        sys.stderr.write('Url is required!')
+        sys.exit(1)
+
+    print banner
+
+    c = Saker(url)
+
+    if opts.scan:
+        c.scan(filename=opts.file,
+               interval=opts.interval,
+               ext=opts.ext)
+
+    if opts.interactive:
+        c.interactive()
