@@ -1,28 +1,30 @@
 # Saker
 
-CTF Web fuzz framework
+[![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 
-## install
+Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password or dirs.
+
+## Install
 
 ```
 git clone https://github.com/LyleMi/Saker.git
 python setup.py install
 ```
 
-## usage
+## Features
 
-### scan website
+### Scan Website
 
 ```python
-from saker.classes.sakerClass import Saker
-s = Saker("http://127.0.0.1")
-s.scan(filename="index.php", ext="php")
+>>> from saker.main import Saker
+>>> s = Saker("http://127.0.0.1")
+>>> s.scan(filename="index.php", ext="php")
 ```
 
 or by shell
 
 ```
-usage: sakerCmd.py [options]
+usage: main.py [options]
 CTF Web fuzz framework
 
 optional arguments:
@@ -36,9 +38,18 @@ optional arguments:
                         set time interval
 ```
 
-### generate fuzz payload
+### Generate fuzz payload
 
 ```python
 >>> from saker.fuzzer.misc import Misc
 >>> payload = Misc.fuzzErrorUnicode(payload)
+```
+
+### Brute password or others
+
+
+```python
+>>> from saker.brute.dir import DirBrute
+>>> dirBrute = DirBrute("php", "index.php")
+>>> paths = dirBrute.brute()
 ```

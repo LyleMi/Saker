@@ -3,6 +3,7 @@
 
 import random
 import string
+from urllib import quote
 from saker.fuzzers.fuzzer import Fuzzer
 
 
@@ -41,3 +42,12 @@ class Code(Fuzzer):
     def fuzzErrorUnicode(s):
         # https://www.leavesongs.com/PENETRATION/mysql-charset-trick.html
         return s + chr(random.randint(0xC2, 0xef))
+
+    @staticmethod
+    def urlencode(s, force=False):
+        if not force:
+            s = quote(s)
+        else:
+            s = map(lambda i: hex(ord(i)).replace("0x", "%"), s)
+            s = "".join(s)
+        return s

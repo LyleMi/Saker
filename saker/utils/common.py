@@ -25,7 +25,7 @@ def load(url):
     p = url.split("//")[1].strip("/") + ".pkl"
     p = p.replace(":", "_")
     p = os.path.join(".", "logs", p)
-    pkl_file = open(p, 'rb')
-    data = pickle.load(pkl_file)
-    pkl_file.close()
+    pklFile = open(p, 'rb')
+    data = pickle.load(pklFile)
+    pklFile.close()
     return data

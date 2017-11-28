@@ -15,5 +15,5 @@ setup(
     include_package_data=True,
     platforms="any",
     package_data={'saker': ['data/*']},
-    scripts=["./saker/sakerCmd.py"],
+    scripts=[],
 )
