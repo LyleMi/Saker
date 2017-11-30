@@ -8,9 +8,12 @@ class HeaderHandler(object):
 
     """heap generate Header"""
 
-    def __init__(self, headers):
+    def __init__(self, headers={}):
         super(HeaderHandler, self).__init__()
         self.headers = headers
+
+    def set(self, key, value):
+        self.headers[key] = value
 
     def setcookie(self, cookie=""):
         self.headers["Cookie"] = cookie
@@ -20,6 +23,15 @@ class HeaderHandler(object):
 
     def setua(self, UA=""):
         self.headers["User-Agent"] = UA if UA else randua()
+
+    def setajax(self):
+        self.headers["X-Requested-With"] = "XMLHttpRequest"
+
+    def setRefer(self, refer):
+        self.headers["Referer"] = refer
+
+    def setXForwardFor(self, ip):
+        self.headers["X-Forwarded-For"] = ip
 
     def show(self):
         print "-" * 100

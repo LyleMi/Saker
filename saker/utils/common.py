@@ -5,10 +5,12 @@ import os
 import pickle
 import random
 
+from saker.utils.paths import Paths
+
 
 def randua():
     # 生成随机ua
-    return random.choice([i.strip("\n") for i in open("data/user-agents.txt")])
+    return random.choice([i.strip("\n") for i in open(Paths.uas)])
 
 
 def store(url, obj):

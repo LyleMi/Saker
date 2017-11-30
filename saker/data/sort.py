@@ -5,7 +5,7 @@ import os
 
 stripslash = False
 
-file = "pathes.txt"
+file = "path.txt"
 # file = "suffixlist.txt"
 tmp = file + ".tmp"
 x = [i for i in open(file)]

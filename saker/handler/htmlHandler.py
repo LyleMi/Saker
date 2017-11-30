@@ -46,7 +46,7 @@ class HTMLHandler(object):
 
     @property
     def links(self):
-        links = self.RegExp.links.findall(self.content)
+        links = self.RegExp.link.findall(self.content)
         return links if len(links) else 'None'
 
     @property

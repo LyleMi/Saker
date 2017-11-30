@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
+import random
 import requests
 
 from saker.brute.dir import DirBrute
@@ -33,10 +34,10 @@ class Saker(object):
         self.url = parseUrl(url)
         self.loglevel = loglevel
         self.logger = logger
+        self.lastr = None
 
-    def get(self, path, params={}, headers={}, proxies={},
-            timeout=None, verify=None, useSession=True,
-            pCode=False, pHeader=False, pContent=False):
+    def get(self, path="", params={}, headers={}, proxies={},
+            timeout=None, verify=None, useSession=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
@@ -50,19 +51,12 @@ class Saker(object):
             r = requests.get(self.url + path, params=params,
                              headers=headers, timeout=timeout,
                              verify=verify)
-
-        if pCode:
-            print r.status_code
-        if pHeader:
-            HeaderHandler(r.headers).show()
-        if pContent:
-            self.logger.info(r.content)
+        self.lastr = r
         return r
 
-    def post(self, path, params={}, data={},
+    def post(self, path="", params={}, data={},
              proxies={}, headers={}, timeout=None,
-             verify=None, useSession=True,
-             pHeader=False, pContent=False):
+             verify=None, useSession=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
@@ -75,10 +69,7 @@ class Saker(object):
             r = requests.post(self.url + path, params=params, data=data,
                               headers=headers, timeout=timeout,
                               verify=verify)
-        if pHeader:
-            HeaderHandler(r.headers).show()
-        if pContent:
-            self.logger.info(r.content)
+        self.lastr = r
         return r
 
     def interactive(self):
@@ -122,10 +113,20 @@ class Saker(object):
             self.logger.critical(msg)
 
     def scan(self, ext="php", filename="", interval=0):
+        '''
+        small scan
+        scan url less than 100
+        and get some base info of site
+        '''
+        self.get("")
+        HeaderHandler(self.lastr.headers).show()
         exists = []
         dirBrute = DirBrute(ext, filename)
         for path in dirBrute.brute():
-            time.sleep(interval)
+            if interval == -1:
+                time.sleep(random.randint(1, 5))
+            else:
+                time.sleep(interval)
             try:
                 r = self.get(path)
                 content = HTMLHandler(r.content)
@@ -165,7 +166,9 @@ if __name__ == '__main__':
     parser.add_argument("-u", '--url',
                         dest="url", help="define specific url")
     parser.add_argument("-t", '--timeinterval', type=int,
-                        dest="interval", help="set time interval", default=0)
+                        dest="interval",
+                        help="scan time interval, random sleep by default",
+                        default=-1)
 
     opts = parser.parse_args()
 

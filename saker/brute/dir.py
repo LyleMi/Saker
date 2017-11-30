@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from saker.brute.brute import Brute
-from saker.utils.paths import fuzzpath
+from saker.utils.paths import Paths
 
 
 class DirBrute(Brute):
@@ -13,11 +13,18 @@ class DirBrute(Brute):
         self.ext = ext
 
     def brute(self):
-        with open(fuzzpath) as pathes:
+        with open(Paths.weakfile) as pathes:
             for p in pathes:
                 path = p.strip("\n")
                 if "%ext%" in path:
                     path = path.replace("%ext%", self.ext)
+                elif "%filename_without_ext%" in path:
+                    if not self.filename:
+                        continue
+                    path = path.replace(
+                        "%filename%",
+                        ".".join(self.filename.split(".")[:-1])
+                    )
                 elif "%filename%" in path:
                     if not self.filename:
                         continue
