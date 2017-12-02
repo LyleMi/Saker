@@ -19,7 +19,8 @@ class HTMLHandler(object):
         link = re.compile(r"(?<=href=\").+?(?=\")|(?<=href=\').+?(?=\')")
         js = re.compile(r'<script.*?</script>')
         css = re.compile(r'<style.*?</style>')
-        comment = re.compile(r'<!--.*?-->')
+        comment = re.compile(r'<!--[\s\S]*?-->')
+        jscomment = re.compile(r'(\/\/.*)|(\/\*[\s\S]*?\*\/)')
         meta = re.compile(r'<meta.*?>')
 
     def __init__(self, content):

@@ -94,24 +94,6 @@ class Saker(object):
             else:
                 print call
 
-    def log(self, msg, level=""):
-        if level == "":
-            level = self.loglevel
-        level = level.lower()
-
-        if level == "verbose":
-            pass
-        elif level == "debug":
-            self.logger.debug(msg)
-        elif level == "info":
-            self.logger.info(msg)
-        elif level == "warning":
-            self.logger.warning(msg)
-        elif level == "error":
-            self.logger.error(msg)
-        elif level == "critical":
-            self.logger.critical(msg)
-
     def scan(self, ext="php", filename="", interval=0):
         '''
         small scan
@@ -122,7 +104,7 @@ class Saker(object):
         HeaderHandler(self.lastr.headers).show()
         exists = []
         dirBrute = DirBrute(ext, filename)
-        for path in dirBrute.brute():
+        for path in dirBrute.weakfiles():
             if interval == -1:
                 time.sleep(random.randint(1, 5))
             else:
@@ -165,7 +147,7 @@ if __name__ == '__main__':
                         help='run with interactive model')
     parser.add_argument("-u", '--url',
                         dest="url", help="define specific url")
-    parser.add_argument("-t", '--timeinterval', type=int,
+    parser.add_argument("-t", '--timeinterval', type=float,
                         dest="interval",
                         help="scan time interval, random sleep by default",
                         default=-1)

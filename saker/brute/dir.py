@@ -12,7 +12,7 @@ class DirBrute(Brute):
         self.filename = filename
         self.ext = ext
 
-    def brute(self):
+    def weakfiles(self):
         with open(Paths.weakfile) as pathes:
             for p in pathes:
                 path = p.strip("\n")

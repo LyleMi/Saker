@@ -6,7 +6,7 @@ from saker.utils.common import randua
 
 class HeaderHandler(object):
 
-    """heap generate Header"""
+    """help generate Header"""
 
     def __init__(self, headers={}):
         super(HeaderHandler, self).__init__()
