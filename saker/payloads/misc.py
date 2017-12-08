@@ -10,7 +10,7 @@ class Misc(object):
         super(Misc, self).__init__()
 
     @staticmethod
-    def zipBomb(dst="dst.zip", size=1):
+    def zipBomb(dst="dst.zip", size=1000):
         '''
         dst: write bomb file path
         size: zip file size

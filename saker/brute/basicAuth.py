@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import requests
+from saker.brute.brute import Brute
 
 
-class BasicAuth(object):
+class BasicAuth(Brute):
 
     '''
     brute test for http basic auth
