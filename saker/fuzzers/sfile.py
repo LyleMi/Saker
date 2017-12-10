@@ -41,8 +41,8 @@ class SFile(Fuzzer):
         return list(map(lambda i: i+"."+ext, l))
 
     @staticmethod
-    def list():
-        return [
+    def list(userpath=""):
+        l = [
             "/dev/mem",
             "/etc/passwd",
             "/etc/crontab",
@@ -66,3 +66,17 @@ class SFile(Fuzzer):
             ".viminfo",
             ".zsh_history",
         ]
+
+        if userpath != "":
+            tl = [
+                ".bashrc",
+                ".bash_history",
+                ".gitconfig",
+                ".profile",
+                ".viminfo",
+                ".zsh_history",
+            ]
+            tl = map(lambda i: userpath+i, tl)
+            l.extend(tl)
+
+        return l
