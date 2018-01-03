@@ -7,8 +7,7 @@ from saker.brute.brute import Brute
 
 class BasicAuth(Brute):
 
-    '''
-    brute test for http basic auth
+    '''brute test for http basic auth
     '''
 
     def __init__(self, url):

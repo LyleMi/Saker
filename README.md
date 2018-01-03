@@ -53,3 +53,5 @@ optional arguments:
 >>> dirBrute = DirBrute("php", "index.php")
 >>> paths = dirBrute.brute()
 ```
+
+now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
