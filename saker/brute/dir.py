@@ -22,7 +22,7 @@ class DirBrute(Brute):
                     if not self.filename:
                         continue
                     path = path.replace(
-                        "%filename%",
+                        "%filename_without_ext%",
                         ".".join(self.filename.split(".")[:-1])
                     )
                 elif "%filename%" in path:
