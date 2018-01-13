@@ -8,8 +8,7 @@ from saker.brute.brute import Brute
 
 class MySQL(Brute):
 
-    """
-    MySQL password brute
+    """MySQL password brute
     """
 
     def __init__(self, addr, port):

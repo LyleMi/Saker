@@ -6,6 +6,7 @@ from saker.fuzzers.fuzzer import Fuzzer
 
 
 class SSTI(Fuzzer):
+
     """Server Side Template Injection"""
 
     def __init__(self, engine=""):

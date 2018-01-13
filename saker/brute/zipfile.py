@@ -7,9 +7,8 @@ from saker.brute.brute import Brute
 
 class ZipFile(Brute):
 
-    '''
-    brute test for http basic auth
-    '''
+    """brute test for http basic auth
+    """
 
     def __init__(self, zipPath):
         super(ZipFile, self).__init__()
