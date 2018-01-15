@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from saker.fuzzers.fuzzer import Fuzzer
+from saker.utils.paths import Paths
 
 
 class SFile(Fuzzer):
@@ -42,54 +43,12 @@ class SFile(Fuzzer):
 
     @staticmethod
     def list(userpath=""):
-        l = [
-            "/dev/mem",
-            "/etc/passwd",
-            "/etc/crontab",
-            "/etc/hosts",
-            "/etc/apache2/apache2.conf",
-            "/etc/nginx/nginx.conf",
-            "/etc/ssh/ssh_config",
-            "/etc/ssh/sshd_config",
-            "/var/log/syslog",
-            "/var/log/syslog.1",
-            "/var/log/apache2/access.log",
-            "/var/log/apache2/error.log",
-            "/var/log/nginx/access.log",
-            "/var/log/nginx/error.log",
-            "/var/www/html/index.php",
-            "/proc/cpuinfo",
-            "/proc/1/root",
-            "/proc/1/status",
-            ".bashrc",
-            ".bash_history",
-            "~/.nano_history",
-            "~/.atftp_history",
-            "~/.mysql_history",
-            "~/.php_history",
-            "~/.ssh/authorized_keys",
-            "~/.ssh/identity.pub",
-            "~/.ssh/identity",
-            "~/.ssh/id_rsa.pub",
-            "~/.ssh/id_rsa",
-            "~/.ssh/id_dsa.pub",
-            "~/.ssh/id_dsa",
-            ".gitconfig",
-            ".profile",
-            ".viminfo",
-            ".zsh_history",
-        ]
-
-        if userpath != "":
-            tl = [
-                ".bashrc",
-                ".bash_history",
-                ".gitconfig",
-                ".profile",
-                ".viminfo",
-                ".zsh_history",
-            ]
-            tl = map(lambda i: userpath+i, tl)
-            l.extend(tl)
-
-        return l
+        ret = []
+        with open(Paths.linuxfile) as pathes:
+            for p in pathes:
+                if p == "\n":
+                    continue
+                if userpath != "":
+                    p = p.replace("~", userpath)
+                ret.append(p.strip("\n"))
+        return ret
