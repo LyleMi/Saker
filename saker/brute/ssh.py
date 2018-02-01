@@ -28,6 +28,7 @@ class SSH(Brute):
                            username=user,
                            password=pwd,
                            timeout=20)
+            res.append(arg)
             return True
         except Exception as e:
             return False

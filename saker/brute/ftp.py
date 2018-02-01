@@ -35,6 +35,7 @@ class FTP(Brute):
             ftp.login(user, pwd)
             ftp.retrlines('LIST')
             ftp.quit()
+            res.append(arg)
             return True
         except (ftplib.all_errors) as msg:
             return False

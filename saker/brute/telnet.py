@@ -32,6 +32,7 @@ class Telnet(Brute):
             tn.write("exit\n")
             tn.read_all()
             tn.close()
+            res.append(arg)
             return True
         except Exception as e:
             # print(e)
