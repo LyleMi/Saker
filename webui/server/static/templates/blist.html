@@ -1,0 +1,108 @@
+<h3>入网防火墙</h3>
+<hr>
+<button class="btn btn-info" ng-click="openIPRuleModel()">添加规则</button>
+<br>
+<br>
+<div class="panel panel-default" ng-init="getAll('blist')">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>来源</th>
+                <th>策略</th>
+                <th>注释</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="blist in data.blists">
+                <td>{{ blist.ip }}</td>
+                <td ng-show="blist.allow">允许</td>
+                <td ng-show="!blist.allow">禁止</td>
+                <td>{{ blist.comment }}</td>
+                <td>
+                    <a ng-click="change('blist', blist.uid)">编辑</a>
+                    <a ng-click="delete('blist', blist.uid)">删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="ruleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">增加新规则</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">来源</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="e.g. 10.0.0.1 or 192.168.229.1/24" ng-model="data.newIPRule.ip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">策略</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="data.newIPRule.allow">
+                                <option value="1">允许</option>
+                                <option value="0">禁止</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">注释</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="data.newIPRule.comment">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary" ng-click="addIPRule()">添加规则</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="changeRuleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">修改规则</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">来源</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" placeholder="e.g. 10.0.0.1 or 192.168.229.1/24" ng-model="data.changeIPRule.ip">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">策略</label>
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-model="data.changeIPRule.allow">
+                                <option value="1">允许</option>
+                                <option value="0">禁止</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">注释</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" ng-model="data.changeIPRule.comment">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary" ng-click="changeIPRule()">修改规则</button>
+            </div>
+        </div>
+    </div>
+</div>

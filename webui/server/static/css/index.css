@@ -1,0 +1,27 @@
+body,
+pre,
+input,
+textarea,
+button,
+code {
+    font: 14px/22px Tahoma, Arial, Roboto, 'Helvetica Neue', 'Hiragino Sans GB', '\5fae\8f6f\96c5\9ed1', sans-serif !important;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+input, textarea {
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #666;
+}
+
+input[type='checkbox'] {
+  -webkit-appearance:checkbox;
+}
