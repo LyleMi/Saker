@@ -5,6 +5,7 @@ from time import time
 
 
 from saker.fuzzers.fuzzer import Fuzzer
+from saker.utils.paths import Paths
 
 
 class SQLi(Fuzzer):
@@ -27,9 +28,13 @@ class SQLi(Fuzzer):
         l.extend(map(lambda i: i.replace('"', "'"), l))
         return l
 
-    @staticmethod
-    def keyword():
-        return ["@version", "@user", "@@datadir"]
+    @classmethod
+    def keyword(cls):
+        with open(Paths.sqlkeywords) as keywords:
+            for k in keywords:
+                yield k.strip("\n")
+        for k in cls.specialChars:
+            yield k
 
     def timeInjection(self):
         pass

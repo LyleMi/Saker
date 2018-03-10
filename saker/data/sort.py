@@ -6,6 +6,7 @@ import os
 stripslash = False
 
 file = "path.txt"
+file = "sqlkeywords.txt"
 tmp = file + ".tmp"
 x = [i for i in open(file)]
 

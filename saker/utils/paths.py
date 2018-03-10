@@ -12,6 +12,7 @@ class Paths(object):
     dirs = op.join(base, "data", "dir.txt")
     linuxfile = op.join(base, "data", "linuxfile.txt")
     passwords = op.join(base, "data", "passwords.txt")
+    sqlkeywords = op.join(base, "data", "sqlkeywords.txt")
     uas = op.join(base, "data", "user-agents.txt")
     weakfile = op.join(base, "data", "weakfile.txt")
 

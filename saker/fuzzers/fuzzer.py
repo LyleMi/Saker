@@ -7,6 +7,8 @@ import string
 
 class Fuzzer(object):
 
+    specialChars = string.printable[62:]
+
     def __init__(self):
         super(Fuzzer, self).__init__()
 
