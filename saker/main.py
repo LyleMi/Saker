@@ -19,7 +19,11 @@ class Saker(object):
     timeout = 20
     verify = False
 
-    def __init__(self, url="", session=None, timeout=0, loglevel="debug"):
+    def __init__(
+            self, url="", session=None,
+            timeout=0, loglevel="debug",
+            proxies={}
+    ):
         """
         :param s: store requests session
         :param url: main url
@@ -34,15 +38,17 @@ class Saker(object):
         self.url = parseUrl(url)
         self.loglevel = loglevel
         self.logger = logger
+        self.proxies = proxies
         self.lastr = None
 
-    def get(self, path="", params={}, headers={}, proxies={},
+    def get(self, path="", params={}, headers={}, proxies=None,
             timeout=None, verify=None, useSession=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
             verify = self.verify
-
+        if proxies is None:
+            proxies = self.proxies
         if useSession:
             r = self.s.get(self.url + path, params=params,
                            headers=headers, timeout=timeout,
@@ -55,12 +61,14 @@ class Saker(object):
         return r
 
     def post(self, path="", params={}, data={},
-             proxies={}, headers={}, timeout=None,
+             proxies=None, headers={}, timeout=None,
              verify=None, useSession=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
             verify = self.verify
+        if proxies is None:
+            proxies = self.proxies
         if useSession:
             r = self.s.post(self.url + path, params=params, data=data,
                             headers=headers, timeout=timeout,
@@ -124,6 +132,7 @@ class Saker(object):
                 print "error while scan", e
         self.logger.info("exists %s" % exists)
 
+
 if __name__ == '__main__':
 
     import sys
@@ -147,6 +156,8 @@ if __name__ == '__main__':
                         help='run with interactive model')
     parser.add_argument("-u", '--url',
                         dest="url", help="define specific url")
+    parser.add_argument("-p", '--proxy',
+                        dest="proxy", help="proxy url")
     parser.add_argument("-t", '--timeinterval', type=float,
                         dest="interval",
                         help="scan time interval, random sleep by default",
@@ -162,7 +173,15 @@ if __name__ == '__main__':
 
     print banner
 
-    c = Saker(url)
+    if opts.proxy:
+        proxies = {
+            "http": opts.proxy,
+            "https": opts.proxy,
+        }
+    else:
+        proxies = {}
+
+    c = Saker(url, proxies=proxies)
 
     if opts.scan:
         c.scan(filename=opts.file,
