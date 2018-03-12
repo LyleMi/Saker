@@ -37,11 +37,6 @@ class SFile(Fuzzer):
             return ["zip://", "bzip2://", "zlib://"][0] + msg
 
     @staticmethod
-    def sourceCode(ext):
-        l = ["app", "index", "main"]
-        return list(map(lambda i: i+"."+ext, l))
-
-    @staticmethod
     def list(userpath=""):
         ret = []
         with open(Paths.linuxfile) as pathes:

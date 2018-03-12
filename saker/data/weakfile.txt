@@ -49,6 +49,8 @@ info.%ext%
 login.%ext%
 passwd
 phpshe.tar.gz
+reg.%ext%
+register.%ext%
 robots.txt
 root
 server-status

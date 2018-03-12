@@ -7,6 +7,8 @@ stripslash = False
 
 file = "path.txt"
 file = "sqlkeywords.txt"
+file = "weakfile.txt"
+file = "linuxfile.txt"
 tmp = file + ".tmp"
 x = [i for i in open(file)]
 
