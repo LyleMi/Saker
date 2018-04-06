@@ -1,20 +1,21 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta http-equiv="content-type" content="text/html;charset=utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="referrer" content="always">
-    <title>Saker</title>
-    <!-- include jQuery -->
-    <script src="{{ static_url('bower/jquery/dist/jquery.min.js') }}"></script>
-    <link href="{{ static_url('bower/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <script src="{{ static_url('bower/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <!-- include font-awesome -->
-    <link href="{{ static_url('bower/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-</head>
+{% include templates\header.html %}
+<br><br><br><br>
+<div class="container">
+    <div id="logo" class="center">
+        <img src="{{ static_url('images/logo.jpg') }}" alt="">
+    </div>
+    <div class="submitform">
+        <form>
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="Project Name">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
-<body>
-
-</body>
-</html>
+{% include templates\footer.html %}

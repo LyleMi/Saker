@@ -25,3 +25,37 @@ a, a:hover {
 input[type='checkbox'] {
   -webkit-appearance:checkbox;
 }
+
+img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.foot {
+    z-index: 10;
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    min-width: 950px;
+    height: auto;
+    padding: 15px 0 15px 0;
+    background: #2f343e;
+    color: #ccc;
+    margin-bottom: 0px;
+}
+
+#logo {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 40%;
+}
+
+.submitform {
+    padding-left: 27%;
+}
+
+
