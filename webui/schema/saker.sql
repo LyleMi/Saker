@@ -12,3 +12,8 @@ CREATE TABLE `project` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE USER 'saker'@'localhost' IDENTIFIED BY 'random_password';
+GRANT all privileges ON saker.* TO 'saker'@'localhost';
+
+CREATE USER 'backup'@'localhost' IDENTIFIED BY 'another_random_password';
+GRANT SELECT ON saker.* TO 'backup'@'localhost';

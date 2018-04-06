@@ -1,5 +1,7 @@
 # Saker
 
+![logo](./webui/static/images/logo.jpg)
+
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 
 Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password or dirs.
