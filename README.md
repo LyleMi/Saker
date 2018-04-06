@@ -3,7 +3,7 @@
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 ![License](https://img.shields.io/aur/license/yaourt.svg)
 
-Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password or dirs.
+Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password and dirs.
 
 ## Install
 
@@ -26,7 +26,7 @@ or by shell
 
 ```
 usage: main.py [options]
-CTF Web fuzz framework
+Tool For Fuzz Web Applications
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -35,15 +35,17 @@ optional arguments:
   -e ext, --ext ext     scan specific ext
   -i, --interactive     run with interactive model
   -u URL, --url URL     define specific url
+  -p PROXY, --proxy PROXY
+                        proxy url
   -t INTERVAL, --timeinterval INTERVAL
-                        set time interval
+                        scan time interval, random sleep by default
 ```
 
 ### Generate fuzz payload
 
 ```python
->>> from saker.fuzzer.misc import Misc
->>> payload = Misc.fuzzErrorUnicode(payload)
+>>> from saker.fuzzer.code import Code
+>>> payload = Code.fuzzErrorUnicode(payload)
 ```
 
 ### Brute password or others
@@ -52,7 +54,7 @@ optional arguments:
 ```python
 >>> from saker.brute.dir import DirBrute
 >>> dirBrute = DirBrute("php", "index.php")
->>> paths = dirBrute.brute()
+>>> paths = dirBrute.weakfiles()
 ```
 
 now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...

@@ -8,7 +8,7 @@ setup(
     name="Saker",
     version="1.0",
     keywords=("CTF", "Web"),
-    description="CTF Web framework and fuzz tool",
+    description="Tool For Fuzz Web Applications",
     license="GPLv3 Licence",
     author="lyle",
     packages=find_packages(),
