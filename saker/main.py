@@ -141,9 +141,9 @@ if __name__ == '__main__':
     from saker.data.banner import banner
 
     parser = argparse.ArgumentParser(
-        description='CTF Web fuzz framework',
+        description='Tool For Fuzz Web Applications',
         usage='%(prog)s [options]',
-        epilog='CTF Web fuzz framework')
+        epilog='Tool For Fuzz Web Applications')
     parser.add_argument('-s', '--scan', action="store_true",
                         help='run with list model')
     parser.add_argument('-f', '--file', metavar='file',
