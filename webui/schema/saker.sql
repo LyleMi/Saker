@@ -5,11 +5,20 @@ CREATE DATABASE `saker` DEFAULT CHARACTER SET utf8 collate utf8_general_ci;
 use `saker`;
 
 CREATE TABLE `project` (
-  `pid` INT AUTO_INCREMENT,
+  `uid` VARCHAR(32) NOT NULL,
   `name` VARCHAR(100) NULL,
   `domain` VARCHAR(100) NULL,
   `desc` VARCHAR(1000) NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `site` (
+  `uid` VARCHAR(32) NOT NULL,
+  -- project id
+  `pid` VARCHAR(32) NOT NULL,
+  `domain` VARCHAR(100) NULL,
+  `desc` VARCHAR(1000) NULL,
+  PRIMARY KEY (`iuidd`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE USER 'saker'@'localhost' IDENTIFIED BY 'random_password';
