@@ -12,6 +12,7 @@ class Brute(object):
 
     def __init__(self):
         super(Brute, self).__init__()
+        self.res = []
 
     @staticmethod
     def itert(self, start=1, end=0, charset=""):

@@ -14,7 +14,7 @@ class BasicAuth(Brute):
         super(BasicAuth, self).__init__()
         self.url = url
 
-    def do(self, args, res):
+    def do(self, arg, res):
         # todo
         if len(res) > 0:
             return
