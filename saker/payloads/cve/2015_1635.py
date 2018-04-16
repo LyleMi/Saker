@@ -28,4 +28,4 @@ class Exploit(object):
 
 if __name__ == '__main__':
     e = Exploit()
-    e.poc("http://www.111zr.gs/")
+    e.poc("http://localhost/")

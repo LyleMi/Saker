@@ -12,26 +12,33 @@ class Fuzzer(object):
     def __init__(self):
         super(Fuzzer, self).__init__()
 
-    @staticmethod
-    def randomInt(min, max):
+    @classmethod
+    def randomInt(cls, min, max):
         return random.randint(min, max)
 
-    @staticmethod
-    def randomStr(charset=string.printable, length=random.randint(1, 100)):
+    @classmethod
+    def randomStr(cls, charset=string.printable, length=random.randint(1, 100)):
         return "".join([random.choice(charset) for i in range(length)])
 
-    @staticmethod
-    def randomCStr(length=random.randint(1, 100)):
-        return Fuzzer.randomStr(string.letters + string.digits, length)
+    @classmethod
+    def randomCStr(cls, length=random.randint(1, 100)):
+        return cls.randomStr(string.letters + string.digits, length)
 
-    @staticmethod
-    def randomHex(length=random.randint(1, 100)):
-        return Fuzzer.randomStr(string.hexdigits, length)
+    @classmethod
+    def randomDict(cls, length=random.randint(1, 10)):
+        ret = {}
+        for i in range(length):
+            ret[cls.randomStr()] = cls.randomStr()
+        return ret
 
-    @staticmethod
-    def randomPrintable(length=random.randint(1, 100)):
-        return Fuzzer.randomStr(string.printable, length)
+    @classmethod
+    def randomHex(cls, length=random.randint(1, 100)):
+        return cls.randomStr(string.hexdigits, length)
 
-    @staticmethod
-    def randomAscii(length=random.randint(1, 100)):
-        return Fuzzer.randomStr([chr(i) for i in xrange(256)], length)
+    @classmethod
+    def randomPrintable(cls, length=random.randint(1, 100)):
+        return cls.randomStr(string.printable, length)
+
+    @classmethod
+    def randomAscii(cls, length=random.randint(1, 100)):
+        return cls.randomStr([chr(i) for i in xrange(256)], length)
