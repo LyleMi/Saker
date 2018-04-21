@@ -47,4 +47,4 @@ def time2str(t):
     return time.strftime(ISOTIMEFORMAT, time.localtime(t))
 
 if __name__ == '__main__':
-    print unixtoday()
+    print(unixtoday())

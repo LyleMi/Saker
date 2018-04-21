@@ -34,11 +34,11 @@ class HeaderHandler(object):
         self.headers["X-Forwarded-For"] = ip
 
     def show(self):
-        print "-" * 100
+        print("-" * 100)
         for k in self.headers:
             tmp = "| %s : %s" % (k, self.headers[k])
             if len(tmp) > 100:
                 tmp = tmp[:95] + "..."
             tmp = tmp.ljust(98, " ") + " |"
-            print tmp
-        print "-" * 100
+            print(tmp)
+        print("-" * 100)

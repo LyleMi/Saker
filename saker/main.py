@@ -89,18 +89,17 @@ class Saker(object):
                 key = raw_input(">>> set what? : ")
                 value = raw_input(">>> vaule? : ")
                 self.__setattr__(key, value)
-                print "set self.%s with value %s" \
-                    % (key, self.__getattribute__(key))
+                print("set self.%s with value %s" % (key, self.__getattribute__(key)))
                 continue
             try:
                 call = self.__getattribute__(cmd)
-            except AttributeError, e:
-                print "has no attribute " + cmd
+            except AttributeError as e:
+                print("has no attribute " + cmd)
                 continue
             if callable(call):
                 call()
             else:
-                print call
+                print(call)
 
     def scan(self, ext="php", filename="", interval=0):
         '''
@@ -120,16 +119,16 @@ class Saker(object):
             try:
                 r = self.get(path)
                 content = HTMLHandler(r.content)
-                print "%s - %s - /%s\t%s" % (
+                print("%s - %s - /%s\t%s" % (
                     r.status_code,
                     content.size,
                     path,
                     content.title
-                )
+                ))
                 if r.status_code < 400:
                     exists.append(path)
             except Exception as e:
-                print "error while scan", e
+                print("error while scan %s" % e)
         self.logger.info("exists %s" % exists)
 
 
@@ -171,7 +170,7 @@ if __name__ == '__main__':
         sys.stderr.write('Url is required!')
         sys.exit(1)
 
-    print banner
+    print(banner)
 
     if opts.proxy:
         proxies = {

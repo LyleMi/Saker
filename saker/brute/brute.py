@@ -32,7 +32,7 @@ class Brute(object):
         from time import sleep
         from random import randint
         sleep(randint(1, 5))
-        print "here is the %d process, now res is %s" % (arg, res)
+        print("here is the %d process, now res is %s" % (arg, res))
         res.append(arg)
 
     def run(self, args):
@@ -57,4 +57,4 @@ class Brute(object):
 
 if __name__ == '__main__':
     b = Brute()
-    print b.run(range(10))
+    print(b.run(range(10)))
