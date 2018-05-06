@@ -42,7 +42,7 @@ class Saker(object):
         self.lastr = None
 
     def get(self, path="", params={}, headers={}, proxies=None,
-            timeout=None, verify=None, useSession=True):
+            timeout=None, verify=None, useSession=True, allow_redirects=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
@@ -52,11 +52,12 @@ class Saker(object):
         if useSession:
             r = self.s.get(self.url + path, params=params,
                            headers=headers, timeout=timeout,
-                           proxies=proxies, verify=verify)
+                           proxies=proxies, verify=verify,
+                           allow_redirects=allow_redirects)
         else:
             r = requests.get(self.url + path, params=params,
                              headers=headers, timeout=timeout,
-                             verify=verify)
+                             verify=verify, allow_redirects=allow_redirects)
         self.lastr = r
         return r
 

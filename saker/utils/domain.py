@@ -92,7 +92,7 @@ def isInternal(seed, stype):
 
 def parseUrl(url):
 
-    if not url.startswith("http://") or url.startswith("https://"):
+    if not (url.startswith("http://") or url.startswith("https://")):
         if ':443' in url:
             url = "https://" + url
         else:
