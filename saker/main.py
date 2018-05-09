@@ -87,8 +87,8 @@ class Saker(object):
             if cmd in ["exit", "quit"]:
                 return
             elif cmd == "set":
-                key = raw_input(">>> set what? : ")
-                value = raw_input(">>> vaule? : ")
+                key = input(">>> set what? : ")
+                value = input(">>> vaule? : ")
                 self.__setattr__(key, value)
                 print("set self.%s with value %s" % (key, self.__getattribute__(key)))
                 continue
@@ -119,7 +119,7 @@ class Saker(object):
                 time.sleep(interval)
             try:
                 r = self.get(path)
-                content = HTMLHandler(r.content)
+                content = HTMLHandler(r.text)
                 print("%s - %s - /%s\t%s" % (
                     r.status_code,
                     content.size,
