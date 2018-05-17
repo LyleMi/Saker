@@ -3,6 +3,7 @@
 """PoC of CVE-2018-7600
 """
 
+import re
 import requests
 
 
@@ -14,6 +15,7 @@ class Exploit(object):
         super(Exploit, self).__init__()
 
     def poc(self, url):
+
         # PoC for Drupal 7.x
         params = {
             'q': 'user/password',
@@ -42,4 +44,4 @@ class Exploit(object):
 
 if __name__ == '__main__':
     e = Exploit()
-    e.poc("http://172.18.108.215:8000/")
+    e.poc("http://127.0.0.1")

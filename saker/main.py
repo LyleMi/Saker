@@ -63,7 +63,8 @@ class Saker(object):
 
     def post(self, path="", params={}, data={},
              proxies=None, headers={}, files={},
-             timeout=None, verify=None, useSession=True):
+             timeout=None, verify=None, useSession=True,
+             allow_redirects=True):
         if timeout is None:
             timeout = self.timeout
         if verify is None:
@@ -73,11 +74,11 @@ class Saker(object):
         if useSession:
             r = self.s.post(self.url + path, params=params, data=data,
                             headers=headers, files=files, timeout=timeout,
-                            proxies=proxies, verify=verify)
+                            proxies=proxies, verify=verify, allow_redirects=allow_redirects)
         else:
             r = requests.post(self.url + path, params=params, data=data,
                               headers=headers, files=files, timeout=timeout,
-                              verify=verify)
+                              verify=verify, allow_redirects=allow_redirects)
         self.lastr = r
         return r
 
