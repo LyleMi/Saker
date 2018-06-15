@@ -9,18 +9,18 @@ from schema.tables.base import BaseTable
 from common.utils import guid
 
 
-class Project(BaseTable):
+class Domain(BaseTable):
 
-    __tablename__ = 'project'
+    __tablename__ = 'domain'
 
-    uid = Column(VARCHAR(32), primary_key=True, default=guid)
+    pid = Column(VARCHAR(32), primary_key=True, default=guid)
     name = Column(VARCHAR(200))
     target = Column(VARCHAR(200))
     desc = Column(VARCHAR(1000))
 
     @classmethod
     def add(cls, name, target, desc):
-        p = Project()
+        p = Domain()
         p.name = name
         p.target = target
         p.desc = desc

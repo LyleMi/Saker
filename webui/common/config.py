@@ -45,4 +45,3 @@ settings = {
 handlers = [
     (r"/", "server.controller.main.MainHandler"),
 ]
-
