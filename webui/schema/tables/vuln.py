@@ -2,25 +2,27 @@
 # -*- coding:utf-8 -*-
 
 from sqlalchemy import and_
-from sqlalchemy import Column, BOOLEAN, VARCHAR, INT
+from sqlalchemy import Column, BOOLEAN, VARCHAR, INT, TIMESTAMP
 from sqlalchemy.sql import func
 
 from schema.tables.base import BaseTable
 from common.utils import guid
+from common.utils import now
 
 
-class Domain(BaseTable):
+class Vuln(BaseTable):
 
-    __tablename__ = 'domain'
+    __tablename__ = 'vuln'
 
-    pid = Column(VARCHAR(32), primary_key=True, default=guid)
+    uid = Column(VARCHAR(32), primary_key=True, default=guid)
+    pid = Column(VARCHAR(32))
     name = Column(VARCHAR(200))
-    target = Column(VARCHAR(200))
     desc = Column(VARCHAR(1000))
+    created = Column(TIMESTAMP, default=now)
 
     @classmethod
     def add(cls, name, target, desc):
-        p = Domain()
+        p = Vuln()
         p.name = name
         p.target = target
         p.desc = desc
