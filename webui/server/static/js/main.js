@@ -8,3 +8,27 @@ async function api(url, opts = {}) {
         throw new Error(dat.status)
     }
 }
+
+var challmodal = new Vue({
+    el: '#project-modal',
+    data: {
+        newProject: {
+            name: '',
+            target: '',
+            desc: '',
+        }
+    },
+    methods: {
+        add() {
+            let formData = new FormData()
+            formData.append("name", this.newProject.name)
+            formData.append("target", this.newProject.target)
+            formData.append("desc", this.newProject.desc)
+            api('project', {
+                method: "POST",
+                body: formData
+            })
+            $('#project-modal').modal('hide')
+        }
+    }
+})

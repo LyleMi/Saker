@@ -44,4 +44,5 @@ settings = {
 # 路由
 handlers = [
     (r"/", "server.controller.main.MainHandler"),
+    (r"/project", "server.controller.project.ProjectHandler"),
 ]

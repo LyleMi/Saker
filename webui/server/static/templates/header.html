@@ -23,8 +23,13 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Saker</a>
         <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="/">New Project</a></li>
+            <li class="nav-item">
+                <a class="nav-link" href="#project-modal" data-toggle="modal">
+                New
+                </a>
+            </li>
             <li class="nav-item"><a class="nav-link" href="/">Project List</a></li>
             <li class="nav-item"><a class="nav-link" href="/">Toolkit</a></li>
         </ul>
     </nav>
+    {% include modals/new.html %}
