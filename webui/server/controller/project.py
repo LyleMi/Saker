@@ -9,7 +9,7 @@ from schema.tables.project import Project
 class ProjectHandler(BaseHandler):
 
     def get(self):
-        self.render("index.html")
+        return self.ok(Project.getAll(True))
 
     def post(self):
         name = self.get_argument('name', '')

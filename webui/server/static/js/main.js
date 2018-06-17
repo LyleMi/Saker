@@ -32,3 +32,17 @@ var challmodal = new Vue({
         }
     }
 })
+
+var project = new Vue({
+    el: '#project',
+    data: {
+        challs: [],
+    },
+    methods: {
+        async loadAll() {
+            this.challs = await api('project')
+        }
+    }
+})
+
+project.loadAll()
