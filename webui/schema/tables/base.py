@@ -41,6 +41,21 @@ class BaseTable(object):
             return obj.one()
 
     @classmethod
+    def add(cls, **kwargs):
+        o = cls()
+        for key in kwargs:
+            o.__setattr__(key, kwargs[key])
+        cls.db.add(o)
+        cls.db.commit()
+        return True
+
+    @classmethod
+    def update(cls, uid, **kwargs):
+        cls.db.query(cls).filter(cls.uid == uid).update(kwargs)
+        cls.db.commit()
+        return True
+
+    @classmethod
     def delete(cls, uid):
         obj = cls.db.query(cls).filter(cls.uid == uid).delete()
         cls.db.commit()

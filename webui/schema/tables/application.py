@@ -10,14 +10,13 @@ from common.utils import guid
 from common.utils import now
 
 
-class Asset(BaseTable):
+class Application(BaseTable):
 
-    __tablename__ = 'asset'
+    __tablename__ = 'application'
 
     uid = Column(VARCHAR(32), primary_key=True, default=guid)
     pid = Column(VARCHAR(32))
-    atype = Column(VARCHAR(200))
-    data = Column(VARCHAR(200))
+    data = Column(VARCHAR(100))
     desc = Column(VARCHAR(1000))
     created = Column(TIMESTAMP, default=now)
 

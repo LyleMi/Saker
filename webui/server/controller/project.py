@@ -4,6 +4,8 @@
 import tornado.web
 from server.controller.base import BaseHandler
 from schema.tables.project import Project
+from schema.tables.asset import Asset
+from schema.tables.vuln import Vuln
 
 
 class ProjectHandler(BaseHandler):
@@ -23,3 +25,15 @@ class ProjectHandler(BaseHandler):
             return self.error(200, "desc is required")
         o = Project.add(name, target, desc)
         return self.ok("suc")
+
+
+class AssetHandler(BaseHandler):
+
+    def get(self):
+        return self.ok(Project.getAll(True))
+
+
+class VulnHandler(BaseHandler):
+
+    def get(self):
+        return self.ok(Project.getAll(True))

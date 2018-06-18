@@ -16,6 +16,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Target</th>
                 <th scope="col">Description</th>
+                <th scope="col">Deatils</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
@@ -29,6 +30,10 @@
                 <td>{{! chall.name }}</td>
                 <td>{{! chall.target }}</td>
                 <td>{{! chall.desc }}</td>
+                <td>
+                    <a href="asset/{{! chall.uid }}">Asset</a>
+                    <a href="vuln/{{! chall.uid }}">Vuln</a>
+                </td>
                 <td>
                     <i class="fa fa-trash"></i>
                 </td>
