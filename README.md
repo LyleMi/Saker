@@ -58,3 +58,8 @@ optional arguments:
 ```
 
 now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
+
+## TODO
+
+- FingerPrint
+- AutoTest
