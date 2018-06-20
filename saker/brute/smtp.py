@@ -15,11 +15,12 @@ class SmtpBrute(Brute):
 
     def do(self, user, res):
         if len(res) > 0:
-            return
+            return True
         with open(self.passwords, "rb") as fh:
             for pwd in fh:
                 server = smtplib.SMTP(self.smtpServer)
                 try:
+                    # print("try %s %s" % (user, pwd.strip("\n")))
                     server.login(user, pwd.strip("\n"))
                     res.append(arg)
                     return True
