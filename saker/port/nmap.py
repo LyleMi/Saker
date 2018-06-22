@@ -27,33 +27,31 @@ class Nmap(object):
         if error:
             print(error)
             return False
-        self.ret = self.parse_nmap_xml()
-        return True
 
-    def parse_nmap_xml(self):
-        """
-        Parse the xml file and extract the imforation of services.
-        :return: dict. Use open port number as key and concrete infomation of the web service as value.
-        """
-        try:
-            tree = ET.parse(self.tmpName)
-            os.remove(self.tmpName)
-            root = tree.getroot()
-            result = {}
-            filter_flag = True
-            for port in root.find('host').find('ports').findall('port'):
+        tree = ET.parse(self.tmpName)
+        os.remove(self.tmpName)
+        root = tree.getroot()
+        result = {}
+        filter_flag = True
+        for host in root.findall('host'):
+            ip = host.find('address').get('addr')
+            result[ip] = {}
+            for port in host.find('ports').findall('port'):
                 if port.find('state').get('state') not in ('filtered', 'closed'):
                     filter_flag = False
                 if port.find('state').get('state') == 'open':
-                    service = port.find('service').attrib
+                    service = port.find('service')
+                    if service is None:
+                        continue
+                    service = service.attrib
+                    if service['name'] == 'tcpwrapped':
+                        continue
                     service.pop('conf')
                     service.pop('method')
-                    result[port.get('portid')] = service
-        except Exception as e:
-            print(e)
-            return None
+                    result[ip][port.get('portid')] = service
+            if result[ip] == {}:
+                del result[ip]
 
-        # What if we get nothing from the xml...
         if not result:
             if filter_flag:
                 print('All open ports detected by zmap are actually filtered or closed!')

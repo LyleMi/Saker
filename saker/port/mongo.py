@@ -12,10 +12,10 @@ class mongoDetect(object):
 
     def run(self, ip, port=27017):
         try:
-            conn = pymongo.MongoClient(ip, port, 'mongo')
+            conn = pymongo.MongoClient(ip, port)
             dbname = conn.database_names()
             return True
-        except Exception as e:
+        except pymongo.errors.ServerSelectionTimeoutError as e:
             return False
 
 

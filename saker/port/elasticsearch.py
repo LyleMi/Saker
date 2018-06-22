@@ -5,7 +5,7 @@
 import requests
 
 
-class elasticsearchDetect(PortBase):
+class elasticsearchDetect(object):
 
     def __init__(self):
         super(elasticsearchDetect, self).__init__()
