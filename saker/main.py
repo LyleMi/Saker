@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import time
 import random
 import requests
@@ -21,8 +22,7 @@ class Saker(object):
 
     def __init__(
             self, url="", session=None,
-            timeout=0, loglevel="debug",
-            proxies={}
+            timeout=0, loglevel="debug"
     ):
         """
         :param s: store requests session
@@ -38,47 +38,23 @@ class Saker(object):
         self.url = parseUrl(url)
         self.loglevel = loglevel
         self.logger = logger
-        self.proxies = proxies
         self.lastr = None
 
-    def get(self, path="", params={}, headers={}, proxies=None,
-            timeout=None, verify=None, useSession=True, allow_redirects=True):
+    def get(self, path="", params={},
+            timeout=None, allow_redirects=True):
         if timeout is None:
             timeout = self.timeout
-        if verify is None:
-            verify = self.verify
-        if proxies is None:
-            proxies = self.proxies
-        if useSession:
-            r = self.s.get(self.url + path, params=params,
-                           headers=headers, timeout=timeout,
-                           proxies=proxies, verify=verify,
-                           allow_redirects=allow_redirects)
-        else:
-            r = requests.get(self.url + path, params=params,
-                             headers=headers, timeout=timeout,
-                             verify=verify, allow_redirects=allow_redirects)
+        r = self.s.get(self.url + path, params=params,
+                       timeout=timeout, allow_redirects=allow_redirects)
         self.lastr = r
         return r
 
     def post(self, path="", params={}, data={},
-             proxies=None, headers={}, files={},
-             timeout=None, verify=None, useSession=True,
-             allow_redirects=True):
+             files={}, timeout=None, allow_redirects=True):
         if timeout is None:
             timeout = self.timeout
-        if verify is None:
-            verify = self.verify
-        if proxies is None:
-            proxies = self.proxies
-        if useSession:
-            r = self.s.post(self.url + path, params=params, data=data,
-                            headers=headers, files=files, timeout=timeout,
-                            proxies=proxies, verify=verify, allow_redirects=allow_redirects)
-        else:
-            r = requests.post(self.url + path, params=params, data=data,
-                              headers=headers, files=files, timeout=timeout,
-                              verify=verify, allow_redirects=allow_redirects)
+        r = self.s.post(self.url + path, params=params, data=data,
+                        files=files, timeout=timeout, allow_redirects=allow_redirects)
         self.lastr = r
         return r
 
@@ -102,6 +78,37 @@ class Saker(object):
                 call()
             else:
                 print(call)
+
+    def mirror(self, path=""):
+        '''
+        mirror current site
+        '''
+        self.get(path)
+        with open("index.html", "wb") as fh:
+            fh.write(self.lastr.content)
+        links = HTMLHandler(self.lastr.text).links
+        for link in links:
+            if link.startswith("http") or link.startswith("//"):
+                continue
+            dirs = link.split("/")
+            if dirs[0] == "":
+                dirs = dirs[1:]
+            for d in range(1, len(dirs)):
+                if not os.path.exists(os.path.sep.join(dirs[:d])):
+                    print("path [%s]" % os.path.sep.join(dirs[:d]))
+                    os.mkdir(os.path.sep.join(dirs[:d]))
+            self.get(link)
+            with open(os.path.sep.join(dirs), "wb") as fh:
+                fh.write(self.lastr.content)
+
+    def setProxies(self, proxies):
+        if isinstance(proxies, dict):
+            self.s.proxies = proxies
+        elif isinstance(proxies, str):
+            self.s.proxies = {
+                "http": proxies,
+                "https": proxies,
+            }
 
     def scan(self, ext="php", filename="", interval=0):
         '''
@@ -174,15 +181,10 @@ if __name__ == '__main__':
 
     print(banner)
 
-    if opts.proxy:
-        proxies = {
-            "http": opts.proxy,
-            "https": opts.proxy,
-        }
-    else:
-        proxies = {}
+    c = Saker(url)
 
-    c = Saker(url, proxies=proxies)
+    if opts.proxy:
+        c.setProxies(opts.proxy)
 
     if opts.scan:
         c.scan(filename=opts.file,
