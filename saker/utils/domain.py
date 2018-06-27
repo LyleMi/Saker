@@ -5,7 +5,28 @@ import re
 import socket
 
 
-IPREG = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
+class RES:
+
+    ip = re.compile(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
+    cidr = re.compile(r"\d+\.\d+\.\d+\.\d+(?:\/\d+)?$")
+    v4range = re.compile(r"\d+\.\d+\.\d+\.\d+\-\d+\.\d+\.\d+\.\d+$")
+    v6range = re.compile(r"[0-9a-fA-F]+:[0-9A-Fa-f:.]+\-[0-9a-fA-F]+:[0-9A-Fa-f:.]+$")
+    glob = re.compile(r"\d+\.\d+\.\d+\.\*$")
+    bracket = re.compile(r"(.*?)\.(\d+)[\[\{\(](.*)[\)\}\]]$")  # parses '1.2.3.4[5-9]' or '1.2.3.[57]'
+    hyphen = re.compile(r"(.*?)\.(\d+)\-(\d+)$")
+    hostname = re.compile(r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?)', re.IGNORECASE)
+
+
+def cidrize(ip):
+    # TODO
+    ips = []
+    if ',' in ipstr:
+        for ip in ipstr.split(","):
+            ips.extend(cidrize(ip))
+        return list(set(ips))
+    if RES.v4range.match(ip):
+        return ip
+    return ips
 
 
 def isUniversalParsing(domain):
@@ -24,7 +45,7 @@ def isUniversalParsing(domain):
 
 def isIPv4(ip):
     # 判断是否为ipv4
-    return bool(re.match(IPREG, ip, re.IGNORECASE))
+    return bool(ip.match(RES.ip, re.IGNORECASE))
 
 
 def isCDN(domain):
