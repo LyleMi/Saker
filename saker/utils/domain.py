@@ -6,7 +6,6 @@ import socket
 
 
 class RES:
-
     ip = re.compile(r"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")
     cidr = re.compile(r"\d+\.\d+\.\d+\.\d+(?:\/\d+)?$")
     v4range = re.compile(r"\d+\.\d+\.\d+\.\d+\-\d+\.\d+\.\d+\.\d+$")
@@ -17,15 +16,17 @@ class RES:
     hostname = re.compile(r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+[A-Z]{2,6}\.?)', re.IGNORECASE)
 
 
-def cidrize(ip):
+def cidrize(ipstr):
     # TODO
+    if isIPv4(ipstr):
+        return [ipstr]
     ips = []
     if ',' in ipstr:
         for ip in ipstr.split(","):
             ips.extend(cidrize(ip))
         return list(set(ips))
-    if RES.v4range.match(ip):
-        return ip
+    if RES.v4range.match(ipstr):
+        return ips
     return ips
 
 
@@ -45,7 +46,7 @@ def isUniversalParsing(domain):
 
 def isIPv4(ip):
     # 判断是否为ipv4
-    return bool(ip.match(RES.ip, re.IGNORECASE))
+    return bool(RES.ip.match(ip))
 
 
 def isCDN(domain):
