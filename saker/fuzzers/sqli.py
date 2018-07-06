@@ -25,6 +25,7 @@ class SQLi(Fuzzer):
         l.append('a") -- +')
         l.append('a") #')
         l.append('a" or "1"="1')
+        l.append('%df%27')
         l.extend(map(lambda i: i.replace('"', "'"), l))
         return l
 

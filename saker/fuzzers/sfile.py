@@ -37,6 +37,17 @@ class SFile(Fuzzer):
             return ["zip://", "bzip2://", "zlib://"][0] + msg
 
     @staticmethod
+    def specialChar():
+        return [
+            ":",
+            ".",
+            ";",
+            "\x00",
+            "\x01",
+            "\\",
+        ]
+
+    @staticmethod
     def list(userpath=""):
         ret = []
         with open(Paths.linuxfile) as pathes:
