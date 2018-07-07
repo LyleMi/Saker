@@ -40,23 +40,17 @@ class Saker(object):
         self.logger = logger
         self.lastr = None
 
-    def get(self, path="", params={},
-            timeout=None, allow_redirects=True):
-        if timeout is None:
-            timeout = self.timeout
-        r = self.s.get(self.url + path, params=params,
-                       timeout=timeout, allow_redirects=allow_redirects)
-        self.lastr = r
-        return r
+    def get(self, path="", *args, **kwargs):
+        self.lastr = self.s.get(self.url + path, *args, **kwargs)
+        return self.lastr
 
-    def post(self, path="", params={}, data={},
-             files={}, timeout=None, allow_redirects=True):
-        if timeout is None:
-            timeout = self.timeout
-        r = self.s.post(self.url + path, params=params, data=data,
-                        files=files, timeout=timeout, allow_redirects=allow_redirects)
-        self.lastr = r
-        return r
+    def post(self, path="", *args, **kwargs):
+        self.lastr = self.s.post(self.url + path, *args, **kwargs)
+        return self.lastr
+
+    def put(self, path="", *args, **kwargs):
+        self.lastr = self.s.put(self.url + path, *args, **kwargs)
+        return self.lastr
 
     def interactive(self):
         while True:
@@ -109,6 +103,10 @@ class Saker(object):
                 "http": proxies,
                 "https": proxies,
             }
+
+    def setUA(self, UA=""):
+        from saker.utils.common import randua
+        self.s.headers["User-Agent"] = UA if UA else randua()
 
     def scan(self, ext="php", filename="", interval=0):
         '''
