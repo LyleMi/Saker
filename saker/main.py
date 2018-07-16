@@ -52,6 +52,14 @@ class Saker(object):
         self.lastr = self.s.put(self.url + path, *args, **kwargs)
         return self.lastr
 
+    def trace(self):
+        '''trace http redirect
+        '''
+        if self.lastr is not None and self.lastr.history:
+            for r in self.lastr.history:
+                print(r.url)
+            print(self.lastr.url)
+
     def interactive(self):
         while True:
             cmd = raw_input(">>> ")
