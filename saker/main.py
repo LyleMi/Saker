@@ -116,7 +116,7 @@ class Saker(object):
         from saker.utils.common import randua
         self.s.headers["User-Agent"] = UA if UA else randua()
 
-    def scan(self, ext="php", filename="", interval=0):
+    def scan(self, ext="php", filename="", interval=0, scan=True):
         '''
         small scan
         scan url less than 100
@@ -126,7 +126,7 @@ class Saker(object):
         HeaderHandler(self.lastr.headers).show()
         exists = []
         dirBrute = DirBrute(ext, filename)
-        for path in dirBrute.weakfiles():
+        for path in dirBrute.all(filename, scan):
             if interval == -1:
                 time.sleep(random.randint(1, 5))
             else:
@@ -192,10 +192,11 @@ if __name__ == '__main__':
     if opts.proxy:
         c.setProxies(opts.proxy)
 
-    if opts.scan:
+    if opts.scan or opts.file:
         c.scan(filename=opts.file,
                interval=opts.interval,
-               ext=opts.ext)
+               ext=opts.ext,
+               scan=opts.scan)
 
     if opts.interactive:
         c.interactive()

@@ -13,6 +13,7 @@ class DirBrute(Brute):
         self.ext = ext
 
     def weakfiles(self):
+        rets = []
         with open(Paths.weakfile) as pathes:
             for p in pathes:
                 path = p.strip("\n")
@@ -29,4 +30,23 @@ class DirBrute(Brute):
                     if not self.filename:
                         continue
                     path = path.replace("%filename%", self.filename)
-                yield path
+                rets.append(path)
+        return rets
+
+    def senpath(self):
+        rets = []
+        with open(Paths.senpath) as pathes:
+            for p in pathes:
+                path = p.strip("\n")
+                if "%ext%" in path:
+                    path = path.replace("%ext%", self.ext)
+                rets.append(path)
+        return rets
+
+    def all(self, wf=True, spath=True):
+        rets = []
+        if wf:
+            rets.extend(self.weakfiles())
+        if spath:
+            rets.extend(self.senpath())
+        return rets
