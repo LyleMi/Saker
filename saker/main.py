@@ -52,6 +52,14 @@ class Saker(object):
         self.lastr = self.s.put(self.url + path, *args, **kwargs)
         return self.lastr
 
+    def patch(self, path="", *args, **kwargs):
+        self.lastr = self.s.patch(self.url + path, *args, **kwargs)
+        return self.lastr
+
+    def delete(self, path="", *args, **kwargs):
+        self.lastr = self.s.delete(self.url + path, *args, **kwargs)
+        return self.lastr
+
     def trace(self):
         '''trace http redirect
         '''
