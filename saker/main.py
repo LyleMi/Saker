@@ -39,6 +39,13 @@ class Saker(object):
         self.loglevel = loglevel
         self.logger = logger
         self.lastr = None
+        self.trace = False
+
+    def traceRequest(self):
+        print(self.lastr.request.headers)
+        print(self.lastr.headers)
+        print(self.lastr.content)
+        print(self.lastr.history)
 
     def get(self, path="", *args, **kwargs):
         self.lastr = self.s.get(self.url + path, *args, **kwargs)
