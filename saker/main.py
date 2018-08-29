@@ -39,7 +39,15 @@ class Saker(object):
         self.loglevel = loglevel
         self.logger = logger
         self.lastr = None
-        self.trace = False
+        # self.trace = False
+
+    def trace(self):
+        '''trace http redirect
+        '''
+        if self.lastr is not None and self.lastr.history:
+            for r in self.lastr.history:
+                print(r.url)
+            print(self.lastr.url)
 
     def traceRequest(self):
         print(self.lastr.request.headers)
@@ -66,14 +74,6 @@ class Saker(object):
     def delete(self, path="", *args, **kwargs):
         self.lastr = self.s.delete(self.url + path, *args, **kwargs)
         return self.lastr
-
-    def trace(self):
-        '''trace http redirect
-        '''
-        if self.lastr is not None and self.lastr.history:
-            for r in self.lastr.history:
-                print(r.url)
-            print(self.lastr.url)
 
     def interactive(self):
         while True:
