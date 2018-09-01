@@ -14,6 +14,11 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     platforms="any",
-    package_data={'saker': ['data/*']},
+    package_data={
+        'saker': [
+            'data/*.*',
+            'data/sample/*',
+        ]
+    },
     scripts=[],
 )
