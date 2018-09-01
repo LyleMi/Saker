@@ -15,23 +15,24 @@ class Zip(Brute):
         self.zfile = ZipFile(zipPath)
 
     def do(self):
-        while len(self.res) < 0 and self.queue.get():
+        while len(self.res) < 1:
             pwd = self.queue.get()
             print("try %s" % pwd)
             try:
                 self.zfile.extractall(pwd=pwd)
                 res.append(arg)
                 break
-            except:
+            except RuntimeError as e:
                 pass
+            except Exception as e:
+                print(e)
 
 
 if __name__ == '__main__':
     from saker.utils.paths import Paths
     z = Zip("test.zip")
-    args = range(5)
-    z.run(args)
+    z.run(5)
     with open(Paths.passwords, "rb") as fh:
         for i in fh:
             z.feed(i.strip("\n"))
-    print(z.res)
+    print(z.finish())
