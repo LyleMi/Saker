@@ -6,16 +6,15 @@ import itertools
 
 from multiprocessing import Process
 from multiprocessing import Manager
-from multiprocessing import Queue
 
 
 class Brute(object):
 
+    '''For Windows do not support many feature
+    '''
     def __init__(self):
         super(Brute, self).__init__()
-        self.manager = Manager()
-        self.res = self.manager.list()
-        self.queue = Queue()
+        self.res = []
 
     @staticmethod
     def itert(self, start=1, end=0, charset=""):
@@ -28,44 +27,36 @@ class Brute(object):
                 s = ''.join(i)
                 yield s
 
-    def feed(self, data):
-        self.queue.put(data)
-
-    def do(self):
+    def do(self, arg, res):
         '''
         multi processing test
         '''
         from time import sleep
         from random import randint
-        arg = self.queue.get()
         sleep(randint(1, 5))
-        print("here is the %d process, now res is %s" % (arg, self.res))
-        self.res.append(arg)
+        print("here is the %d process, now res is %s" % (arg, res))
+        res.append(arg)
 
-    def run(self, num):
+    def run(self, args):
         '''
         args: list contain paramters passed to self.do
               every argument will start a process
         '''
-        self.processes = [
+        manager = Manager()
+        res = manager.list()
+        processes = [
             Process(
                 target=self.do,
-                args=()
+                args=(arg, res)
             )
-            for i in range(num)
+            for arg in args
         ]
-        for p in self.processes:
+        for p in processes:
             p.start()
-
-    def finish(self):
-        for p in self.processes:
+        for p in processes:
             p.join()
-        return self.res
-
+        return res
 
 if __name__ == '__main__':
     b = Brute()
-    b.run(10)
-    for i in range(10):
-        b.feed(i)
-    print(b.finish())
+    print(b.run(range(10)))
