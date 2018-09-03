@@ -18,7 +18,7 @@ class Brute(object):
         self.queue = Queue()
 
     @staticmethod
-    def itert(self, start=1, end=0, charset=""):
+    def itert(start=1, end=0, charset=""):
         if not charset:
             charset = string.printable[:-5]
         if end == 0:

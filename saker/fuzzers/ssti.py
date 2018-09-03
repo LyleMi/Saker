@@ -21,7 +21,13 @@ class SSTI(Fuzzer):
             return "{{ config.items() }}"
         elif self.engine == "Django":
             return "{{ request }}"
-        else:
+        elif self.engine == "ruby":
+            # Basic injection
+            return "<%= 7 * 7 %>"
+        elif self.engine == "ruby":
+            # Basic injection
+            return "${7*7}"
+        elif self.engine == "Twig":
             return "{{ 7*7 }}"
 
     def exp(self):
