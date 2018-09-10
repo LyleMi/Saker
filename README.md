@@ -1,4 +1,4 @@
-<p align="center"><a href="" target="_blank" rel="noopener noreferrer"><img width="200" src="./webui/server/static/images/logo.jpg" alt="Saker logo"></a></p>
+<p align="center"><a href="" target="_blank" rel="noopener noreferrer"><img width="200" src="./logo.jpg" alt="Saker logo"></a></p>
 
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 ![License](https://img.shields.io/aur/license/yaourt.svg)
