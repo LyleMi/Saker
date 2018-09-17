@@ -39,21 +39,18 @@ class Saker(object):
         self.loglevel = loglevel
         self.logger = logger
         self.lastr = None
-        # self.trace = False
 
     def trace(self):
-        '''trace http redirect
-        '''
-        if self.lastr is not None and self.lastr.history:
-            for r in self.lastr.history:
-                print(r.url)
-            print(self.lastr.url)
-
-    def traceRequest(self):
-        print(self.lastr.request.headers)
-        print(self.lastr.headers)
+        if self.lastr is None:
+            return
+        HeaderHandler(self.lastr.request.headers).show()
+        HeaderHandler(self.lastr.headers).show()
         print(self.lastr.content)
-        print(self.lastr.history)
+        if not self.lastr.history:
+            return
+        for r in self.lastr.history:
+            print(r.url)
+        print(self.lastr.url)
 
     def get(self, path="", *args, **kwargs):
         self.lastr = self.s.get(self.url + path, *args, **kwargs)
