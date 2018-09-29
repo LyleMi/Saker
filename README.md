@@ -3,7 +3,7 @@
 [![Python 2.7](https://img.shields.io/badge/Python-2.7-blue.svg)](http://www.python.org/download/)
 ![License](https://img.shields.io/aur/license/yaourt.svg)
 
-Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password and dirs.
+Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities or brute password and dirs. This project is for research and study only, do not use Saker for unauthorized penetration testing.
 
 ## Install
 
