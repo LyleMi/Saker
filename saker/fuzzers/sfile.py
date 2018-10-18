@@ -30,9 +30,9 @@ class SFile(Fuzzer):
         elif type == "phpb64":
             return "php://filter/convert.base64-encode/resource=" + msg
         elif type == "textb64":
-            return "data://text/plain;base64," + msg.encode("base64")
+            return "data://text/plain,base64," + msg.encode("base64")
         elif type == "text":
-            return "data://text/plain;" + msg
+            return "data://text/plain," + msg
         elif type == "zip":
             return ["zip://", "bzip2://", "zlib://"][0] + msg
 
