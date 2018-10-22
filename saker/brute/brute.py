@@ -24,7 +24,7 @@ class Brute(object):
         if end == 0:
             end = len(charset) + 1
         for k in range(start, end):
-            for i in itertools.permutations(charset, k):
+            for i in itertools.product(charset, repeat=k):
                 s = ''.join(i)
                 yield s
 
