@@ -11,6 +11,25 @@ class Code(Fuzzer):
 
     """Code Payload"""
 
+    homograph = {
+        'a': '\u0430',
+        'c': '\u03F2',
+        'd': '\u0501',
+        'e': '\u0435',
+        'h': '\u04BB',
+        'i': '\u0456',
+        'j': '\u0458',
+        'l': '\u04CF',
+        'o': '\u043E',
+        'p': '\u0440',
+        'r': '\u0433',
+        'q': '\u051B',
+        's': '\u0455',
+        'w': '\u051D',
+        'x': '\u0445',
+        'y': '\u0443',
+    }
+
     def __init__(self):
         super(Code, self).__init__()
 
