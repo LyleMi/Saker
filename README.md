@@ -50,7 +50,6 @@ optional arguments:
 
 ### Brute password or others
 
-
 ```python
 >>> from saker.brute.dir import DirBrute
 >>> dirBrute = DirBrute("php", "index.php")
@@ -58,6 +57,30 @@ optional arguments:
 ```
 
 now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
+
+### Call Some API
+
+```python
+>>> from saker.api.dnsdumper import DNSdumpster
+>>> DNSdumpster("github.com")
+```
+
+### Handle HTML
+
+```python
+>>> from saker.handler.htmlhandler import HTMLHandler
+>>> h = HTMLHandler("<html><head><title>title</title></head><body></body></html>")
+>>> print(h.title)
+```
+
+### Port Scanner
+
+```python
+>>> from saker.port.nmap import Nmap
+>>> n = Nmap(domain)
+>>> ret = n.run()
+>>> print(n.ret)
+```
 
 ## TODO
 
