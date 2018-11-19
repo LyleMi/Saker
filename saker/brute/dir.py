@@ -16,7 +16,7 @@ class DirBrute(Brute):
         rets = []
         with open(Paths.weakfile) as pathes:
             for p in pathes:
-                path = p.strip("\n")
+                path = p.strip()
                 if "%ext%" in path:
                     path = path.replace("%ext%", self.ext)
                 elif "%filename_without_ext%" in path:
