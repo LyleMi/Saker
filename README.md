@@ -7,7 +7,8 @@ Saker is a tool for fuzz Web Applications. It can be used to penetrate website, 
 
 ## Install
 
-```
+```bash
+pip install -r requirements.txt
 git clone https://github.com/LyleMi/Saker.git
 python setup.py install
 ```
@@ -24,7 +25,7 @@ python setup.py install
 
 or by shell
 
-```
+```bash
 usage: main.py [options]
 Tool For Fuzz Web Applications
 
