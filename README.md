@@ -13,6 +13,12 @@ git clone https://github.com/LyleMi/Saker.git
 python setup.py install
 ```
 
+or by pip
+
+```bash
+pip install Saker
+```
+
 ## Features
 
 ### Scan Website
