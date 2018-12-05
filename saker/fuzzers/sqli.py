@@ -39,6 +39,8 @@ class SQLi(Fuzzer):
 
     @classmethod
     def schemas(cls, bias=-1):
+        # todo 
+        # add innodb_table_stats
         payload = "select distinct(SCHEMA_NAME) from information_schema.SCHEMATA"
         if bias >= 0:
             payload += " limit %s,1" % bias
