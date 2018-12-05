@@ -16,6 +16,7 @@ class Paths(object):
     uas = op.join(base, "data", "user-agents.txt")
     weakfile = op.join(base, "data", "weakfile.txt")
     senpath = op.join(base, "data", "sensitivepath.txt")
+    subnames = op.join(base, "domains", "subnames.txt")
 
 
 if __name__ == '__main__':

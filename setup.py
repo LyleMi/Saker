@@ -20,6 +20,7 @@ setup(
         'saker': [
             'data/*.*',
             'data/sample/*',
+            'data/domains/*',
         ]
     },
     scripts=[],

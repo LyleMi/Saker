@@ -7,6 +7,7 @@ import itertools
 from multiprocessing import Process
 from multiprocessing import Manager
 from multiprocessing import Queue
+from multiprocessing import cpu_count
 
 
 class Brute(object):
@@ -16,6 +17,7 @@ class Brute(object):
         self.manager = Manager()
         self.res = self.manager.list()
         self.queue = Queue()
+        self.cpuCount = cpu_count()
 
     @staticmethod
     def itert(start=1, end=0, charset=""):
