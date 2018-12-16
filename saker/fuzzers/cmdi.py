@@ -13,4 +13,10 @@ class CmdInjection(Fuzzer):
 
     @staticmethod
     def test(self):
-        return [";id", "\n\rid", "`id`"]
+        return [
+            "|id",
+            "=cmd|'cmd'!''",
+            ";id",
+            "\n\rid",
+            "`id`"
+        ]
