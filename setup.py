@@ -19,7 +19,7 @@ requires = [
 
 setup(
     name="Saker",
-    version="1.0.1",
+    version="1.0.4",
     keywords=("Web Security", "Fuzz"),
     description="Tool For Fuzz Web Applications",
     long_description=long_description,
