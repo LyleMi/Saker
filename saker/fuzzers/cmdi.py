@@ -18,5 +18,14 @@ class CmdInjection(Fuzzer):
             "=cmd|'cmd'!''",
             ";id",
             "\n\rid",
-            "`id`"
+            "`id`",
+        ]
+
+    @staticmethod
+    def wafbypass(self):
+        return [
+            "i\\d",
+            "i''d",
+            "/u??/bin/id",
+            "a=i;b=d;$a$b",
         ]
