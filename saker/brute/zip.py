@@ -27,12 +27,15 @@ class Zip(Brute):
             except Exception as e:
                 print(e)
 
+    def autorun(self):
+        from saker.utils.paths import Paths
+        self.run()
+        with open(Paths.passwords, "rb") as fh:
+            for i in fh:
+                self.feed(i.strip("\n"))
+        print(self.finish())
+
 
 if __name__ == '__main__':
-    from saker.utils.paths import Paths
     z = Zip("test.zip")
-    z.run(5)
-    with open(Paths.passwords, "rb") as fh:
-        for i in fh:
-            z.feed(i.strip("\n"))
-    print(z.finish())
+    z.autorun()

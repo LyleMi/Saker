@@ -44,11 +44,13 @@ class Brute(object):
         print("here is the %d process, now res is %s" % (arg, self.res))
         self.res.append(arg)
 
-    def run(self, num):
+    def run(self, num=-1):
         '''
         args: list contain paramters passed to self.do
               every argument will start a process
         '''
+        if num < 0:
+            num = self.cpuCount
         self.processes = [
             Process(
                 target=self.do,
