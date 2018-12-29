@@ -19,6 +19,8 @@ class CmdInjection(Fuzzer):
             ";id",
             "\n\rid",
             "`id`",
+            "${id}",
+            "\x00`id`",
         ]
 
     @staticmethod

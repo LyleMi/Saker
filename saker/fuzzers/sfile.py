@@ -10,7 +10,7 @@ class SFile(Fuzzer):
     """sensitive File"""
 
     generalports = [20, 21, 80]
-    phpext = ['php', 'php3', 'php4', 'php5', 'php7', 'pht', 'phtml', 'shtml']
+    phpext = ['php', 'php2', 'php3', 'php4', 'php5', 'php6', 'php7', 'pht', 'phtml', 'shtml']
 
     def __init__(self):
         super(SFile, self).__init__()

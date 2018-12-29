@@ -4,6 +4,7 @@
 import os
 import time
 import random
+import urllib3
 import requests
 
 from saker.brute.dir import DirBrute
@@ -11,6 +12,8 @@ from saker.handler.headerHandler import HeaderHandler
 from saker.handler.htmlHandler import HTMLHandler
 from saker.utils.domain import parseUrl
 from saker.utils.logger import logger
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class Saker(object):
@@ -39,13 +42,14 @@ class Saker(object):
         self.loglevel = loglevel
         self.logger = logger
         self.lastr = None
+        self.s.verify = False
 
     def trace(self):
         if self.lastr is None:
             return
         HeaderHandler(self.lastr.request.headers).show()
         HeaderHandler(self.lastr.headers).show()
-        print(self.lastr.content)
+        print(self.lastr.text)
         if not self.lastr.history:
             return
         for r in self.lastr.history:

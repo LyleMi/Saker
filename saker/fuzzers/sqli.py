@@ -18,15 +18,16 @@ class SQLi(Fuzzer):
     @staticmethod
     def fuzz(quote=["'", '"']):
         l = []
-        l.append('\\')
         l.append('"')
         l.append('")')
-        l.append('a" -- +')
-        l.append('a") -- +')
-        l.append('a") #')
-        l.append('a" or "1"="1')
+        l.append('" -- +')
+        l.append('") -- +')
+        l.append('") #')
+        l.append('" or "1"="1')
+        l += list(map(lambda i: i.replace('"', "'"), l))
+        l.append('')
+        l.append('\\')
         l.append('%df%27')
-        l.extend(map(lambda i: i.replace('"', "'"), l))
         return l
 
     @classmethod
