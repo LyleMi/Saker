@@ -3,6 +3,7 @@
 
 import os
 import time
+import pickle
 import random
 import urllib3
 import requests
@@ -75,6 +76,16 @@ class Saker(object):
     def delete(self, path="", *args, **kwargs):
         self.lastr = self.s.delete(self.url + path, *args, **kwargs)
         return self.lastr
+
+    def loadCookie(self, pkl='.cookie.pkl'):
+        self.logger.debug('loading cookie...')
+        with open(pkl, 'rb') as f:
+            self.s.cookies = pickle.load(f)
+
+    def saveCookie(self, pkl='.cookie.pkl'):
+        self.logger.debug('save cookie...')
+        with open(pkl, 'wb') as f:
+            pickle.dump(self.s.cookies, f)
 
     def interactive(self):
         while True:
