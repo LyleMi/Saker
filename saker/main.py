@@ -3,6 +3,7 @@
 
 import os
 import time
+import json
 import pickle
 import random
 import urllib3
@@ -11,6 +12,7 @@ import requests
 from saker.brute.dir import DirBrute
 from saker.handler.headerHandler import HeaderHandler
 from saker.handler.htmlHandler import HTMLHandler
+from saker.utils.datatype import AttribDict
 from saker.utils.domain import parseUrl
 from saker.utils.logger import logger
 
@@ -56,6 +58,15 @@ class Saker(object):
         for r in self.lastr.history:
             print(r.url)
         print(self.lastr.url)
+
+    def jsonLoadr(self):
+        if self.lastr is None:
+            return
+        try:
+            self.jsonr = AttribDict(json.loads(self.lastr.text))
+        except json.decoder.JSONDecodeError as e:
+            pass
+        return self.jsonr
 
     def get(self, path="", *args, **kwargs):
         self.lastr = self.s.get(self.url + path, *args, **kwargs)

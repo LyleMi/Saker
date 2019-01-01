@@ -35,7 +35,11 @@ class AttribDict(dict):
         """
 
         try:
-            return self.__getitem__(item)
+            ret = self.__getitem__(item)
+            if isinstance(ret, dict):
+                ret = AttribDict(ret)
+                self.__setattr__(item, ret)
+            return ret
         except KeyError:
             raise AttributeError("unable to access item '%s'" % item)
 
