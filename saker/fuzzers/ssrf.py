@@ -4,6 +4,16 @@
 
 from saker.fuzzers.fuzzer import Fuzzer
 
+_server = '''
+<?php
+$scheme = $_GET['s']    ?? 'http';
+$ip     = $_GET['ip']   ?? '127.0.0.1';
+$port   = $_GET['port'] ?? '80';
+$path   = $_GET['path'] ?? '';
+$code   = $_GET['code]  ?? 'HTTP/1.1 302 Found';
+header($code);
+header("Location: $scheme://$ip:$port/$path");
+'''
 
 class SSRF(Fuzzer):
 

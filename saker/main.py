@@ -47,6 +47,10 @@ class Saker(object):
         self.lastr = None
         self.s.verify = False
 
+    def _callback(self):
+        if self.lastr.headers['Content-Type'] == 'application/json; charset="utf-8"':
+            self.jsonLoadr()
+
     def trace(self):
         if self.lastr is None:
             return
@@ -70,22 +74,27 @@ class Saker(object):
 
     def get(self, path="", *args, **kwargs):
         self.lastr = self.s.get(self.url + path, *args, **kwargs)
+        self._callback()
         return self.lastr
 
     def post(self, path="", *args, **kwargs):
         self.lastr = self.s.post(self.url + path, *args, **kwargs)
+        self._callback()
         return self.lastr
 
     def put(self, path="", *args, **kwargs):
         self.lastr = self.s.put(self.url + path, *args, **kwargs)
+        self._callback()
         return self.lastr
 
     def patch(self, path="", *args, **kwargs):
         self.lastr = self.s.patch(self.url + path, *args, **kwargs)
+        self._callback()
         return self.lastr
 
     def delete(self, path="", *args, **kwargs):
         self.lastr = self.s.delete(self.url + path, *args, **kwargs)
+        self._callback()
         return self.lastr
 
     def loadCookie(self, pkl='.cookie.pkl'):
