@@ -3,7 +3,8 @@
 
 import random
 import string
-from urllib import quote
+from urllib.parse import quote
+from unicodedata import normalize
 from saker.fuzzers.fuzzer import Fuzzer
 
 
@@ -70,3 +71,16 @@ class Code(Fuzzer):
             s = map(lambda i: hex(ord(i)).replace("0x", "%"), s)
             s = "".join(s)
         return s
+
+    @staticmethod
+    def findUpper(dst):
+        return list(filter(lambda i: i.upper() == dst, map(chr, range(1, 0x10000))))
+
+    @staticmethod
+    def findLower(dst):
+        return list(filter(lambda i: i.lower() == dst, map(chr, range(1, 0x10000))))
+
+    @staticmethod
+    def findNormalize(dst, form='NFKC'):
+        # form should in ['NFC', 'NFKC', 'NFD', 'NFKD']
+        return list(filter(lambda i: normalize(form, i)[0] == dst, map(chr, range(1, 0x10000))))

