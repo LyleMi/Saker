@@ -371,6 +371,11 @@ class XSS(Fuzzer):
             s += '>%s</%s>\n' % (t, t)
         return cls.htmlTemplate % s
 
+    @classmethod
+    def acmehttp01(cls, url):
+        # https://labs.detectify.com/2018/09/04/xss-using-quirky-implementations-of-acme-http-01/
+        return url + '/.well-known/acme-challenge/?<h1>hi'
+
     def img(self, payload):
         return '<img/onerror="%s"/src=x>' % payload
 
