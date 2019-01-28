@@ -1,7 +1,10 @@
 <p align="center"><a href="" target="_blank" rel="noopener noreferrer"><img width="200" src="https://raw.githubusercontent.com/LyleMi/Saker/master/logo.jpg" alt="Saker logo"></a></p>
 
 [![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)](http://www.python.org/download/)
-![License](https://img.shields.io/aur/license/yaourt.svg)
+![](https://img.shields.io/github/issues/lylemi/saker.svg)
+![](https://img.shields.io/github/forks/lylemi/saker.svg)
+![](https://img.shields.io/github/stars/lylemi/saker.svg)
+![](https://img.shields.io/github/license/lylemi/saker.svg)
 
 Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities, brute password and dirs.
 
