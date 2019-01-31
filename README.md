@@ -29,7 +29,7 @@ pip install Saker
 ### Scan Website
 
 ```python
->>> from saker.main import Saker
+>>> from saker.core.scaner import Saker
 >>> s = Saker("http://127.0.0.1")
 >>> s.scan(filename="index.php", ext="php")
 ```
@@ -37,6 +37,8 @@ pip install Saker
 or by shell
 
 ```bash
+python -m saker
+
 usage: main.py [options]
 Tool For Fuzz Web Applications
 
