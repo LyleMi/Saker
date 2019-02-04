@@ -16,25 +16,13 @@ class WebPage(object):
     def __init__(self, url):
         """
         Initialize a new WebPage object.
-
-        Parameters
-        ----------
-
-        url : str
-            The web page URL.
-        html : str
-            The web page content (HTML)
-        headers : dict
-            The HTTP response headers
         """
         response = requests.get(url, verify=False, timeout=30)
         self.url = url
-        # if use response.text, could have some error
-        self.html = response.content.decode('utf8')
+        self.html = response.text
         self.headers = response.headers
 
-        # Parse the HTML with BeautifulSoup to find <script> and <meta> tags.
-        self.parsed_html = soup = BeautifulSoup(self.html, "html.parser")
+        soup = BeautifulSoup(self.html, "html.parser")
         self.scripts = [script['src'] for script in
                         soup.findAll('script', src=True)]
         self.meta = {
@@ -44,9 +32,7 @@ class WebPage(object):
         }
 
         self.title = soup.title.string if soup.title else 'None'
-
-        wappalyzer = Wappalyzer()
-        self.apps = wappalyzer.analyze(self)
+        self.apps = Wappalyzer().analyze(self)
 
     def info(self):
         return {
@@ -61,15 +47,6 @@ class Wappalyzer(object):
     """
 
     def __init__(self):
-        """
-        Parameters
-        ----------
-
-        categories : dict
-            Map of category ids to names, as in apps.json.
-        apps : dict
-            Map of app names to app dicts, as in apps.json.
-        """
         appurl = 'https://raw.githubusercontent.com/AliasIO/Wappalyzer/master/src/apps.json'
         apppath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "apps.json")
         if not os.path.exists(apppath):
