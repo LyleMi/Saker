@@ -12,6 +12,17 @@ class SQLi(Fuzzer):
 
     """generate SQLi payload and test"""
 
+    mysqlStrFunc = [
+        'mid(%s,1,1)',
+        'substr(%s,1,1)',
+        'substring(%s,1,1)',
+        'lpad(%s,1,1)',
+        'rpad(%s,1,1)',
+        'left(%s,1)',
+        'right(%s,1)',
+        'reverse(%s,1)',
+    ]
+
     def __init__(self):
         super(SQLi, self).__init__()
 
