@@ -365,6 +365,16 @@ _h5payloads = [
     '<iframe srcdoc="&lt;img src&equals;x:x onerror&equals;alert&lpar;1&rpar;&gt;" />',
 ]
 
+_svg_payload = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 105">
+<html>
+    <head>
+        <title>test</title>
+    </head>
+    <body>
+        <script>alert('xss');</script>
+    </body>
+</html>
+</svg>'''
 
 class XSS(Fuzzer):
 

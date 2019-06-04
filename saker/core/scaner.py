@@ -48,7 +48,7 @@ class Saker(object):
         self.s.verify = False
 
     def _callback(self):
-        if self.lastr.headers['Content-Type'] == 'application/json; charset="utf-8"':
+        if 'Content-Type' in self.lastr.headers and self.lastr.headers['Content-Type'] == 'application/json; charset="utf-8"':
             self.jsonLoadr()
 
     def trace(self):
