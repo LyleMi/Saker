@@ -31,6 +31,8 @@ class Code(Fuzzer):
         'y': '\u0443',
     }
 
+    fuzzencodings = ['IBM-Thai', 'IBM00924', 'IBM01047', 'IBM01140', 'IBM01141', 'IBM01142', 'IBM01143', 'IBM01144', 'IBM01145', 'IBM01146', 'IBM01147', 'IBM01148', 'IBM01149', 'IBM037', 'IBM1026', 'IBM273', 'IBM277', 'IBM278', 'IBM280', 'IBM284', 'IBM285', 'IBM290', 'IBM297', 'IBM420', 'IBM423', 'IBM424', 'IBM500', 'IBM870', 'IBM871', 'IBM880', 'IBM905', 'cp1025', 'cp875', 'unicodeFFFE', 'utf-16', 'utf-32', 'utf-32BE', 'x-EBCDIC-KoreanExtended']
+
     def __init__(self):
         super(Code, self).__init__()
 
