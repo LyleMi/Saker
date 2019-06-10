@@ -8,11 +8,11 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities, brute password and dirs.
+Saker是一个辅助测试Web站点的工具，有信息收集、渗透测试、爆破路径等功能。
 
-This project is for research and study only, do not use Saker for unauthorized penetration testing.
+本工具仅供学习和交流使用，请勿在未授权的测试中使用。
 
-## Install
+## 安装
 
 ```bash
 git clone https://github.com/LyleMi/Saker.git
@@ -20,15 +20,15 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
-or by pip
+或者使用pip安装
 
 ```bash
-pip install Saker
+pip install -u Saker
 ```
 
-## Features
+## 特性
 
-### Scan Website
+### Web网站扫描
 
 ```python
 >>> from saker.core.scaner import Saker
@@ -36,7 +36,7 @@ pip install Saker
 >>> s.scan(filename="index.php", ext="php")
 ```
 
-or by shell
+或者使用命令行
 
 ```bash
 python -m saker
@@ -57,14 +57,14 @@ optional arguments:
                         scan time interval, random sleep by default
 ```
 
-### Generate fuzz payload
+### 生成模糊测试载荷
 
 ```python
 >>> from saker.fuzzer.code import Code
 >>> payload = Code.fuzzErrorUnicode(payload)
 ```
 
-### Brute password or others
+### 爆破密码等
 
 ```python
 >>> from saker.brute.dir import DirBrute
@@ -72,16 +72,16 @@ optional arguments:
 >>> paths = dirBrute.weakfiles()
 ```
 
-now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
+目前支持http basic auth / ftp / MySQL / SSH 等的密码爆破。
 
-### Call Some API
+### API调用
 
 ```python
 >>> from saker.api.dnsdumper import DNSdumpster
 >>> DNSdumpster("github.com")
 ```
 
-### Handle HTML
+### HTML处理
 
 ```python
 >>> from saker.handler.htmlhandler import HTMLHandler
@@ -89,7 +89,7 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 >>> print(h.title)
 ```
 
-### Port Scanner
+### 端口扫描
 
 ```python
 >>> from saker.port.nmap import Nmap
