@@ -3,6 +3,16 @@
 
 from saker.fuzzers.fuzzer import Fuzzer
 
+_globals = [
+    'window',
+    'self',
+    '_self',
+    'this',
+    'top',
+    'parent',
+    'frames',
+]
+
 _tags = [
     'a',
     'abbr',
@@ -376,10 +386,11 @@ _svg_payload = '''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 105">
 </html>
 </svg>'''
 
+
 class XSS(Fuzzer):
 
     """generate XSS payload"""
-
+    jsglobals = _globals
     tags = _tags
     events = _events
     htmlTemplate = _htmlTemplate
