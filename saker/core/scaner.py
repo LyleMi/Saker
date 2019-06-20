@@ -14,7 +14,7 @@ from saker.handler.headerHandler import HeaderHandler
 from saker.handler.htmlHandler import HTMLHandler
 from saker.utils.datatype import AttribDict
 from saker.utils.domain import parseUrl
-from saker.utils.logger import logger
+from saker.utils.logger import getLogger
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -43,7 +43,7 @@ class Saker(object):
             self.timeout = timeout
         self.url = parseUrl(url)
         self.loglevel = loglevel
-        self.logger = logger
+        self.logger = getLogger()
         self.lastr = None
         self.s.verify = False
 
