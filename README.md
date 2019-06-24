@@ -64,6 +64,11 @@ optional arguments:
 >>> payload = Code.fuzzErrorUnicode(payload)
 ```
 
+```python
+>>> from saker.fuzzers.ssi import SSI
+>>> payloads = SSI.test()
+```
+
 ### Brute password or others
 
 ```python
@@ -101,4 +106,9 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 ## TODO
 
 - FingerPrint
+  - CMS
+  - Framework
+  - Language
+  - OS
+  - WAF
 - AutoTest

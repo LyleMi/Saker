@@ -8,6 +8,7 @@ import string
 class Fuzzer(object):
 
     specialChars = string.printable[62:]
+    payloads = []
 
     def __init__(self):
         super(Fuzzer, self).__init__()
@@ -42,3 +43,7 @@ class Fuzzer(object):
     @classmethod
     def randomAscii(cls, length=random.randint(1, 100)):
         return cls.randomStr([chr(i) for i in xrange(256)], length)
+
+    @classmethod
+    def test(cls):
+        return cls.payloads

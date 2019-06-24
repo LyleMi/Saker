@@ -10,8 +10,28 @@ class SFile(Fuzzer):
     """sensitive File"""
 
     generalports = [20, 21, 80]
-    phpext = ['php', 'php2', 'php3', 'php4', 'php5', 'php6', 'php7', 'pht', 'phtml', 'shtml']
-    phpwrappers = ['file', 'http', 'ftp', 'php', 'zlib', 'data', 'glob', 'phar']
+    phpext = [
+        'php',
+        'php2',
+        'php3',
+        'php4',
+        'php5',
+        'php6',
+        'php7',
+        'pht',
+        'phtml',
+        'shtml'
+    ]
+    phpwrappers = [
+        'file',
+        'http',
+        'ftp',
+        'php',
+        'zlib',
+        'data',
+        'glob',
+        'phar'
+    ]
 
     def __init__(self):
         super(SFile, self).__init__()
@@ -46,6 +66,9 @@ class SFile(Fuzzer):
             "\x00",
             "\x01",
             "\\",
+            "../",
+            "..//",
+            "\\..",
         ]
 
     @staticmethod

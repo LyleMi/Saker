@@ -64,6 +64,11 @@ optional arguments:
 >>> payload = Code.fuzzErrorUnicode(payload)
 ```
 
+```python
+>>> from saker.fuzzers.ssi import SSI
+>>> payloads = SSI.test()
+```
+
 ### 爆破密码等
 
 ```python
