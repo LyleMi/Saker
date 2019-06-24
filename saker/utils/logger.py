@@ -6,11 +6,13 @@ import logging
 
 from saker.utils.mtime import today
 
+
 def getLogger():
     logger = logging.getLogger("saker")
     if len(logger.handlers) > 0:
         return logger
     return initLogger(logger)
+
 
 def initLogger(logger, logfile=False, logpath=None):
     logger.setLevel(logging.DEBUG)
@@ -28,7 +30,7 @@ def initLogger(logger, logfile=False, logpath=None):
     if logfile:
         if logpath is None:
             logdir = os.path.join(".", "logs")
-            logpath = os.path.join(logdir, "saker-"+today()+".log")
+            logpath = os.path.join(logdir, "saker-" + today() + ".log")
             if not os.path.exists(logdir):
                 os.mkdir(logdir)
         fh = logging.FileHandler(logpath)
@@ -36,4 +38,3 @@ def initLogger(logger, logfile=False, logpath=None):
         fh.setFormatter(formatter)
         logger.addHandler(fh)
     return logger
-
