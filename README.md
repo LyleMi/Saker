@@ -26,6 +26,12 @@ or by pip
 pip install Saker
 ```
 
+or via Github
+
+```bash
+pip install git+https://github.com/lylemi/saker
+```
+
 ## Features
 
 ### Scan Website
@@ -112,3 +118,19 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
   - OS
   - WAF
 - AutoTest
+
+## Contributing
+
+Contributions, issues and feature requests are welcome.
+
+Feel free to check [issues page](https://github.com/lylemi/saker/issues) if you want to contribute.
+
+## Show your support
+
+Please star this repository if this project helped you.
+
+## License
+
+Copyright © 2019 [Lyle](https://github.com/lylemi).
+
+This project is [GPLv3](https://github.com/lylemi/saker/blob/master/LICENSE) licensed.
