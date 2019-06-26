@@ -3,30 +3,36 @@
 
 import os
 
-stripslash = False
 
-file = "path.txt"
-file = "sqlkeywords.txt"
-file = "weakfile.txt"
-file = "linuxfile.txt"
-tmp = file + ".tmp"
-x = [i for i in open(file)]
+def main():
+    stripslash = False
 
-# strip slash
-if stripslash:
-    for i in range(len(x)):
-        if x[i].startswith("/"):
-            x[i] = x[i][1:]
+    file = "path.txt"
+    file = "sqlkeywords.txt"
+    file = "weakfile.txt"
+    file = "linuxfile.txt"
+    tmp = file + ".tmp"
+    x = [i for i in open(file)]
 
-x = list(set(x))
+    # strip slash
+    if stripslash:
+        for i in range(len(x)):
+            if x[i].startswith("/"):
+                x[i] = x[i][1:]
 
-x.sort()
+    x = list(set(x))
 
-y = open(tmp, "w")
-for i in x:
-    y.writelines(i)
+    x.sort()
 
-y.close()
+    y = open(tmp, "w")
+    for i in x:
+        y.writelines(i)
 
-os.remove(file)
-os.rename(tmp, file)
+    y.close()
+
+    os.remove(file)
+    os.rename(tmp, file)
+
+
+if __name__ == '__main__':
+    main()

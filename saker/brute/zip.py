@@ -17,7 +17,7 @@ class Zip(Brute):
     def do(self):
         while len(self.res) < 1:
             pwd = self.queue.get()
-            print "try %s" % pwd, "\r"
+            print("try %s" % pwd, "\r")
             try:
                 self.zfile.extractall(pwd=pwd)
                 res.append(arg)

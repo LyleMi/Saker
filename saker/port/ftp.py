@@ -21,7 +21,7 @@ class ftpDetect(object):
             ftp.retrlines('LIST', lambda i: flist.append(i))
             ftp.quit()
             self.flist = flist
-        except Exception, e:
+        except Exception as e:
             # print(str(e), 'error')
             return None
         finally:

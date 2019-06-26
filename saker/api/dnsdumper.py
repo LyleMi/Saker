@@ -42,4 +42,4 @@ def DNSdumpster(domain):
     return True, list(set(domains))
 
 if __name__ == '__main__':
-    print DNSdumpster("baidu.com")
+    print(DNSdumpster("baidu.com"))
