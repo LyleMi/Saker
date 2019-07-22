@@ -8,23 +8,44 @@ class CmdInjection(Fuzzer):
 
     """CmdInjection"""
 
+    splits = [
+        ' ',
+        '\t',
+        '\x0b',
+        ';',
+        '\n',
+        '\r',
+        '\r\n',
+        '|',
+        '||',
+        '&',
+        '&&',
+        '#',
+        '\x00',
+        '::',
+        '$IFS$9',
+        # http://seclists.org/fulldisclosure/2016/Nov/67
+        '\x1a',
+    ]
+
     def __init__(self):
         super(CmdInjection, self).__init__()
 
-    @staticmethod
-    def test(self):
+    @classmethod
+    def test(cls, cmd="id"):
         return [
-            "|id",
-            "=cmd|'cmd'!''",
-            ";id",
-            "\n\rid",
-            "`id`",
-            "${id}",
-            "\x00`id`",
+            "|%s" % cmd,
+            "=%s|'%s'!''" % (cmd, cmd),
+            ";%s" % cmd,
+            "\n%s" % cmd,
+            "`%s`" % cmd,
+            "$(%s)" % cmd,
+            "${%s}" % cmd,
+            "\x00`%s`" % cmd,
         ]
 
-    @staticmethod
-    def wafbypass(self):
+    @classmethod
+    def wafbypass(cls):
         return [
             "i\\d",
             "i''d",
