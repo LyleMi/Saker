@@ -2,12 +2,14 @@
 .bash_history
 .bash_logout
 .bashrc
+.bzr
 .git
 .git-credentials
 .git/HEAD
 .git/config
 .git/index
 .gitignore
+.hg
 .htaccess
 .htpasswd
 .idea

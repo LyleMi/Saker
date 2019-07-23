@@ -71,3 +71,27 @@ class HTTPFuzzer(Fuzzer):
 
     def __init__(self):
         super(HTTPFuzzer, self).__init__()
+
+    def trace(self):
+        '''
+        trace method test
+        '''
+        pass
+
+    def put(self):
+        '''
+        put method test
+        '''
+        pass
+
+    def illegal(self, method='ILLEGAL'):
+        '''
+        illegal method test
+        '''
+        pass
+
+    def raw(self):
+        '''
+        raw HTTP connection
+        '''
+        pass
