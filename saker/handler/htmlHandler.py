@@ -48,7 +48,7 @@ class HTMLHandler(object):
     @property
     def links(self):
         links = self.RegExp.link.findall(self.content)
-        return links if len(links) else 'None'
+        return links if len(links) else []
 
     @property
     def size(self):
@@ -58,3 +58,9 @@ class HTMLHandler(object):
             return "%sKB" % (len(self.content) >> 10)
         else:
             return "%sMB" % (len(self.content) >> 20)
+
+    def domains(self, domain):
+        reg = re.compile(r'[a-zA-Z0-9\-\.]+\.' + domain.replace('.', '\\.'), re.IGNORECASE)
+        datas = reg.findall(self.content)
+        datas = list(set(datas))
+        return datas if len(datas) else []

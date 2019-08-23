@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Summary
+"""
 
 import os
 import time
@@ -21,37 +23,53 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class Saker(object):
 
-    cookie = ""
-    proxies = {}
-    timeout = 20
-    verify = False
+    """Core Scanner
+    
+    Attributes:
+        ffua (str): Firefox User Agent Str for default UA
+        jsonr (TYPE): JSON response
+        lastr (TYPE): last response
+        s (TYPE): Session
+        timeout (int): Default requests timeout
+        url (TYPE): Main url
+    
+    Deleted Attributes:
+        proxies (dict): Description
+    """
+
+    # 'Mozilla/<version> (<system-information>) <platform> (<platform-details>) <extensions>'
+    ffua = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101 Firefox/68.0'
 
     def __init__(
-            self, url="", session=None,
+            self, url="", verify=False,
             timeout=0, loglevel="debug"
     ):
         """
-        :param s: store requests session
-        :param url: main url
+        Args:
+            url (str, optional): main url
+            verify (bool, optional): verify or not
+            timeout (int, optional): requests timeout
         """
         super(Saker, self).__init__()
-        if session is not None:
-            self.s = session
-        else:
-            self.s = requests.Session()
+        self.s = requests.Session()
         if timeout != 0:
             self.timeout = timeout
         self.url = parseUrl(url)
         self.loglevel = loglevel
         self.logger = getLogger()
         self.lastr = None
-        self.s.verify = False
+        self.s.verify = verify
+        self.setUA(self.ffua)
 
     def _callback(self):
+        """Request Callback
+        """
         if 'Content-Type' in self.lastr.headers and self.lastr.headers['Content-Type'] == 'application/json; charset="utf-8"':
             self.jsonLoadr()
 
     def trace(self):
+        """Trace requests
+        """
         if self.lastr is None:
             return
         HeaderHandler(self.lastr.request.headers).show()
@@ -64,6 +82,8 @@ class Saker(object):
         print(self.lastr.url)
 
     def jsonLoadr(self):
+        """load json response
+        """
         if self.lastr is None:
             return
         try:
@@ -98,11 +118,21 @@ class Saker(object):
         return self.lastr
 
     def loadCookie(self, pkl='.cookie.pkl'):
+        """load saved cookie
+        
+        Args:
+            pkl (str, optional): cookie file name
+        """
         self.logger.debug('loading cookie...')
         with open(pkl, 'rb') as f:
             self.s.cookies = pickle.load(f)
 
     def saveCookie(self, pkl='.cookie.pkl'):
+        """save cookie
+        
+        Args:
+            pkl (str, optional): cookie file name
+        """
         self.logger.debug('save cookie...')
         with open(pkl, 'wb') as f:
             pickle.dump(self.s.cookies, f)
@@ -129,9 +159,6 @@ class Saker(object):
                 print(call)
 
     def mirror(self, path=""):
-        '''
-        mirror current site
-        '''
         self.get(path)
         with open("index.html", "wb") as fh:
             fh.write(self.lastr.content)
@@ -151,6 +178,8 @@ class Saker(object):
                 fh.write(self.lastr.content)
 
     def setProxies(self, proxies):
+        """set request proxies
+        """
         if isinstance(proxies, dict):
             self.s.proxies = proxies
         elif isinstance(proxies, str):
@@ -160,6 +189,8 @@ class Saker(object):
             }
 
     def setUA(self, UA=""):
+        """set default User Agent
+        """
         from saker.utils.common import randua
         self.s.headers["User-Agent"] = UA if UA else randua()
 
@@ -168,6 +199,12 @@ class Saker(object):
         small scan
         scan url less than 100
         and get some base info of site
+        
+        Args:
+            ext (str, optional): site ext
+            filename (str, optional): file to scan
+            interval (int, optional): scan interval
+            scan (bool, optional): scan or not
         '''
         self.get("")
         HeaderHandler(self.lastr.headers).show()
@@ -192,4 +229,3 @@ class Saker(object):
             except Exception as e:
                 print("error while scan %s" % e)
         self.logger.info("exists %s" % exists)
-
