@@ -181,11 +181,9 @@ class Wappalyzer(object):
         Return a list of applications that can be detected on the web page.
         """
         detected_apps = set()
-
         for app_name, app in self.apps.items():
             if self._has_app(app, webpage):
                 detected_apps.add(app_name)
 
         detected_apps |= self._get_implied_apps(detected_apps)
-
         return detected_apps

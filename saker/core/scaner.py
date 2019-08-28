@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Summary
-"""
 
 import os
 import time
@@ -17,6 +15,7 @@ from saker.handler.htmlHandler import HTMLHandler
 from saker.utils.datatype import AttribDict
 from saker.utils.domain import parseUrl
 from saker.utils.logger import getLogger
+from saker.utils.hash import md5
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -24,7 +23,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class Saker(object):
 
     """Core Scanner
-    
+
     Attributes:
         ffua (str): Firefox User Agent Str for default UA
         jsonr (TYPE): JSON response
@@ -32,7 +31,7 @@ class Saker(object):
         s (TYPE): Session
         timeout (int): Default requests timeout
         url (TYPE): Main url
-    
+
     Deleted Attributes:
         proxies (dict): Description
     """
@@ -119,7 +118,7 @@ class Saker(object):
 
     def loadCookie(self, pkl='.cookie.pkl'):
         """load saved cookie
-        
+
         Args:
             pkl (str, optional): cookie file name
         """
@@ -129,7 +128,7 @@ class Saker(object):
 
     def saveCookie(self, pkl='.cookie.pkl'):
         """save cookie
-        
+
         Args:
             pkl (str, optional): cookie file name
         """
@@ -199,7 +198,7 @@ class Saker(object):
         small scan
         scan url less than 100
         and get some base info of site
-        
+
         Args:
             ext (str, optional): site ext
             filename (str, optional): file to scan
@@ -207,7 +206,7 @@ class Saker(object):
             scan (bool, optional): scan or not
         '''
         self.get("")
-        HeaderHandler(self.lastr.headers).show()
+        self.logger.info('\n' + HeaderHandler(self.lastr.headers).show(True))
         exists = []
         dirBrute = DirBrute(ext, filename)
         for path in dirBrute.all(filename, scan):
@@ -227,5 +226,14 @@ class Saker(object):
                 if r.status_code < 400:
                     exists.append(path)
             except Exception as e:
-                print("error while scan %s" % e)
+                self.logger.error("error while scan %s" % e)
         self.logger.info("exists %s" % exists)
+        return exists
+
+    def testAll200(self):
+        """return True if site always returns 200
+        """
+        r1 = self.get(md5(random.randint()))
+        r2 = self.get(md5(random.randint()) + '/' + md5(random.randint()))
+        if r1.status_code == 200 and r2.status_code == 200:
+            return True

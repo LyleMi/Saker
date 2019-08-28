@@ -9,7 +9,9 @@ charset = string.printable[:-5]
 
 
 def md5(s):
-    return hashlib.md5(s.encode('utf8')).hexdigest()
+    if isinstance(s, str):
+        s = s.encode('utf-8')
+    return hashlib.md5(s).hexdigest()
 
 
 def collision(prefix, suffix='', func=md5):

@@ -33,12 +33,15 @@ class HeaderHandler(object):
     def setXForwardFor(self, ip):
         self.headers["X-Forwarded-For"] = ip
 
-    def show(self):
-        print("-" * 100)
+    def show(self, ret=False):
+        s = "-" * 100 + '\n'
         for k in self.headers:
             tmp = "| %s : %s" % (k, self.headers[k])
             if len(tmp) > 100:
                 tmp = tmp[:95] + "..."
-            tmp = tmp.ljust(98, " ") + " |"
-            print(tmp)
-        print("-" * 100)
+            s += tmp.ljust(98, " ") + " |\n"
+        s += "-" * 100
+        if ret:
+            return s
+        else:
+            print(s)

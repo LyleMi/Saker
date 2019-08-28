@@ -100,6 +100,14 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 >>> print(h.title)
 ```
 
+### HTML
+
+```python
+>>> from saker.handler.wappalyzer import WebPage
+>>> w = WebPage('https://github.com')
+>>> w.info()
+```
+
 ### Port Scanner
 
 ```python
