@@ -9,47 +9,46 @@ from bs4 import BeautifulSoup
 
 
 class WebPage(object):
-    """
-    Simple representation of a web page
-    """
-
-    def __init__(self, url):
+    
+    def __init__(self, response):
         """
-        Initialize a new WebPage object.
+        Initialize a new WebPage object with request response
         """
-        response = requests.get(url, verify=False, timeout=30)
-        self.url = url
+        self.url = response.url
         self.html = response.text
         self.headers = response.headers
 
         soup = BeautifulSoup(self.html, "html.parser")
-        self.scripts = [script['src'] for script in
-                        soup.findAll('script', src=True)]
+        self.scripts = [
+            script['src'] for script in
+            soup.findAll('script', src=True)
+        ]
         self.meta = {
             meta['name'].lower():
                 meta['content'] for meta in soup.findAll(
-                    'meta', attrs=dict(name=True, content=True))
+                    'meta', attrs=dict(name=True, content=True)
+            )
         }
-
         self.title = soup.title.string if soup.title else 'None'
-        self.apps = Wappalyzer().analyze(self)
 
     def info(self):
         return {
-            "apps": self.apps,
+            "meta": self.meta,
+            "apps": list(self.apps),
             "title": self.title,
         }
 
 
 class Wappalyzer(object):
+
     """
     Python Wappalyzer driver.
     """
 
-    def __init__(self):
+    def __init__(self, update=False):
         appurl = 'https://raw.githubusercontent.com/AliasIO/Wappalyzer/master/src/apps.json'
         apppath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "apps.json")
-        if not os.path.exists(apppath):
+        if not os.path.exists(apppath) or update:
             with open(apppath, 'wb') as fd:
                 fd.write(requests.get(appurl).content)
         with open(apppath, 'rb') as fd:
@@ -65,7 +64,6 @@ class Wappalyzer(object):
         """
         Normalize app data, preparing it for the detection phase.
         """
-
         # Ensure these keys' values are lists
         for key in ['url', 'html', 'script', 'implies']:
             value = app.get(key)
@@ -176,14 +174,17 @@ class Wappalyzer(object):
 
         return cat_names
 
-    def analyze(self, webpage):
+    def analyze(self, response):
         """
         Return a list of applications that can be detected on the web page.
         """
+        webpage = WebPage(response)
+
         detected_apps = set()
         for app_name, app in self.apps.items():
             if self._has_app(app, webpage):
                 detected_apps.add(app_name)
 
         detected_apps |= self._get_implied_apps(detected_apps)
-        return detected_apps
+        webpage.apps = detected_apps
+        return webpage

@@ -12,6 +12,7 @@ import requests
 from saker.brute.dir import DirBrute
 from saker.handler.headerHandler import HeaderHandler
 from saker.handler.htmlHandler import HTMLHandler
+from saker.handler.wappalyzer import Wappalyzer
 from saker.utils.datatype import AttribDict
 from saker.utils.domain import parseUrl
 from saker.utils.logger import getLogger
@@ -59,6 +60,7 @@ class Saker(object):
         self.lastr = None
         self.s.verify = verify
         self.setUA(self.ffua)
+        self.w = Wappalyzer()
 
     def _callback(self):
         """Request Callback
@@ -237,3 +239,9 @@ class Saker(object):
         r2 = self.get(md5(random.randint()) + '/' + md5(random.randint()))
         if r1.status_code == 200 and r2.status_code == 200:
             return True
+        return False
+
+    def appinfo(self):
+        self.get()
+        webpage = self.w.analyze(self.lastr)
+        return webpage.info()

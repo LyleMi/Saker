@@ -7,8 +7,8 @@ import logging
 from saker.utils.mtime import today
 
 
-def getLogger():
-    logger = logging.getLogger("saker")
+def getLogger(loggername="saker"):
+    logger = logging.getLogger(loggername)
     if len(logger.handlers) > 0:
         return logger
     return initLogger(logger)
