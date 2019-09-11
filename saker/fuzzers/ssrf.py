@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random
 from functools import reduce
 from saker.fuzzers.fuzzer import Fuzzer
 
@@ -92,9 +93,9 @@ class SSRF(Fuzzer):
     def ip2oct(ip):
         '''
         >>> SSRF.ip2oct("127.0.0.1")
-        '0o177.0o0.0o0.0o1'
+        '0177.00.00.01'
         '''
-        return ".".join(map(lambda i: oct(int(i)), ip.split(".")))
+        return ".".join(map(lambda i: oct(int(i)), ip.split("."))).replace('o', '')
 
     @staticmethod
     def ip2hex(ip):
@@ -119,3 +120,10 @@ class SSRF(Fuzzer):
         '0x7f000001'
         '''
         return hex(reduce(lambda x, y: (x << 8) + y, map(int, ip.split(".")))).strip("L")
+
+    @staticmethod
+    def ip2mix(ip):
+        ip = ip.split('.')
+        for i in range(len(ip)):
+            ip[i] = [SSRF.ip2oct, SSRF.ip2hex][random.randint(0, 1)](ip[i])
+        return '.'.join(ip)
