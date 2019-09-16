@@ -2,7 +2,9 @@
 # -*- coding:utf-8 -*-
 
 import base64
+from urllib.parse import quote
 from urllib.parse import unquote
+
 
 def b64d(s):
     '''
@@ -15,3 +17,7 @@ def b64d(s):
     if len(s) % 4 != 0:
         s += '=' * (len(s) % 4)
     return base64.b64decode(s)
+
+
+def doubleURL(s):
+    return quote(quote(s))
