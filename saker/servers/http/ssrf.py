@@ -18,10 +18,10 @@ class SSRFHandler(tornado.web.RequestHandler):
         self.redirect(scheme + '://' + ip + ':' + port + path, status=int(code))
 
 
-def start(host=r".*$", handlers=[(r"/ssrf", SSRFHandler)]):
+def start(host=r".*$", port=8888, handlers=[(r"/ssrf", SSRFHandler)]):
     app = getApp()
     app.add_handlers(host, handlers)
-    baseStart(app)
+    baseStart(app, port)
 
 if __name__ == '__main__':
     start()
