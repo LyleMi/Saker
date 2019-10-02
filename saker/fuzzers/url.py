@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random
 from saker.fuzzers.fuzzer import Fuzzer
 
 
@@ -30,6 +31,10 @@ class URL(Fuzzer):
 
     unc = '\\\\localhost\\c$\\windows\\win.ini'
 
+    scheme = [
+        'http',
+        'https',
+    ]
 
     def __init__(self):
         super(URL, self).__init__()
@@ -38,3 +43,16 @@ class URL(Fuzzer):
     def test(cls, url):
         for p in cls.payloads:
             yield url + p
+
+    @classmethod
+    def genUrl(cls, scheme, user, password, domain, port, path):
+        # scheme://[user:password@]domain:port/path?query#fragments
+        url = ''
+        url += scheme
+        url += '://'
+        if user and password:
+            url += '%s:%s@' % s(user, password)
+        url += domain
+        url += ':' + port
+        url += '/' + path
+        return url

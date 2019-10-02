@@ -18,7 +18,7 @@ class Request(object):
             self.sess = requests.Session()
         else:
             self.sess = sess
-        self.method = options.get('method', 'get')
+        self.method = options.get('method', 'get').lower()
         self.url = options.get('url', '')
         self.params = options.get('params', {})
         self.data = options.get('data', {})
