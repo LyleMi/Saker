@@ -79,3 +79,7 @@ class MySQLi(SQLi):
     @classmethod
     def readfile(filename):
         return 'load_file(%s)' % filename
+
+    @classmethod
+    def offset(limit, offset):
+        return 'limit %s, %s' % (limit, offset)

@@ -9,6 +9,8 @@ class Paths(object):
     base = op.dirname(
         op.dirname(op.abspath(__file__))
     )
+    names = op.join(base, "data", "names.txt")
+    areaid = op.join(base, "data", "areaid.json")
     uas = op.join(base, "data", "user-agents.txt")
     sqlkeywords = op.join(base, "data", "sqlkeywords.txt")
     linuxfile = op.join(base, "data", "linuxfile.txt")
