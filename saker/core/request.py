@@ -19,6 +19,8 @@ class Request(object):
         else:
             self.sess = sess
         self.method = options.get('method', 'get').lower()
+        if not self.method:
+            self.method = 'get'
         self.url = options.get('url', '')
         self.params = options.get('params', {})
         self.data = options.get('data', {})
