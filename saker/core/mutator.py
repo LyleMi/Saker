@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
 from saker.fuzzers.url import URL
+from saker.fuzzers.cmdi import CmdInjection
 
 
 class Mutator(object):
@@ -28,35 +30,39 @@ class Mutator(object):
         super(Mutator, self).__init__()
         self.req = req
 
-    def fuzz(self, fuzzpart, fuzzkey=None):
+    def fuzz(self, part, key=None, vuln=''):
         """fuzz request
 
         Args:
-            fuzzpart (TYPE): fuzz part
-            fuzzkey (TYPE): fuzz key
+            part (TYPE): fuzz part
+            key (TYPE): fuzz key
         """
-        if fuzzpart == 'url':
+        if part == 'url':
             original = self.req.url
             for url in self.fuzzurl(original):
                 self.req.url = url
                 self.req.submit()
                 print(url, self.req.brief())
-        elif fuzzpart in ['params', 'data', 'header', 'cookies']:
-            if fuzzkey is None:
+        elif part in ['params', 'data', 'header', 'cookies']:
+            if key is None:
                 return
-            data = getattr(self.req, fuzzpart)
-            if fuzzkey in data:
-                original = data[fuzzkey]
+            data = getattr(self.req, part)
+            if key in data:
+                original = data[key]
             else:
                 original = ''
-            for d in self.fuzzdata(original):
-                getattr(self.req, fuzzpart)[fuzzkey] = d
+            for d in self.fuzzdata(original, vuln):
+                getattr(self.req, part)[key] = d
                 self.req.submit()
-                print(d, self.req.brief())
+                print(repr(d) + '\t' + self.req.brief())
 
     def fuzzurl(self, url):
         for mutateUrl in URL.test(url):
             yield mutateUrl
 
-    def fuzzdata(self, data):
-        yield data
+    def fuzzdata(self, data, vuln):
+        if vuln == 'cmdi':
+            for c in CmdInjection.test():
+                yield data + c
+        else:
+            yield data

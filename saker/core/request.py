@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
 import requests
 
 
 class Request(object):
 
-    def __init__(self, sess=None, options={}):
+    def __init__(self, options={}, sess=None):
         """Summary
 
         Args:
@@ -27,13 +28,16 @@ class Request(object):
         self.files = options.get('files', {})
         self.headers = options.get('headers', {})
         self.cookies = options.get('cookies', {})
+        self.interval = 0
 
     def submit(self):
+        start = time.time()
         self.lastr = getattr(self.sess, self.method)(
             self.url, params=self.params, data=self.data, files=self.files,
             headers=self.headers, cookies=self.cookies
         )
+        self.interval = time.time() - start
         return self.lastr
 
     def brief(self):
-        return "%s %s" % (self.lastr.status_code, len(self.lastr.content))
+        return "%s\t%s\t%s" % (self.lastr.status_code, len(self.lastr.content), self.interval)

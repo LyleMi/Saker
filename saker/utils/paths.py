@@ -14,6 +14,7 @@ class Paths(object):
     uas = op.join(base, "data", "user-agents.txt")
     sqlkeywords = op.join(base, "data", "sqlkeywords.txt")
     linuxfile = op.join(base, "data", "linuxfile.txt")
+    windowsfile = op.join(base, "data", "windowsfile.txt")
     
     dirs = op.join(base, "data", "website", "dir.txt")
     weakfile = op.join(base, "data", "website", "weakfile.txt")
