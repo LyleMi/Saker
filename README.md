@@ -1,14 +1,22 @@
-<p align="center"><a href="" target="_blank" rel="noopener noreferrer"><img width="200" src="https://raw.githubusercontent.com/LyleMi/Saker/master/logo.jpg" alt="Saker logo"></a></p>
+<p align="center">
+  <a href="" target="_blank" rel="noopener noreferrer">
+    <img width="200" src="https://raw.githubusercontent.com/LyleMi/Saker/master/logo.jpg" alt="Saker logo">
+  </a>
+</p>
 
-[![Python 3.6](https://img.shields.io/badge/Python-3.6-blue.svg)](http://www.python.org/download/)
-![](https://img.shields.io/github/issues/lylemi/saker.svg)
-![](https://img.shields.io/github/forks/lylemi/saker.svg)
-![](https://img.shields.io/github/stars/lylemi/saker.svg)
-![](https://img.shields.io/github/license/lylemi/saker.svg)
+<h4 align="center">Penetrate Testing Auxiliary Suite</h4>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.6-blue.svg">
+  <img src="https://img.shields.io/github/issues/lylemi/saker.svg">
+  <img src="https://img.shields.io/github/forks/lylemi/saker.svg">
+  <img src="https://img.shields.io/github/stars/lylemi/saker.svg">
+  <img src="https://img.shields.io/github/license/lylemi/saker.svg">
+</p>
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Saker is a tool for fuzz Web Applications. It can be used to penetrate website, fuzz some vulnerabilities, brute password and dirs.
+Saker is a penetrate testing auxiliary suite. It can be used to gather subdomain info, penetrate/scan website, fuzz some vulnerabilities, brute password and dirs.
 
 This project is for research and study only, do not use Saker for unauthorized penetration testing.
 
@@ -85,11 +93,36 @@ optional arguments:
 
 now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 
-### Call Some API
+### Call Third Party API
+
+#### Crt.sh
+
+```python
+>>> from saker.api.crtsh import crtsh
+>>> crtsh("github.com")
+```
+
+#### DNSDumper
 
 ```python
 >>> from saker.api.dnsdumper import DNSdumpster
 >>> DNSdumpster("github.com")
+```
+
+#### Github API
+
+```python
+>>> from saker.api.githubapi import GithubAPI
+>>> g = GithubAPI()
+>>> g.gatherByEmail("@github.com")
+```
+
+#### SQLMap API
+
+```python
+>>> from saker.api.sqlmap import SQLMap
+>>> options = {"url": "https://github.com"}
+>>> SQLMap().scan(options)
 ```
 
 ### Handle HTML
@@ -107,6 +140,18 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 >>> n = Nmap(domain)
 >>> ret = n.run()
 >>> print(n.ret)
+```
+
+### Special Server
+
+```python
+from saker.servers.socket.dnsrebinding import RebindingServer
+values = {
+    'result': ['8.8.8.8', '127.0.0.1'],
+    'index': 0
+}
+dnsServer = RebindingServer(values)
+dnsServer.serve_forever()
 ```
 
 ## Contributing

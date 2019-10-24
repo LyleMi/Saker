@@ -8,33 +8,33 @@ import dnslib
 import socketserver
 
 
-class DNSServer(socketserver.UDPServer):
+class RebindingServer(socketserver.UDPServer):
 
-    def __init__(self, options):
+    def __init__(self, values={}, callback=None):
         socketserver.UDPServer.__init__(
             self, ('0.0.0.0', 53), RequestHandler
         )
-        self.result = options['result']
-        self.resultIdx = 0
-        self.ttl = options['ttl']
-        self.recordType = options['recordType']
+        if callback is None:
+            self.getRecord = self._getRecord
+        else:
+            self.getRecord = callback
+        self.values = values
 
-    def getRecord(self):
-        record = self.result[self.resultIdx % len(self.result)]
-        self.resultIdx += 1
-        return record
+    def _getRecord(self, qname):
+        record = self.values['result'][self.values['index'] % len(self.values['result'])]
+        self.values['index'] += 1
+        ttl = 0
+        recordType = 'A'
+        return record, ttl, recordType
 
 
 class RequestHandler(socketserver.DatagramRequestHandler):
 
     def handle(self):
-        ttl = self.server.ttl
-        recordType = self.server.recordType
-
         request = dnslib.DNSRecord.parse(self.packet).reply()
-        qname = request.q.qname.__str__()
-        record = self.server.getRecord()
-
+        qname = str(request.q.qname)
+        record, ttl, recordType = self.server.getRecord(qname)
+        answer = dnslib.DNSRecord.question(qname)
         request.add_answer(
             dnslib.RR(
                 qname,
@@ -48,12 +48,11 @@ class RequestHandler(socketserver.DatagramRequestHandler):
 
 
 def main():
-    options = {
-        'ttl': 0,
-        'recordType': 'A',
-        'result': ['8.8.8.8', '127.0.0.1']
+    values = {
+        'result': ['8.8.8.8', '127.0.0.1'],
+        'index': 0
     }
-    dnsServer = DNSServer(options)
+    dnsServer = RebindingServer(values)
     dnsServer.serve_forever()
 
 
