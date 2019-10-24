@@ -21,3 +21,11 @@ def b64d(s):
 
 def doubleURL(s):
     return quote(quote(s))
+
+
+def hex(s):
+    return s.encode().hex()
+
+
+def unhex(s):
+    return bytes.fromhex(s).decode()

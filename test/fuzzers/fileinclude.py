@@ -13,7 +13,7 @@ class FileIncludeTest(unittest.TestCase):
 
     def test_fuzz(self):
         o = FileInclude()
-        for i in o.fuzz():
+        for i in o.fuzz('http://example.com/static/main.css'):
             print(i)
 
     def test_proc(self):
