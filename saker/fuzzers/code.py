@@ -42,7 +42,6 @@ class Code(Fuzzer):
         'koi8_u',
         'oem',
         'utf_16_be',
-        'aliases',
         'cp1252',
         'cp850',
         'cp874',
@@ -60,7 +59,6 @@ class Code(Fuzzer):
         'latin_1',
         'ptcp154',
         'utf_32',
-        'base64_codec',
         'cp1254',
         'cp855',
         'cp932',
@@ -76,7 +74,6 @@ class Code(Fuzzer):
         'iso2022_jp_1',
         'iso8859_3',
         'mac_croatian',
-        'quopri_codec',
         'utf_32_le',
         'big5hkscs',
         'cp1256',
@@ -87,14 +84,12 @@ class Code(Fuzzer):
         'mac_cyrillic',
         'raw_unicode_escape',
         'utf_7',
-        'bz2_codec',
         'cp1257',
         'cp858',
         'euc_jis_2004',
         'iso2022_jp_2004',
         'iso8859_5',
         'mac_farsi',
-        'rot_13*',
         'utf_8',
         'charmap',
         'cp1258',
@@ -113,7 +108,6 @@ class Code(Fuzzer):
         'iso8859_7',
         'mac_iceland',
         'shift_jis_2004',
-        'uu_codec',
         'cp1006',
         'cp424',
         'cp862',
@@ -122,7 +116,6 @@ class Code(Fuzzer):
         'iso8859_8',
         'mac_latin2',
         'shift_jisx0213',
-        'zlib_codec',
         'cp1026',
         'cp437',
         'cp863',
@@ -138,7 +131,6 @@ class Code(Fuzzer):
         'iso8859_10',
         'johab',
         'mac_romanian',
-        'undefined',
         'cp1140',
         'cp720',
         'cp865',
@@ -150,7 +142,6 @@ class Code(Fuzzer):
         'cp1250',
         'cp737',
         'cp866',
-        'hex_codec',
         'iso8859_13',
         'koi8_t',
         'mbcs',
@@ -162,16 +153,16 @@ class Code(Fuzzer):
 
     @staticmethod
     def fuzzAscii():
-        for i in xrange(256):
+        for i in range(256):
             yield chr(i)
 
     @staticmethod
-    def fuzzUnicode(cnt=1):
-        for i in xrange(cnt):
-            yield unichr(random.randint(0, 0xffff))
+    def fuzzUnicode(cnt:int=1):
+        for i in range(cnt):
+            yield chr(random.randint(0, 0xffff))
 
     @staticmethod
-    def fuzzUnicodeReplace(s, cnt=1):
+    def fuzzUnicodeReplace(s:str, cnt:int=1):
         # Greek letter
         s = s.replace("A", "Ā", cnt)
         s = s.replace("A", "Ă", cnt)
@@ -185,33 +176,40 @@ class Code(Fuzzer):
         return s
 
     @staticmethod
-    def fuzzErrorUnicode(s):
+    def fuzzErrorUnicode(s:str):
         # https://www.leavesongs.com/PENETRATION/mysql-charset-trick.html
         return s + chr(random.randint(0xC2, 0xef))
 
     @staticmethod
-    def urlencode(s, force=False):
+    def urlencode(s:str, force:bool=False):
         if not force:
             s = quote(s)
         else:
-            s = map(lambda i: hex(ord(i)).replace("0x", "%"), s)
-            s = "".join(s)
+            s = "".join(map(lambda i: hex(ord(i)).replace("0x", "%"), s))
         return s
 
     @staticmethod
-    def findUpper(dst):
+    def findUpper(dst:str):
         return list(filter(lambda i: i.upper() == dst, map(chr, range(1, 0x10000))))
 
     @staticmethod
-    def findLower(dst):
+    def findLower(dst:str):
         return list(filter(lambda i: i.lower() == dst, map(chr, range(1, 0x10000))))
 
     @staticmethod
-    def findNormalize(dst, form='NFKC'):
+    def findNormalize(dst:str, form:str='NFKC'):
         # form should in ['NFC', 'NFKC', 'NFD', 'NFKD']
         return list(filter(lambda i: normalize(form, i)[0] == dst, map(chr, range(1, 0x10000))))
 
     @classmethod
-    def fuzzEncoding(cls, dst):
+    def fuzzEncoding(cls, dst:str):
         for encoding in cls.encodings:
             yield dst.encode(encoding)
+
+    def fuzz(self, level:int=1):
+        yield ''
+        for c in self.fuzzAscii():
+            yield c
+        if level > 1:
+            for c in self.fuzzUnicode():
+                yield c

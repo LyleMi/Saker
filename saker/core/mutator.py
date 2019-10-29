@@ -9,33 +9,27 @@ from saker.fuzzers.cmdi import CmdInjection
 class Mutator(object):
 
     """Request Mutator
-
-    Attributes:
-        cookies (TYPE): Description
-        data (TYPE): Description
-        headers (TYPE): Description
-        method (TYPE): Description
-        params (TYPE): Description
-        sess (TYPE): Description
-        url (TYPE): Description
     """
 
     def __init__(self, req):
         """Summary
-
+        
         Args:
-            sess (requests.sessions.Session): request Session
-            options (saker.core.Request): request object
+            req (saker.core.Request): request object
         """
         super(Mutator, self).__init__()
         self.req = req
 
-    def fuzz(self, part, key=None, vuln=''):
+    def fuzz(self, part:str, key:str='', vuln:str=''):
         """fuzz request
-
+        
         Args:
-            part (TYPE): fuzz part
-            key (TYPE): fuzz key
+            part (str): fuzz part, be url/params/data/header/cookies
+            key (str): fuzz key
+            vuln (str, optional): Description
+        
+        Returns:
+            TYPE: Description
         """
         if part == 'url':
             original = self.req.url
@@ -44,7 +38,7 @@ class Mutator(object):
                 self.req.submit()
                 print(url, self.req.brief())
         elif part in ['params', 'data', 'header', 'cookies']:
-            if key is None:
+            if key == '':
                 return
             data = getattr(self.req, part)
             if key in data:
@@ -56,12 +50,30 @@ class Mutator(object):
                 self.req.submit()
                 print(repr(d) + '\t' + self.req.brief())
 
-    def fuzzurl(self, url):
+    def fuzzurl(self, url:str):
+        """fuzz url
+        
+        Args:
+            url (str): url to be fuzz
+        
+        Yields:
+            str: mutated url
+        """
         for mutateUrl in URL.test(url):
             yield mutateUrl
 
-    def fuzzdata(self, data, vuln):
-        if vuln == 'cmdi':
+    def fuzzdata(self, data:str, vuln:str):
+        '''
+        Args:
+            data (str): Description
+            vuln (str): Description
+        
+        Yields:
+            TYPE: Description
+        
+        '''
+        vuln = vuln.split(',')
+        if 'cmdi' == vuln:
             for c in CmdInjection.test():
                 yield data + c
         else:
