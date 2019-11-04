@@ -157,12 +157,12 @@ class Code(Fuzzer):
             yield chr(i)
 
     @staticmethod
-    def fuzzUnicode(cnt:int=1):
+    def fuzzUnicode(cnt: int = 1):
         for i in range(cnt):
             yield chr(random.randint(0, 0xffff))
 
     @staticmethod
-    def fuzzUnicodeReplace(s:str, cnt:int=1):
+    def fuzzUnicodeReplace(s: str, cnt: int = 1):
         # Greek letter
         s = s.replace("A", "Ā", cnt)
         s = s.replace("A", "Ă", cnt)
@@ -176,12 +176,12 @@ class Code(Fuzzer):
         return s
 
     @staticmethod
-    def fuzzErrorUnicode(s:str):
+    def fuzzErrorUnicode(s: str):
         # https://www.leavesongs.com/PENETRATION/mysql-charset-trick.html
         return s + chr(random.randint(0xC2, 0xef))
 
     @staticmethod
-    def urlencode(s:str, force:bool=False):
+    def urlencode(s: str, force: bool = False):
         if not force:
             s = quote(s)
         else:
@@ -189,24 +189,28 @@ class Code(Fuzzer):
         return s
 
     @staticmethod
-    def findUpper(dst:str):
+    def urlutf8encode(s: str):
+        return "".join(map(lambda i: hex(ord(i)).replace("0x", "%00"), s))
+
+    @staticmethod
+    def findUpper(dst: str):
         return list(filter(lambda i: i.upper() == dst, map(chr, range(1, 0x10000))))
 
     @staticmethod
-    def findLower(dst:str):
+    def findLower(dst: str):
         return list(filter(lambda i: i.lower() == dst, map(chr, range(1, 0x10000))))
 
     @staticmethod
-    def findNormalize(dst:str, form:str='NFKC'):
+    def findNormalize(dst: str, form: str = 'NFKC'):
         # form should in ['NFC', 'NFKC', 'NFD', 'NFKD']
         return list(filter(lambda i: normalize(form, i)[0] == dst, map(chr, range(1, 0x10000))))
 
     @classmethod
-    def fuzzEncoding(cls, dst:str):
+    def fuzzEncoding(cls, dst: str):
         for encoding in cls.encodings:
             yield dst.encode(encoding)
 
-    def fuzz(self, level:int=1):
+    def fuzz(self, level: int = 1):
         yield ''
         for c in self.fuzzAscii():
             yield c
