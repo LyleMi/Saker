@@ -14,7 +14,7 @@ from saker.handler.headerHandler import HeaderHandler
 from saker.handler.htmlHandler import HTMLHandler
 from saker.handler.wappalyzer import Wappalyzer
 from saker.utils.datatype import AttribDict
-from saker.utils.domain import parseUrl
+from saker.utils.url import normalizeUrl
 from saker.utils.logger import getLogger
 from saker.utils.hash import md5
 
@@ -54,7 +54,7 @@ class Saker(object):
         self.s = requests.Session()
         if timeout != 0:
             self.timeout = timeout
-        self.url = parseUrl(url)
+        self.url = normalizeUrl(url)
         self.loglevel = loglevel
         self.logger = getLogger()
         self.lastr = None

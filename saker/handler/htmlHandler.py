@@ -11,6 +11,8 @@ class HTMLHandler(object):
     handle html content
     '''
 
+    _links = None
+
     class RegExp(object):
 
         title = re.compile(r'<title>(.*?)</title>')
@@ -47,8 +49,10 @@ class HTMLHandler(object):
 
     @property
     def links(self):
-        links = self.RegExp.link.findall(self.content)
-        return links if len(links) else []
+        if self._links is None:
+            links = list(set(self.RegExp.link.findall(self.content)))
+            self._links = links if len(links) else []
+        return self._links
 
     @property
     def size(self):
@@ -59,7 +63,7 @@ class HTMLHandler(object):
         else:
             return "%sMB" % (len(self.content) >> 20)
 
-    def domains(self, domain):
+    def subdomains(self, domain):
         reg = re.compile(r'[a-zA-Z0-9\-\.]+\.' + domain.replace('.', '\\.'), re.IGNORECASE)
         datas = reg.findall(self.content)
         datas = list(set(datas))

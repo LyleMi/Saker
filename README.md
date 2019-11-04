@@ -128,9 +128,14 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 ### Handle HTML
 
 ```python
->>> from saker.handler.htmlhandler import HTMLHandler
->>> h = HTMLHandler("<html><head><title>title</title></head><body></body></html>")
+>>> import requests
+>>> from saker.handler.htmlHandler import HTMLHandler
+>>> r = requests.get("https://github.com")
+>>> h = HTMLHandler(r.text)
 >>> print(h.title)
+The world’s leading software development platform · GitHub
+>>> print(h.subdomains("github.com"))
+['enterprise.github.com', 'resources.github.com', 'developer.github.com', 'partner.github.com', 'desktop.github.com', 'api.github.com', 'help.github.com', 'customer-stories-feed.github.com', 'live-stream.github.com', 'services.github.com', 'lab.github.com', 'shop.github.com', 'education.github.com']
 ```
 
 ### Port Scanner
