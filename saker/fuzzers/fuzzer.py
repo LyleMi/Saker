@@ -47,4 +47,4 @@ class Fuzzer(object):
     @classmethod
     def fuzz(cls):
         for p in cls.payloads:
-            yield payloads
+            yield p

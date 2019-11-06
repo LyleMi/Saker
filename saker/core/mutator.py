@@ -6,6 +6,14 @@ from saker.fuzzers.url import URL
 from saker.fuzzers.bof import BOF
 from saker.fuzzers.cmdi import CmdInjection
 from saker.fuzzers.code import Code
+from saker.fuzzers.fileinclude import FileInclude
+from saker.fuzzers.ldap import LdapInjection
+from saker.fuzzers.sqli import SQLi
+from saker.fuzzers.ssi import SSI
+from saker.fuzzers.ssrf import SSRF
+from saker.fuzzers.ssti import SSTI
+from saker.fuzzers.xss import XSS
+from saker.fuzzers.xxe import XXE
 from saker.core.request import Request
 
 
@@ -80,7 +88,7 @@ class Mutator(object):
             TYPE: Description
 
         '''
-        vuln = vuln.split(',')
+        vuln = vuln.lower().split(',')
         if 'bof' in vuln or '*' in vuln:
             for p in BOF.fuzz():
                 yield data + p
@@ -91,3 +99,29 @@ class Mutator(object):
             C = Code()
             for p in C.fuzz():
                 yield data + p
+        if 'fi' in vuln or '*' in vuln:
+            F = FileInclude()
+            for p in F.fuzz():
+                yield data + p
+        if 'ldap' in vuln or '*' in vuln:
+            for p in LdapInjection.fuzz():
+                yield data + p
+        if 'sqli' in vuln or '*' in vuln:
+            for p in SQLi.fuzz():
+                yield data + p
+        if 'ssi' in vuln or '*' in vuln:
+            for p in SSI.fuzz():
+                yield data + p
+        if 'ssrf' in vuln or '*' in vuln:
+            for p in SSRF.fuzz():
+                yield data + p
+        if 'ssti' in vuln or '*' in vuln:
+            for p in SSTI.fuzz():
+                yield data + p
+        if 'xss' in vuln or '*' in vuln:
+            for p in XSS().fuzz():
+                yield data + p
+        if 'xxe' in vuln or '*' in vuln:
+            for p in XXE().fuzz():
+                yield data + p
+

@@ -15,8 +15,8 @@ class SQLi(Fuzzer):
     def __init__(self):
         super(SQLi, self).__init__()
 
-    @staticmethod
-    def fuzz(quote=["'", '"']):
+    @classmethod
+    def fuzz(cls, quote=["'", '"']):
         l = []
         l.append('"')
         l.append('")')
@@ -28,7 +28,8 @@ class SQLi(Fuzzer):
         l.append('')
         l.append('\\')
         l.append('%df%27')
-        return l
+        for p in l:
+            yield p
 
     @classmethod
     def keyword(cls):

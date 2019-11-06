@@ -8,7 +8,7 @@ class OpenRedirect(Fuzzer):
 
     """Open Redirect"""
 
-    special = [
+    payloads = [
         "\\\\",
         "\\",
         r"%EF%BC%BC",

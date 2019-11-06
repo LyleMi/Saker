@@ -15,13 +15,13 @@ class MutatorTest(unittest.TestCase):
             }
         }
         m = Mutator(options)
-        # m.fuzz('url')
-        # m.fuzz('params', 'test')
+        m.fuzz('url')
+        m.fuzz('params', 'test')
 
     def test_fuzzdata(self):
         m = Mutator({})
-        test = ['bof', 'cmdi', 'code']
-        for t in [test.pop()]:
+        test = ['bof', 'cmdi', 'code', 'fi', 'ldap', 'sqli', 'ssi', 'ssrf', 'ssti', 'xss', 'xxe']
+        for t in test:
             for payload in m.fuzzdata('', t):
                 print(payload)
 

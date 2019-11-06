@@ -49,7 +49,4 @@ _serverPayloads= [
 
 class XXE(Fuzzer):
 
-    @staticmethod
-    def test():
-        for payload in _payloads:
-            yield payload
+    payloads = _payloads
