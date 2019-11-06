@@ -45,5 +45,6 @@ class Fuzzer(object):
         return cls.randomStr([chr(i) for i in xrange(256)], length)
 
     @classmethod
-    def test(cls):
-        return cls.payloads
+    def fuzz(cls):
+        for p in cls.payloads:
+            yield payloads

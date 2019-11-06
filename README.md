@@ -16,11 +16,47 @@
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
-Saker is a penetrate testing auxiliary suite. It can be used to gather subdomain info, penetrate/scan website, fuzz some vulnerabilities, brute password and dirs.
+Saker is a flexible penetrate testing auxiliary suite. 
 
-This project is for research and study only, do not use Saker for unauthorized penetration testing.
+> Note: This project is for research and study only, do not use Saker for unauthorized penetration testing.
 
-## Install
+## TL;DR
+
+brief support features:
+
++ scan website
+  + infomation gathering
+  + framework fingerprint
++ fuzz web request
+  + XSS
+  + SQL injection
+  + SSRF
+  + XXE
+  + ...
++ subdomain gathering
++ port scanner
++ bruteforce
+  + web dir
+  + zip password
+  + domain
+  + ...
++ auxiliary servers
+  + dns rebinding
+  + ssrf
+  + xss
++ third party api integration
+  + crtsh
+  + dns dumper
+  + github
+  + sqlmap
+
+## Quick Setup
+
+### latest version
+
+```bash
+pip install git+https://github.com/lylemi/saker
+```
 
 ```bash
 git clone https://github.com/LyleMi/Saker.git
@@ -28,35 +64,30 @@ pip install -r requirements.txt
 python setup.py install
 ```
 
-or by pip
+### stable version
 
 ```bash
 pip install Saker
 ```
 
-or via Github
-
-```bash
-pip install git+https://github.com/lylemi/saker
-```
-
-## Features
+## Example Cases
 
 ### Scan Website
 
 ```python
->>> from saker.core.scaner import Saker
->>> s = Saker("http://127.0.0.1")
->>> s.scan(filename="index.php", ext="php")
+from saker.core.scaner import Scanner
+s = Scanner("http://127.0.0.1")
+s.scan(filename="index.php", ext="php")
 ```
 
 or by shell
 
 ```bash
-python -m saker
+python -m saker scan
 
 usage: main.py [options]
-Tool For Fuzz Web Applications
+
+Saker Scanner
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -71,24 +102,71 @@ optional arguments:
                         scan time interval, random sleep by default
 ```
 
-### Generate fuzz payload
+### Fuzz Website
 
 ```python
->>> from saker.fuzzer.code import Code
->>> payload = Code.fuzzErrorUnicode(payload)
+from saker.core.mutator import Mutator
+options = {
+    "url": "http://127.0.0.1:7777/",
+    "params": {
+        "test": "test"
+    }
+}
+m = Mutator(options)
+m.fuzz('url')
+m.fuzz('params', 'test')
 ```
 
+or by shell
+
+```bash
+python -m saker fuzz
+
+usage: [options]
+
+Saker Fuzzer
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -u URL, --url URL     define specific url
+  -m METHOD, --method METHOD
+                        request method, use get as default
+  -p PARAMS, --params PARAMS
+                        request params, use empty string as default
+  -d DATA, --data DATA  request data, use empty string as default
+  -H HEADERS, --headers HEADERS
+                        request headers, use empty string as default
+  -c COOKIES, --cookies COOKIES
+                        request cookies, use empty string as default
+  -P PART, --part PART  fuzz part, could be url / params / data / ...
+  -k KEY, --key KEY     key to be fuzzed
+  -v VULN, --vuln VULN  Vulnarability type to be fuzzed
+  -t INTERVAL, --timeinterval INTERVAL
+                        scan time interval, random sleep by default
+```
+
+### Generate fuzz payload
+
+#### Unicode Fuzz
+
 ```python
->>> from saker.fuzzers.ssi import SSI
->>> payloads = SSI.test()
+from saker.fuzzer.code import Code
+payload = Code.fuzzErrorUnicode(payload)
+```
+
+#### Fuzz SSI
+
+```python
+from saker.fuzzers.ssi import SSI
+payloads = [i for i in SSI.fuzz()]
 ```
 
 ### Brute password or others
 
 ```python
->>> from saker.brute.dir import DirBrute
->>> dirBrute = DirBrute("php", "index.php")
->>> paths = dirBrute.weakfiles()
+from saker.brute.dir import DirBrute
+dirBrute = DirBrute("php", "index.php")
+paths = dirBrute.weakfiles()
 ```
 
 now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
@@ -98,53 +176,53 @@ now support brute http basic auth, ftp, mysql, ssh, telnet, zipfile...
 #### Crt.sh
 
 ```python
->>> from saker.api.crtsh import crtsh
->>> crtsh("github.com")
+from saker.api.crtsh import crtsh
+crtsh("github.com")
 ```
 
 #### DNSDumper
 
 ```python
->>> from saker.api.dnsdumper import DNSdumpster
->>> DNSdumpster("github.com")
+from saker.api.dnsdumper import DNSdumpster
+DNSdumpster("github.com")
 ```
 
 #### Github API
 
 ```python
->>> from saker.api.githubapi import GithubAPI
->>> g = GithubAPI()
->>> g.gatherByEmail("@github.com")
+from saker.api.githubapi import GithubAPI
+g = GithubAPI()
+g.gatherByEmail("@github.com")
 ```
 
 #### SQLMap API
 
 ```python
->>> from saker.api.sqlmap import SQLMap
->>> options = {"url": "https://github.com"}
->>> SQLMap().scan(options)
+from saker.api.sqlmap import SQLMap
+options = {"url": "https://github.com"}
+SQLMap().scan(options)
 ```
 
 ### Handle HTML
 
 ```python
->>> import requests
->>> from saker.handler.htmlHandler import HTMLHandler
->>> r = requests.get("https://github.com")
->>> h = HTMLHandler(r.text)
->>> print(h.title)
+import requests
+from saker.handler.htmlHandler import HTMLHandler
+r = requests.get("https://github.com")
+h = HTMLHandler(r.text)
+print(h.title)
 The world’s leading software development platform · GitHub
->>> print(h.subdomains("github.com"))
+print(h.subdomains("github.com"))
 ['enterprise.github.com', 'resources.github.com', 'developer.github.com', 'partner.github.com', 'desktop.github.com', 'api.github.com', 'help.github.com', 'customer-stories-feed.github.com', 'live-stream.github.com', 'services.github.com', 'lab.github.com', 'shop.github.com', 'education.github.com']
 ```
 
 ### Port Scanner
 
 ```python
->>> from saker.port.nmap import Nmap
->>> n = Nmap(domain)
->>> ret = n.run()
->>> print(n.ret)
+from saker.port.nmap import Nmap
+n = Nmap(domain)
+ret = n.run()
+print(n.ret)
 ```
 
 ### Special Server

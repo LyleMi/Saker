@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import re
-from urllib.parse import urlparse
+import urllib.parse as uparse
 
 
 def urlRelativeToAbsolute(url):
@@ -62,6 +62,7 @@ def urlFile(url):
         return ''
     return url.split('/')[-1].split('?')[0]
 
+
 def normalizeUrl(url):
     if not (url.startswith("http://") or url.startswith("https://")):
         if ':443' in url:
@@ -70,3 +71,13 @@ def normalizeUrl(url):
             url = "http://" + url
     url = (url + '/') if url[-1] != '/' else url
     return url
+
+
+def parseQuery(query):
+    ret = {}
+    for k, v in uparse.parse_qs(query).items():
+        if len(v) < 2:
+            ret[k] = uparse.unquote(v[0])
+        else:
+            ret[k] = [uparse.unquote(i) for i in v]
+    return ret

@@ -88,7 +88,7 @@ class CmdInjection(Fuzzer):
         self.shell = shell
 
     @classmethod
-    def test(cls, cmd="id"):
+    def fuzz(cls, cmd="id"):
         # some system do not have id
         return [
             "|%s" % cmd,

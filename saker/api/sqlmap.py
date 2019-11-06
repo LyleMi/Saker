@@ -3,10 +3,10 @@
 # REST API from lib/utils/api.py
 # options from lib/core/optiondict.py
 
-from saker.core.scaner import Saker
+from saker.core.sess import Sess
 
 
-class SQLmap(Saker):
+class SQLmap(Sess):
 
     def __init__(self, url="http://127.0.0.1:8775", adminid=""):
         super(SQLmap, self).__init__(url)

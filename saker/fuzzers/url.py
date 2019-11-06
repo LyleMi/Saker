@@ -3,7 +3,7 @@
 
 import random
 from saker.fuzzers.fuzzer import Fuzzer
-
+from saker.utils.url import urlBaseDir
 
 class URL(Fuzzer):
 
@@ -40,9 +40,11 @@ class URL(Fuzzer):
         super(URL, self).__init__()
 
     @classmethod
-    def test(cls, url):
+    def fuzz(cls, url):
         for p in cls.payloads:
             yield url + p
+        for p in cls.payloads:
+            yield urlBaseDir(url) + p
 
     @classmethod
     def genUrl(cls, scheme, user, password, domain, port, path):

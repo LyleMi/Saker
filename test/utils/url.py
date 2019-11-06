@@ -9,6 +9,7 @@ from saker.utils.url import urlBaseDir
 from saker.utils.url import urlBaseUrl
 from saker.utils.url import urlFile
 from saker.utils.url import normalizeUrl
+from saker.utils.url import parseQuery
 
 
 class UrlTest(unittest.TestCase):
@@ -35,6 +36,15 @@ class UrlTest(unittest.TestCase):
         self.assertEqual(normalizeUrl('example.com:443'), 'https://example.com/')
         self.assertEqual(normalizeUrl('example.com:8080'), 'http://example.com:8080/')
         self.assertEqual(normalizeUrl('https://example.com:1443'), 'https://example.com:1443/')
+
+    def test_parseQuery(self):
+        self.assertEqual(parseQuery('a=1'), {'a': '1'})
+        self.assertEqual(parseQuery('a=%2f'), {'a': '/'})
+        self.assertEqual(parseQuery('a=%2f&b=3'), {'a': '/', 'b': '3'})
+        self.assertEqual(parseQuery('a=1&b=%253'), {'a': '1', 'b': '%3'})
+        self.assertEqual(parseQuery('a[]=1&b=%253'), {'a[]': '1', 'b': '%3'})
+        self.assertEqual(parseQuery('a[]=1&a[]=2'), {'a[]': ['1', '2']})
+        self.assertEqual(parseQuery('a=1&a=2'), {'a': ['1', '2']})
 
 
 if __name__ == '__main__':

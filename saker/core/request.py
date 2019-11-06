@@ -29,15 +29,21 @@ class Request(object):
         self.headers = options.get('headers', {})
         self.cookies = options.get('cookies', {})
         self.interval = 0
+        self.lastr = None
 
     def submit(self):
         start = time.time()
-        self.lastr = getattr(self.sess, self.method)(
-            self.url, params=self.params, data=self.data, files=self.files,
-            headers=self.headers, cookies=self.cookies
-        )
+        try:
+            self.lastr = getattr(self.sess, self.method)(
+                self.url, params=self.params, data=self.data, files=self.files,
+                headers=self.headers, cookies=self.cookies
+            )
+        except Exception as e:
+            print(repr(e))
         self.interval = time.time() - start
         return self.lastr
 
     def brief(self):
+        if self.lastr is None:
+            return "Exception"
         return "%s\t%s\t%s" % (self.lastr.status_code, len(self.lastr.content), self.interval)
