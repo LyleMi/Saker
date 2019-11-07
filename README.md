@@ -94,7 +94,7 @@ optional arguments:
   -s, --scan            run with list model
   -f file, --file file  scan specific file
   -e ext, --ext ext     scan specific ext
-  -i, --interactive     run with interactive model
+  -i, --info            get site info
   -u URL, --url URL     define specific url
   -p PROXY, --proxy PROXY
                         proxy url
@@ -143,6 +143,23 @@ optional arguments:
   -v VULN, --vuln VULN  Vulnarability type to be fuzzed
   -t INTERVAL, --timeinterval INTERVAL
                         scan time interval, random sleep by default
+```
+
+### Port Scanner
+
+```bash
+python -m saker port
+
+usage: [options]
+
+Saker Port Scanner
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t TARGET, --target TARGET
+                        define scan target
+  -b, --background      run port scanner in background with unix daemon, only
+                        support unix platform
 ```
 
 ### Generate fuzz payload
@@ -214,15 +231,6 @@ print(h.title)
 The world’s leading software development platform · GitHub
 print(h.subdomains("github.com"))
 ['enterprise.github.com', 'resources.github.com', 'developer.github.com', 'partner.github.com', 'desktop.github.com', 'api.github.com', 'help.github.com', 'customer-stories-feed.github.com', 'live-stream.github.com', 'services.github.com', 'lab.github.com', 'shop.github.com', 'education.github.com']
-```
-
-### Port Scanner
-
-```python
-from saker.port.nmap import Nmap
-n = Nmap(domain)
-ret = n.run()
-print(n.ret)
 ```
 
 ### Special Server

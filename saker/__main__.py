@@ -4,10 +4,13 @@
 import sys
 import argparse
 
+from pprint import pprint
+
 from saker.data.banner import banner
 from saker.core.scaner import Scanner
 from saker.core.mutator import Mutator
 from saker.core.request import Request
+from saker.port.nmap import Nmap
 from saker.utils.url import parseQuery
 from saker.utils.url import normalizeUrl
 
@@ -17,6 +20,10 @@ def main():
         scanner(sys.argv[2:])
     elif sys.argv[1] == 'fuzz':
         fuzz(sys.argv[2:])
+    elif sys.argv[1] == 'port':
+        port(sys.argv[2:])
+    else:
+        print('unknown command')
 
 
 def scanner(args):
@@ -40,8 +47,8 @@ def scanner(args):
         help='scan specific ext'
     )
     parser.add_argument(
-        '-i', '--interactive', action="store_true",
-        help='run with interactive model'
+        '-i', '--info', action="store_true",
+        help='get site info'
     )
     parser.add_argument(
         "-u", '--url',
@@ -74,13 +81,15 @@ def scanner(args):
         c.setProxies(opts.proxy)
 
     if opts.scan or opts.file:
-        c.scan(filename=opts.file,
-               interval=opts.interval,
-               ext=opts.ext,
-               scan=opts.scan)
+        c.scan(
+            filename=opts.file,
+            interval=opts.interval,
+            ext=opts.ext,
+            scan=opts.scan
+        )
 
-    if opts.interactive:
-        c.interactive()
+    if opts.info:
+        pprint(c.appinfo())
 
 
 def fuzz(args):
@@ -162,6 +171,32 @@ def fuzz(args):
     m = Mutator(options)
     m.fuzz(opts.part, opts.key, opts.vuln, opts.interval)
     print('Done')
+
+
+def port(args):
+    parser = argparse.ArgumentParser(
+        description='Saker Port Scanner',
+        usage='[options]',
+        epilog='Nmap wrapper'
+    )
+    parser.add_argument(
+        "-t", '--target',
+        dest="target", help="define scan target"
+    )
+    parser.add_argument(
+        '-b', '--background', action="store_true",
+        help='run port scanner in background with unix daemon, only support unix platform'
+    )
+    opts = parser.parse_args(args)
+    if not opts.target:
+        parser.print_help()
+        return
+    n = Nmap(opts.target)
+    if opts.background:
+        n.dump()
+    else:
+        n.run()
+        pprint(n.json)
 
 
 if __name__ == '__main__':
