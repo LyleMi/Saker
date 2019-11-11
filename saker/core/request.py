@@ -3,6 +3,8 @@
 
 import time
 import requests
+from saker.utils.color import red, cyan, green
+from saker.utils.hash import md5
 
 
 class Request(object):
@@ -40,10 +42,23 @@ class Request(object):
             )
         except Exception as e:
             print(repr(e))
-        self.interval = time.time() - start
+        self.interval = round(time.time() - start, 2)
         return self.lastr
 
     def brief(self):
         if self.lastr is None:
             return "Exception"
-        return "%s\t%s\t%s" % (self.lastr.status_code, len(self.lastr.content), self.interval)
+        msg = "\t".join(map(str, [
+            self.lastr.status_code,
+            len(self.lastr.content),
+            self.interval,
+            md5(self.lastr.content)[:8]
+        ]))
+        if self.lastr.status_code // 100 == 5:
+            return red(msg)
+        elif self.lastr.status_code // 100 == 4:
+            return cyan(msg)
+        elif self.lastr.status_code // 100 == 3:
+            return green(msg)
+        else:
+            return msg

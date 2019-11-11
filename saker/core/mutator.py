@@ -34,7 +34,11 @@ class Mutator(object):
         elif isinstance(req, Request):
             self.req = req
 
-    def fuzz(self, part: str, key: str = '', vuln: str = '', interval: int = -1):
+    def fuzz(
+        self, part: str, key: str = '',
+        vuln: str = '', interval: int = -1,
+        replace: bool = False
+    ):
         """fuzz request
 
         Args:
@@ -61,7 +65,7 @@ class Mutator(object):
             else:
                 original = ''
             for d in self.fuzzdata(original, vuln):
-                getattr(self.req, part)[key] = d
+                data[key] = original + d
                 self.req.submit()
                 print(repr(d) + '\t' + self.req.brief())
                 time.sleep(interval)
@@ -86,42 +90,24 @@ class Mutator(object):
 
         Yields:
             TYPE: Description
-
         '''
         vuln = vuln.lower().split(',')
-        if 'bof' in vuln or '*' in vuln:
-            for p in BOF.fuzz():
-                yield data + p
-        if 'cmdi' in vuln or '*' in vuln:
-            for p in CmdInjection.fuzz():
-                yield data + p
-        if 'code' in vuln or '*' in vuln:
-            C = Code()
-            for p in C.fuzz():
-                yield data + p
-        if 'fi' in vuln or '*' in vuln:
-            F = FileInclude()
-            for p in F.fuzz():
-                yield data + p
-        if 'ldap' in vuln or '*' in vuln:
-            for p in LdapInjection.fuzz():
-                yield data + p
-        if 'sqli' in vuln or '*' in vuln:
-            for p in SQLi.fuzz():
-                yield data + p
-        if 'ssi' in vuln or '*' in vuln:
-            for p in SSI.fuzz():
-                yield data + p
-        if 'ssrf' in vuln or '*' in vuln:
-            for p in SSRF.fuzz():
-                yield data + p
-        if 'ssti' in vuln or '*' in vuln:
-            for p in SSTI.fuzz():
-                yield data + p
-        if 'xss' in vuln or '*' in vuln:
-            for p in XSS().fuzz():
-                yield data + p
-        if 'xxe' in vuln or '*' in vuln:
-            for p in XXE().fuzz():
-                yield data + p
-
+        support = {
+            'bof': BOF,
+            'cmdi': CmdInjection,
+            'code': Code,
+            'fi': FileInclude,
+            'ldap': LdapInjection,
+            'sqli': SQLi,
+            'ssi': SSI,
+            'ssrf': SSRF,
+            'ssti': SSTI,
+            'xss': XSS,
+            'xxe': XXE,
+        }
+        for k in support.keys():
+            if k not in vuln and '*' not in vuln:
+                continue
+            o = support[k]()
+            for p in o.fuzz():
+                yield p
