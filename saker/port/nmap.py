@@ -6,19 +6,15 @@ import json
 import uuid
 import subprocess
 import xml.etree.cElementTree as ET
-from saker.utils.daemon import Daemon
 
 
-class Nmap(Daemon):
+class Nmap(object):
 
     args = ['-sV', '-sT', '-Pn']
     ports = '21-25,80-89,110,111,143,443,513,873,1080,1158,1433,1521,2049,2181,3306-3308,3389,3690,5900,6370-6379,7001,8000-8090,8161,9000,9418,11211,27017-27019,50060'
 
     def __init__(self, target, options=[], *args, **kwargs):
-        pidfile = '%s.pid' % target
-        logfile = '%s.log' % target
-        errfile = '%s.err' % target
-        super(Nmap, self).__init__(pidfile, stdout=logfile, stderr=errfile, *args, **kwargs)
+        super(Nmap, self).__init__(*args, **kwargs)
         self.target = target
         self.options = options
         self.output = '.tmp-nmap.%s.xml' % uuid.uuid4().hex
@@ -37,7 +33,12 @@ class Nmap(Daemon):
         return self.parse()
 
     def parse(self):
-        tree = ET.parse(self.output)
+        try:
+            tree = ET.parse(self.output)
+        except ET.ParseError as e:
+            return
+        except Exception as e:
+            raise e
         '''
         if self.output.startswith('.tmp-nmap'):
             os.remove(self.output)
@@ -77,7 +78,7 @@ class Nmap(Daemon):
         return json.dumps(self.result)
 
     def dump(self):
-        self.start()
+        self.run()
         if len(self.result) < 0:
             return
         with open(self.target + '.json', "w") as fh:

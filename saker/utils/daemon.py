@@ -17,7 +17,7 @@ class Daemon(object):
     """
 
     def __init__(
-        self, pidfile, stdin=os.devnull,
+        self, pidfile=None, stdin=os.devnull,
         stdout=os.devnull, stderr=os.devnull,
         home_dir='.', umask=0o22, verbose=1,
         use_gevent=False, use_eventlet=False
@@ -205,5 +205,5 @@ class Daemon(object):
             self.log('Process (pid %d) is killed' % pid)
             return False
 
-    def run(self):
-        raise NotImplementedError
+    def run(self, func, *args, **kwargs):
+        func(*args, **kwargs)
