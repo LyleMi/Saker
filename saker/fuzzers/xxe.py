@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# xls / docx
 
 from saker.fuzzers.fuzzer import Fuzzer
 

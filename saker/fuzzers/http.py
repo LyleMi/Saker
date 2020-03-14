@@ -62,6 +62,20 @@ _status_code = {
     600: 'Unparseable Response Headers',
 }
 
+_verbs = [
+    'SET',
+    'REMOVE',
+    'DEBUG',
+    'TRACK',
+    'FORWARD',
+    'INFO',
+    'GET',
+    'PUT',
+    'POST',
+    'DELETE',
+    'OPTIONS',
+]
+
 
 class HTTPFuzzer(Fuzzer):
 

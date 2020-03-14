@@ -22,3 +22,7 @@ def danger(s):
 
 def yellow(s):
     return colored(s, 'yellow')
+
+
+def highlight(s, keyword, color='red'):
+    return s.replace(keyword, colored(keyword, color))

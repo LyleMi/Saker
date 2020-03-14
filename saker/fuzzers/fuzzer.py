@@ -9,9 +9,24 @@ class Fuzzer(object):
 
     specialChars = string.printable[62:]
     payloads = []
+    ints = [
+        "1",
+        "-1",
+        "0",
+        "0x1",
+        "0xf",
+        "01",
+    ]
 
     def __init__(self):
         super(Fuzzer, self).__init__()
+
+    @classmethod
+    def intFuzz(cls):
+        for i in cls.ints:
+            yield i
+        for i in range(10):
+            yield 2 ** i
 
     @classmethod
     def randomInt(cls, min, max):

@@ -7,6 +7,7 @@ import pickle
 import requests
 
 from saker.utils.url import normalizeUrl
+from saker.utils.hash import md5
 from saker.utils.logger import getLogger
 from saker.utils.datatype import AttribDict
 
@@ -72,6 +73,17 @@ class Sess(object):
         self.lastr = self.s.delete(self.url + path, *args, **kwargs)
         self._callback()
         return self.lastr
+
+    def cacheGet(self, path=""):
+        cachefile = '.%s.html' % md5(path)
+        if os.path.exists(cachefile):
+            with open(cachefile, 'rb') as fh:
+                return fh.read()
+        else:
+            self.get(path)
+            with open(cachefile, 'wb') as fh:
+                fh.write(r.content)
+                return r.content
 
     def trace(self):
         """Trace requests

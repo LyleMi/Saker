@@ -8,11 +8,10 @@ class BOF(Fuzzer):
 
     """Buffer Overflow test"""
 
-
     def __init__(self):
         super(BOF, self).__init__()
 
     @classmethod
-    def fuzz(cls):
-        for i in range(10, 16):
+    def fuzz(cls, data=''):
+        for i in range(8, 16):
             yield 'A' * (2**i)

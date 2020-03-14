@@ -58,3 +58,9 @@ class URL(Fuzzer):
         url += ':' + port
         url += '/' + path
         return url
+
+    @classmethod
+    def shortUrl(cls):
+        # windows short name
+        # https://github.com/irsdl/IIS-ShortName-Scanner
+        return ''

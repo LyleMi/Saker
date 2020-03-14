@@ -8,12 +8,14 @@ import tornado.web
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
+        recordRequest(self.request)
         self.write("")
 
 
 class ExitHandler(tornado.web.RequestHandler):
     def get(self):
         self.write("")
+        print('exit...')
         exit()
 
 
@@ -33,11 +35,13 @@ def recordRequest(request):
     ))
 
 
-def start(app, port=8888):
+def start(app=None, port=8888):
+    if app is None:
+        app = getApp()
     # app.add_handlers(r".*$", handlers)
     app.listen(port)
     tornado.ioloop.IOLoop.current().start()
 
 
 if __name__ == '__main__':
-    start(getApp())
+    start()

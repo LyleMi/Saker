@@ -36,13 +36,13 @@ class Mutator(object):
 
     def fuzz(
         self, part: str, key: str = '',
-        vuln: str = '', interval: int = -1,
+        vuln: str = '', interval: int = 0,
         replace: bool = False
     ):
         """fuzz request
 
         Args:
-            part (str): fuzz part, be url/params/data/header/cookies
+            part (str): fuzz part, be url/params/data/headers/cookies
             key (str): fuzz key
             vuln (str, optional): Description
 
@@ -56,7 +56,7 @@ class Mutator(object):
                 self.req.submit()
                 print(url, self.req.brief(), self.req.lastr.url)
                 time.sleep(interval)
-        elif part in ['params', 'data', 'header', 'cookies']:
+        elif part in ['params', 'data', 'headers', 'cookies']:
             if key == '':
                 return
             data = getattr(self.req, part)

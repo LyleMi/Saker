@@ -18,8 +18,6 @@
 
 Saker is a flexible penetrate testing auxiliary suite. 
 
-> Note: This project is for research and study only, do not use Saker for unauthorized penetration testing.
-
 ## TL;DR
 
 brief support features:
@@ -68,6 +66,14 @@ python setup.py install
 
 ```bash
 pip install Saker
+```
+
+### develop install
+
+add /path/to/saker to PYTHONPATH
+
+```bash
+export PYTHONPATH=/path/to/saker
 ```
 
 ## Example Cases
@@ -245,11 +251,19 @@ dnsServer = RebindingServer(values)
 dnsServer.serve_forever()
 ```
 
+## Todo
+
+APK analyze
+
 ## Contributing
 
 Contributions, issues and feature requests are welcome.
 
 Feel free to check [issues page](https://github.com/lylemi/saker/issues) if you want to contribute.
+
+## Disclaimer
+
+This project is for educational purposes only. Do not test or attack any system with this tool unless you have explicit permission to do so.
 
 ## Show your support
 

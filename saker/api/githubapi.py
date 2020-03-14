@@ -4,10 +4,16 @@
 
 import re
 import time
+from collections import defaultdict
 from github import Github
 
 
 class GithubAPI(object):
+
+    '''
+    https://github.com/settings/tokens
+    public_repo, read:user, repo:status, user:email
+    '''
 
     def __init__(self, token=None):
         super(GithubAPI, self).__init__()
@@ -58,8 +64,20 @@ class GithubAPI(object):
                     yield email
                     emails.append(email)
 
+    def gatherParameter(self, interval=2):
+        parameters = defaultdict(int)
+        pages = self.g.search_code('$_GET')
+        reg = re.compile(r'''\$_GET\[['"]?(.*?)['"]?\]''')
+        for page in pages:
+            time.sleep(interval)
+            datas = reg.findall(page.decoded_content.decode())
+            for parameter in datas:
+                print(parameter)
+                parameters[parameter] += 1
+            break
 
 if __name__ == '__main__':
     token = ''
     g = GithubAPI(token)
-    print(g.gatherByEmail('@github.com'))
+    # print(g.gatherByEmail('@github.com'))
+    g.gatherParameter()

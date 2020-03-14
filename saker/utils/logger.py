@@ -7,6 +7,34 @@ import logging
 from saker.utils.mtime import today
 
 
+class ColoredFormatter(logging.Formatter):
+
+    BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
+
+    COLORS = {
+        'WARNING': YELLOW,
+        'INFO': WHITE,
+        'DEBUG': BLUE,
+        'CRITICAL': YELLOW,
+        'ERROR': RED
+    }
+
+    RESET_SEQ = "\033[0m"
+    COLOR_SEQ = "\033[1;%dm"
+    BOLD_SEQ = "\033[1m"
+
+    def __init__(self, msg, use_color=True):
+        logging.Formatter.__init__(self, msg)
+        self.use_color = use_color
+
+    def format(self, record):
+        levelname = record.levelname
+        if self.use_color and levelname in self.COLORS:
+            levelname_color = self.COLOR_SEQ % (30 + self.COLORS[levelname]) + levelname + self.RESET_SEQ
+            record.levelname = levelname_color
+        return logging.Formatter.format(self, record)
+
+
 def getLogger(loggername="saker"):
     logger = logging.getLogger(loggername)
     if len(logger.handlers) > 0:
@@ -21,8 +49,8 @@ def initLogger(logger, logfile=False, logpath=None):
 
     # command line logger
     ch = logging.StreamHandler()
-    chformatter = logging.Formatter(formatStr)
     ch.setLevel(logging.DEBUG)
+    chformatter = ColoredFormatter(formatStr)
     ch.setFormatter(chformatter)
     logger.addHandler(ch)
 

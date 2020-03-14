@@ -28,6 +28,7 @@ class SQLi(Fuzzer):
         l.append('')
         l.append('\\')
         l.append('%df%27')
+        l.append("""11^sleep(5)#'^sleep(5)#"^sleep(5)#""")
         for p in l:
             yield p
 

