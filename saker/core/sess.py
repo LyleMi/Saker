@@ -74,16 +74,18 @@ class Sess(object):
         self._callback()
         return self.lastr
 
-    def cacheGet(self, path=""):
-        cachefile = '.%s.html' % md5(path)
+    def cacheGet(self, path="", cachefile=None):
+        if cachefile is None:
+            cachefile = '.%s.html' % md5(path)
         if os.path.exists(cachefile):
+            self.logger.debug('cache %s hit' % path)
             with open(cachefile, 'rb') as fh:
                 return fh.read()
         else:
             self.get(path)
             with open(cachefile, 'wb') as fh:
-                fh.write(r.content)
-                return r.content
+                fh.write(self.lastr.content)
+                return self.lastr
 
     def trace(self):
         """Trace requests

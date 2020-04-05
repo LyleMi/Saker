@@ -10,6 +10,8 @@ def b64d(s):
     '''
     auto handle url encode / url safe base64
     '''
+    if isinstance(s, bytes):
+        s = s.decode()
     if '%' in s:
         s = unquote(s)
     if '-' in s or '_' in s:

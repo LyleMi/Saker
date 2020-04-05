@@ -67,13 +67,16 @@ _verbs = [
     'REMOVE',
     'DEBUG',
     'TRACK',
+    'CONNECT',
+    'TRACE',
     'FORWARD',
     'INFO',
+    'OPTIONS',
+    'HEAD',
     'GET',
     'PUT',
     'POST',
     'DELETE',
-    'OPTIONS',
 ]
 
 
