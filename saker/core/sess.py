@@ -85,7 +85,7 @@ class Sess(object):
             self.get(path)
             with open(cachefile, 'wb') as fh:
                 fh.write(self.lastr.content)
-                return self.lastr
+                return self.lastr.content
 
     def trace(self):
         """Trace requests
@@ -104,7 +104,7 @@ class Sess(object):
     def _callback(self):
         """Request Callback
         """
-        if 'Content-Type' in self.lastr.headers and self.lastr.headers['Content-Type'] == 'application/json; charset="utf-8"':
+        if 'Content-Type' in self.lastr.headers and self.lastr.headers['Content-Type'].startswith('application/json;'):
             self.jsonLoadr()
 
     def jsonLoadr(self):
@@ -114,9 +114,11 @@ class Sess(object):
             return
         try:
             self.jsonr = AttribDict(json.loads(self.lastr.text))
+            return self.jsonr
         except json.decoder.JSONDecodeError as e:
             pass
-        return self.jsonr
+        except Exception as e:
+            print(repr(e))
 
     def loadCookie(self, pkl='.cookie.pkl'):
         """load saved cookie
@@ -138,6 +140,9 @@ class Sess(object):
         with open(pkl, 'wb') as f:
             pickle.dump(self.s.cookies, f)
 
+    def setCookie(self, key, value):
+        self.s.cookies.set(key, value)
+
     def setProxies(self, proxies):
         """set request proxies
         """
@@ -149,8 +154,17 @@ class Sess(object):
                 "https": proxies,
             }
 
+    def setHeader(self, key, value):
+        self.s.headers[key] = value
+
     def setUA(self, UA=""):
         """set default User Agent
         """
         from saker.utils.common import randua
-        self.s.headers["User-Agent"] = UA if UA else randua()
+        ua = UA if UA else randua()
+        self.setHeader("User-Agent", ua)
+
+    def setXFF(self, ip="1.1.1.1"):
+        self.setHeader("X-Forwarded-For", ip)
+        self.setHeader("X-Real-IP", ip)
+        self.setHeader("HTTP_CLIENT_IP", ip)
