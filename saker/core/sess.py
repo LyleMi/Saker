@@ -127,8 +127,8 @@ class Sess(object):
             pkl (str, optional): cookie file name
         """
         self.logger.debug('loading cookie...')
-        with open(pkl, 'rb') as f:
-            self.s.cookies = pickle.load(f)
+        with open(pkl, 'rb') as fh:
+            self.s.cookies = pickle.load(fh)
 
     def saveCookie(self, pkl='.cookie.pkl'):
         """save cookie
@@ -137,8 +137,8 @@ class Sess(object):
             pkl (str, optional): cookie file name
         """
         self.logger.debug('save cookie...')
-        with open(pkl, 'wb') as f:
-            pickle.dump(self.s.cookies, f)
+        with open(pkl, 'wb') as fh:
+            pickle.dump(self.s.cookies, fh)
 
     def setCookie(self, key, value):
         self.s.cookies.set(key, value)
