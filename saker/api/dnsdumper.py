@@ -34,7 +34,7 @@ def DNSdumpster(domain):
         return False, "dnsdumpster return a %d" % req.status_code
 
     regRel = re.compile('[a-zA-Z0-9\-\.]+\.' + domain, re.IGNORECASE)
-    domains = regRel.findall(req.content)
+    domains = regRel.findall(req.text)
 
     if not domains:
         return False, "no result"
