@@ -21,6 +21,10 @@ class MySQLi(SQLi):
     ]
 
     @classmethod
+    def version(cls):
+        return "version()"
+
+    @classmethod
     def schemas(cls, bias=-1):
         # todo
         # add innodb_table_stats
