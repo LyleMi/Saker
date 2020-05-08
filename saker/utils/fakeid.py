@@ -33,7 +33,7 @@ def fakeid():
         areaid = json.load(fh)
     ids = list(areaid.keys())
     aid = random.choice(ids)
-    age = random.randint(20, 80)
+    age = random.randint(20, 40)
     dates = date(date.today().year - age, 1, 1) + timedelta(days=random.randint(0, 364))
     dates = str(dates).replace("-", "")
     seq = str(random.randint(1, 99)).rjust(2, '0')

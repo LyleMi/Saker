@@ -5,17 +5,12 @@ from setuptools import setup
 from setuptools import find_packages
 
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-requires = [
-    'ipaddress>=1.0.19',
-    'netaddr>=0.7.19',
-    'requests>=2.20.0',
-    'six>=1.11.0',
-    'urllib3>=1.22',
-    'dnspython>=1.15.0'
-]
+with open("requirements.txt", "r", encoding="utf-8") as fh:
+    requires = fh.read().split("\n")
+    requires.remove('')
 
 setup(
     name="Saker",

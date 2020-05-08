@@ -15,4 +15,4 @@ class Nginx(Fuzzer):
         second = requests.get(url + "../" + static + "/" + file)
         if first.status_code == 200 and second.status_code == 200:
             return True
-        return Fals
+        return False
