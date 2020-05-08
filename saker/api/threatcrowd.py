@@ -22,6 +22,8 @@ class Threatcrowd(object):
             "domain": domain
         }
         r = requests.get(cls.url + api, params=params)
+        # print(r.status_code)
+        # print(r.text)
         data = json.loads(r.text)
-        data = data["subdomains"]
+        data = data.get("subdomains", [])
         return data

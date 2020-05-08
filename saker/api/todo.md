@@ -1,8 +1,6 @@
 # Information Gathering
 
-https://dnsdumpster.com
 https://web.archive.org
-https://shodan.io
 https://virustotal.com
 https://www.binaryedge.io
 https://securitytrails.com
