@@ -5,7 +5,6 @@ https://virustotal.com
 https://www.binaryedge.io
 https://securitytrails.com
 https://sslmate.com/certspotter
-https://censys.io
 https://threatminer.org
 http://dns.bufferover.run
 https://hackertarget.com

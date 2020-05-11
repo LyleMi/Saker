@@ -48,6 +48,5 @@ def checkCodeCal(code):
     weight = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
     code = sum([a * b for a, b in zip(weight, code)])
     code %= 11
-    if code == 10:
-        return 'X'
-    return str(code)
+    codes = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2']
+    return codes[code]
