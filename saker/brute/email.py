@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import random
 import smtplib
 
 from saker.brute.brute import Brute
@@ -78,3 +79,15 @@ class Email(Brute):
             smtpServer.ehlo()
             smtpServer.starttls()
         return smtpServer
+
+    def verify(self, mail, srv):
+        helo = s.docmd('HELO example.com')
+        s.docmd('MAIL FROM:<%s@example.com>' % random.random())
+        s.docmd('RCPT TO:<%s>' % mail)
+        if send_from[0] in [250, 451]:
+            # 邮箱存在
+            return True
+        elif send_from[0] == 550:
+            return False
+        else:
+            return None

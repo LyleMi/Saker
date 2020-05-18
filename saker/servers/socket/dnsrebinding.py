@@ -28,6 +28,24 @@ class RebindingServer(socketserver.UDPServer):
         return record, ttl, recordType
 
 
+class HexServer(socketserver.UDPServer):
+
+    def __init__(self):
+        socketserver.UDPServer.__init__(
+            self, ('0.0.0.0', 53), RequestHandler
+        )
+
+    def getRecord(self, qname):
+        payload = qname.split('.')[0]
+        try:
+            record = bytes.fromhex(payload).decode()
+        except Exception as e:
+            record = '127.0.0.1'
+        ttl = 600
+        recordType = 'A'
+        return record, ttl, recordType
+
+
 class RequestHandler(socketserver.DatagramRequestHandler):
 
     def handle(self):
@@ -48,11 +66,20 @@ class RequestHandler(socketserver.DatagramRequestHandler):
 
 
 def main():
+    hexServer()
+
+
+def rebindingServer():
     values = {
         'result': ['8.8.8.8', '127.0.0.1'],
         'index': 0
     }
     dnsServer = RebindingServer(values)
+    dnsServer.serve_forever()
+
+
+def hexServer():
+    dnsServer = HexServer()
     dnsServer.serve_forever()
 
 
