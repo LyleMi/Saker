@@ -145,13 +145,3 @@ class GithubAPI(object):
             for parameter in datas:
                 print(parameter)
                 parameters[parameter] += 1
-            break
-
-
-if __name__ == '__main__':
-    token = ''
-    g = GithubAPI(token)
-    # print(g.gatherByEmail('@github.com'))
-    # g.gatherParameter()
-    # g.getUsersByOrgContributors('')
-    # g.dumpUsersInfo()
