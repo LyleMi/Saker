@@ -83,6 +83,7 @@ class Sess(object):
                 return fh.read()
         else:
             self.get(path)
+            self.logger.debug('cache save %s to file %s' % (path, cachefile))
             with open(cachefile, 'wb') as fh:
                 fh.write(self.lastr.content)
                 return self.lastr.content

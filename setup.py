@@ -14,7 +14,7 @@ with open("requirements.txt", "r", encoding="utf-8") as fh:
 
 setup(
     name="Saker",
-    version="1.0.5",
+    version="1.0.6",
     keywords=("Web Security", "Fuzz"),
     description="Tool For Fuzz Web Applications",
     long_description=long_description,

@@ -26,5 +26,4 @@ class SmtpBrute(Brute):
                     return True
                 except smtplib.SMTPAuthenticationError:
                     pass
-
         return False

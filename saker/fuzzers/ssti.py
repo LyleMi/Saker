@@ -15,6 +15,7 @@ class SSTI(Fuzzer):
         "Jinja2": "{{ config.items() }}",
         "Django": "{{ request }}",
         "ruby": "<%= 7 * 7 %>",
+        "freemaker": "${7*7}",
         "ruby": "${7*7}",
         "Twig": "{{ 7*7 }}",
     }

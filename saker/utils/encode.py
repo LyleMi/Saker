@@ -6,6 +6,12 @@ from urllib.parse import quote
 from urllib.parse import unquote
 
 
+def b64e(s):
+    if isinstance(s, str):
+        s = s.encode()
+    return base64.b64encode(s).decode()
+
+
 def b64d(s):
     '''
     auto handle url encode / url safe base64

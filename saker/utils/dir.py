@@ -13,3 +13,12 @@ def traverse(path):
                 yield p
         elif os.path.isfile(tmp):
             yield tmp
+
+
+def makeIfNotExists(path):
+    paths = path.split(os.sep)
+    cur = ''
+    for path in paths:
+        cur = os.path.join(cur, path)
+        if not os.path.exists(cur):
+            os.mkdir(cur)
