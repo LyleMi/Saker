@@ -11,3 +11,6 @@ class NmapTest(unittest.TestCase):
     def test_scan(self):
         n = Nmap('github.com')
         n.dump()
+
+if __name__ == '__main__':
+    unittest.main()

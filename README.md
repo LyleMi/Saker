@@ -9,16 +9,26 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.6-blue.svg">
   <img src="https://img.shields.io/github/issues/lylemi/saker.svg">
-  <img src="https://img.shields.io/github/forks/lylemi/saker.svg">
   <img src="https://img.shields.io/github/stars/lylemi/saker.svg">
+  <img src="https://img.shields.io/github/forks/lylemi/saker.svg">
   <img src="https://img.shields.io/github/license/lylemi/saker.svg">
+  <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat&label=Contributions&colorA=red&colorB=black" />
 </p>
 
 [中文版本(Chinese version)](README.zh-cn.md)
 
 Saker is a flexible penetrate testing auxiliary suite. 
 
-## TL;DR
+## Table of contents
+
+- [Features](https://github.com/LyleMi/saker#features)
+- [Quick Setup](https://github.com/LyleMi/saker#quick-setup)
+- [Example Cases](https://github.com/LyleMi/saker#example-cases)
+- [Contributing](https://github.com/LyleMi/saker#contributing)
+- [Disclaimer](https://github.com/LyleMi/saker#disclaimer)
+- [License](https://github.com/LyleMi/saker#license)
+
+## Features
 
 brief support features:
 
@@ -43,10 +53,14 @@ brief support features:
   + ssrf
   + xss
 + third party api integration
+  + censys
   + crtsh
   + dns dumper
+  + fofa
   + github
+  + shodan
   + sqlmap
+  + threadcrowd
 
 ## Quick Setup
 
@@ -268,6 +282,10 @@ This project is for educational purposes only. Do not test or attack any system 
 ## Show your support
 
 Please star this repository if this project helped you.
+
+## Issues
+
+If you face any issue, you can create a new issue in the [Issues Tab](https://github.com/lylemi/saker/issues) and I will be glad to help you out.
 
 ## License
 

@@ -77,9 +77,10 @@ class Nmap(object):
     def json(self):
         return json.dumps(self.result)
 
-    def dump(self):
+    def dump(self, dumpDir=""):
         self.run()
-        if len(self.result) < 0:
+        if self.result is None or vlen(self.result) < 0:
             return
-        with open(self.target + '.json', "w") as fh:
+        dumpPath = os.path.join(dumpDir, self.target + '.json')
+        with open(dumpPath, "w") as fh:
             fh.write(self.json)
