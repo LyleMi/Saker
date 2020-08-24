@@ -24,8 +24,13 @@ class Threatcrowd(object):
         r = self.s.get(self.url + api, params=params)
         # print(r.status_code)
         # print(r.text)
-        data = json.loads(r.text)
-        data = data.get("subdomains", [])
+        try:
+            data = json.loads(r.text)
+            data = data.get("subdomains", [])
+        except Exception as e:
+            # ban by cf
+            print(repr(e))
+            data = []
         return data
 
     def ipReport(self, ip):

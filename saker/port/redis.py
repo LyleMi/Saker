@@ -16,10 +16,17 @@ class redisDetect(object):
             self.config = r.config_get()
             return True
         except redis.exceptions.ConnectionError as e:
-            return False
+            return False, "ConnectionError"
         except redis.exceptions.TimeoutError as e:
+            return False, "TimeoutError"
+        except Exception as e:
+            print(repr(e))
             return False
 
-
-if __name__ == '__main__':
-    pass
+    def tryWrite(self):
+        commands = [
+            "CONFIG SET dir /tmp/",
+            "SET XX \"file_content\"",
+            "CONFIG SET dbfilename xxx.log",
+            "save",
+        ]

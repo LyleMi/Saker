@@ -169,3 +169,15 @@ class Sess(object):
         self.setHeader("X-Forwarded-For", ip)
         self.setHeader("X-Real-IP", ip)
         self.setHeader("HTTP_CLIENT_IP", ip)
+
+    def sendRaw(self, method, url):
+        '''
+        handle url like ../../../
+        '''
+        s = requests.Session()
+        r = requests.Request(method, url)
+        r.url = url
+        prepared = r.prepare()
+        prepared.url = url
+        r = s.send(prepared)
+        return r

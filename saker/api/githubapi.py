@@ -126,10 +126,17 @@ class GithubAPI(object):
         emails = []
         reg = re.compile(r'[a-zA-Z0-9\-\.]*' + suffix.replace('.', '\\.'), re.IGNORECASE)
         pages = self.g.search_code(suffix)
+        count = 1
         for page in pages:
+            self.logger.debug("%s page" % count)
+            count += 1
             # for access rate limit
             self.wait()
-            datas = reg.findall(page.decoded_content.decode())
+            try:
+                datas = reg.findall(page.decoded_content.decode())
+            except Exception as e:
+                self.logger.error(repr(e))
+                continue
             for email in datas:
                 if email not in emails:
                     yield email

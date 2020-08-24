@@ -44,12 +44,3 @@ class RawHTTP(object):
         resp = s.recv(4096)
         s.close()
         return resp
-
-    def setProxy(self, addr, port, username=None, password=None, proxy_type=socks.SOCKS5):
-        # pip install PySocks
-        import socks
-        socks.set_default_proxy(
-            proxy_type, addr=addr, port=port, username=username, password=password
-        )
-        # socket.socket = socks.socksocket
-        self.socket = socks.socksocket
