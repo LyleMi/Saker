@@ -8,6 +8,7 @@ from saker.cmdline.scan import scan
 from saker.cmdline.port import port
 from saker.cmdline.fuzz import fuzz
 from saker.cmdline.server import server
+from saker.cmdline.util import util
 
 
 def main():
@@ -19,8 +20,10 @@ def main():
         port(sys.argv[2:])
     elif sys.argv[1] == 'server':
         server(sys.argv[2:])
+    elif sys.argv[1] == 'util':
+        util(sys.argv[2:])
     else:
-        print('unknown command, support scan / fuzz / port')
+        print('unknown command, support scan / fuzz / port / server / util')
 
 
 if __name__ == '__main__':
