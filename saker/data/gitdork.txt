@@ -1,0 +1,186 @@
+# https://github.com/obheda12/GitDorker/blob/master/Dorks/alldorks.txt
+
+AWSSecretKey
+JEKYLL_GITHUB_TOKEN
+SF_USERNAME salesforce
+access_key
+access_token
+amazonaws
+apiSecret
+api_key
+api_secret
+apidocs
+apikey
+app_key
+app_secret
+appkey
+appkeysecret
+application_key
+appsecret
+auth
+auth_token
+authorizationToken
+aws_access
+aws_access_key_id
+aws_key
+aws_secret
+aws_token
+password
+bucket_password
+client_secret
+cloudfront
+config
+conn.login
+connectionstring
+consumer_key
+credentials
+database_password
+db_password
+db_username
+dbpasswd
+dbpassword
+dbuser
+encryption_key
+firebase
+ftp
+gh_token
+github_key
+github_token
+gitlab
+gmail_password
+gmail_username
+internal
+key
+keyPassword
+ldap_password
+ldap_username
+login
+mail
+master_key
+mysql
+node_env
+oauth_token
+pass
+passwd
+password
+passwords
+pem private
+preprod
+private_key
+prod
+pwd
+pwds
+secret
+secrets
+secure
+security_credentials
+send.keys
+send_keys
+sendkeys
+sf_username
+slack_api
+slack_token
+sql_password
+ssh
+ssh2_auth_password
+sshpass
+staging
+stg
+storePassword
+stripe
+swagger
+testuser
+token
+x-api-key
+HEROKU_API_KEY language:json
+HEROKU_API_KEY language:shell
+HOMEBREW_GITHUB_API_TOKEN language:shell
+PT_TOKEN language:bash
+[WFClient] Password= extension:ica
+extension:avastlic support.avast.com
+extension:cfg
+extension:env
+extension:exs
+extension:ini
+extension:pem
+extension:pem private
+extension:ppk
+extension:ppk private
+extension:properties
+extension:sh
+extension:sls
+extension:sql
+extension:sql password
+filename:.git-credentials
+filename:.history
+filename:.htpasswd
+filename:.tugboat NOT _tugboat
+filename:bash_history
+filename:bash_profile
+filename:bashrc
+filename:beanstalkd.yml
+filename:composer.json
+filename:config
+filename:config
+filename:config.json
+filename:config.php
+filename:configuration.php JConfig password
+filename:connections
+filename:connections.xml
+filename:constants
+filename:credentials
+filename:credentials aws_access_key_id
+filename:cshrc
+filename:database
+filename:dbeaver-data-sources.xml
+filename:deploy.rake
+filename:deployment-config.json
+filename:dhcpd.conf
+filename:dockercfg
+filename:environment
+filename:express.conf
+filename:express.conf path:.openshift
+filename:filezilla.xml
+filename:filezilla.xml Pass
+filename:git-credentials
+filename:gitconfig
+filename:global
+filename:history
+filename:htpasswd
+filename:hub oauth_token
+filename:id_dsa
+filename:id_rsa
+filename:id_rsa or filename:id_dsa
+filename:idea14.key
+filename:known_hosts
+filename:logins.json
+filename:makefile
+filename:master.key path:config
+filename:netrc
+filename:npmrc
+filename:pass
+filename:passwd path:etc
+filename:pgpass
+filename:prod.exs
+filename:prod.exs NOT prod.secret.exs
+filename:prod.secret.exs
+filename:proftpdpasswd
+filename:recentservers.xml
+filename:recentservers.xml Pass
+filename:robomongo.json
+filename:s3cfg
+filename:secrets.yml password
+filename:server.cfg
+filename:server.cfg rcon password
+filename:settings
+filename:settings.py SECRET_KEY
+filename:sftp-config.json
+filename:sftp.json path:.vscode
+filename:shadow
+filename:shadow path:etc
+filename:spec
+filename:sshd_config
+filename:tugboat
+filename:ventrilo_srv.ini
+filename:wp-config
+filename:wp-config.php
