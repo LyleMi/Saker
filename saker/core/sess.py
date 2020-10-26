@@ -141,7 +141,7 @@ class Sess(object):
         with open(pkl, 'wb') as fh:
             pickle.dump(self.s.cookies, fh)
 
-    def setCookie(self, key, value):
+    def setCookie(self, key, value, **kwargs):
         self.s.cookies.set(key, value)
 
     def setProxies(self, proxies):
@@ -165,10 +165,37 @@ class Sess(object):
         ua = UA if UA else randua()
         self.setHeader("User-Agent", ua)
 
-    def setXFF(self, ip="1.1.1.1"):
-        self.setHeader("X-Forwarded-For", ip)
-        self.setHeader("X-Real-IP", ip)
-        self.setHeader("HTTP_CLIENT_IP", ip)
+    def setXFF(self, ip="1.1.1.1", setAll=False):
+        commonHeaders = [
+            "X-Forwarded-For",
+            "X-Real-IP",
+            "HTTP_CLIENT_IP",
+        ]
+        allHeaders = [
+            "Ali-CDN-Real-IP",
+            "Cdn-Real-Ip",
+            "Cdn-Src-Ip",
+            "CF-Connecting-IP",
+            "Client-IP",
+            "Fastly-Client-Ip",
+            "Proxy-Client-IP",
+            "True-Client-Ip",
+            "WL-Proxy-Client-IP",
+            "X-Client-IP",
+            "X-Cluster-Client-IP",
+            "X-Forwarded",
+            "X-Forwarded-By",
+            "X-Forwarded-For-Original",
+            "X-Forwarded-Host",
+            "X-remote-addr",
+            "X-remote-IP",
+        ]
+        if setAll:
+            headers = commonHeaders + allHeaders
+        else:
+            headers = commonHeaders
+        for header in headers:
+            self.setHeader(header, ip)
 
     def sendRaw(self, method, url):
         '''

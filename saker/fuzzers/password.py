@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from saker.fuzzers.fuzzer import Fuzzer
-
+from saker.utils.paths import Paths
 
 class Password(Fuzzer):
 
@@ -47,3 +47,9 @@ class Password(Fuzzer):
         }
         for p in cls.pwdlist:
             yield p.format(**info)
+
+    @classmethod
+    def commonPass(cls):
+        with open(Paths.passwords, "r", encoding="utf-8") as fh:
+            for p in fh:
+                yield p.strip()

@@ -19,6 +19,7 @@ class Paths(object):
     dirs = op.join(base, "data", "website", "dir.txt")
     weakfile = op.join(base, "data", "website", "weakfile.txt")
     senpath = op.join(base, "data", "website", "sensitivepath.txt")
+    webdict = op.join(base, "data", "website", "dict.txt")
     
     subnames = op.join(base, "domains", "subnames.txt")
     usernames = op.join(base, "data", "userpass", "small-user.txt")
