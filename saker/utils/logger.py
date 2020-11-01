@@ -35,11 +35,11 @@ class ColoredFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-def getLogger(loggername="saker"):
+def getLogger(loggername="saker", logfile=False, logpath=None):
     logger = logging.getLogger(loggername)
     if len(logger.handlers) > 0:
         return logger
-    return initLogger(logger)
+    return initLogger(logger, logfile, logpath)
 
 
 def initLogger(logger, logfile=False, logpath=None):
@@ -61,6 +61,7 @@ def initLogger(logger, logfile=False, logpath=None):
             logpath = os.path.join(logdir, "saker-" + today() + ".log")
             if not os.path.exists(logdir):
                 os.mkdir(logdir)
+    if logpath is not None:
         fh = logging.FileHandler(logpath)
         fh.setLevel(logging.DEBUG)
         fh.setFormatter(formatter)

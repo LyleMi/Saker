@@ -18,6 +18,18 @@ class Fuzzer(object):
         "01",
     ]
 
+    empty = [
+        "\x09",
+        "\x0a",
+        "\x0c",
+        "\x20",
+    ]
+
+    space = [
+        " ",
+        "\t",
+    ]
+
     def __init__(self):
         super(Fuzzer, self).__init__()
 
