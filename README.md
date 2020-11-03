@@ -21,46 +21,46 @@ Saker is a flexible penetrate testing auxiliary suite.
 
 ## Table of contents
 
-- [Features](https://github.com/LyleMi/saker#features)
-- [Quick Setup](https://github.com/LyleMi/saker#quick-setup)
-- [Example Cases](https://github.com/LyleMi/saker#example-cases)
-- [Contributing](https://github.com/LyleMi/saker#contributing)
-- [Disclaimer](https://github.com/LyleMi/saker#disclaimer)
-- [License](https://github.com/LyleMi/saker#license)
+- [Features](#features)
+- [Quick Setup](#quick-setup)
+- [Example Cases](#example-cases)
+- [Contributing](#contributing)
+- [Disclaimer](#disclaimer)
+- [License](#license)
 
 ## Features
 
 brief support features:
 
-+ scan website
-  + infomation gathering
-  + framework fingerprint
-+ fuzz web request
-  + XSS
-  + SQL injection
-  + SSRF
-  + XXE
-  + ...
-+ subdomain gathering
-+ port scanner
-+ bruteforce
-  + web dir
-  + zip password
-  + domain
-  + ...
-+ auxiliary servers
-  + dns rebinding
-  + ssrf
-  + xss
-+ third party api integration
-  + censys
-  + crtsh
-  + dns dumper
-  + fofa
-  + github
-  + shodan
-  + sqlmap
-  + threadcrowd
+- scan website
+  - infomation gathering
+  - framework fingerprint
+- fuzz web request
+  - XSS
+  - SQL injection
+  - SSRF
+  - XXE
+  - ...
+- subdomain gathering
+- port scanner
+- bruteforce
+  - web dir
+  - zip password
+  - domain
+  - ...
+- auxiliary servers
+  - dns rebinding
+  - ssrf
+  - xss
+- third party api integration
+  - censys
+  - crtsh
+  - dns dumper
+  - fofa
+  - github
+  - shodan
+  - sqlmap
+  - threadcrowd
 
 ## Quick Setup
 
@@ -289,6 +289,6 @@ If you face any issue, you can create a new issue in the [Issues Tab](https://gi
 
 ## License
 
-Copyright © 2019 [Lyle](https://github.com/lylemi).
+Copyright © 2019-2020 [Lyle](https://github.com/lylemi).
 
 This project is [GPLv3](https://github.com/lylemi/saker/blob/master/LICENSE) licensed.
