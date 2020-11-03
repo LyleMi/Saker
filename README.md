@@ -67,7 +67,7 @@ brief support features:
 ### latest version
 
 ```bash
-pip install git+https://github.com/lylemi/saker
+pip install -U git+https://github.com/lylemi/saker
 ```
 
 ```bash

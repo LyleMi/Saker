@@ -54,7 +54,7 @@ Saker是一个辅助测试Web站点的工具，有信息收集、渗透测试、
 ### 最新版本
 
 ```bash
-pip install git+https://github.com/lylemi/saker
+pip install -U git+https://github.com/lylemi/saker
 ```
 
 ```bash

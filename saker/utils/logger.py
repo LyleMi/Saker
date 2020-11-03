@@ -35,35 +35,39 @@ class ColoredFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-def getLogger(loggername="saker", logfile=False, logpath=None):
+def getLogger(loggername="saker", logpath=None):
     logger = logging.getLogger(loggername)
     if len(logger.handlers) > 0:
         return logger
-    return initLogger(logger, logfile, logpath)
-
-
-def initLogger(logger, logfile=False, logpath=None):
     logger.setLevel(logging.DEBUG)
+    ch = commandHandler()
+    logger.addHandler(ch)
+    if logpath is not None:
+        fh = fileHandler(logpath)
+        logger.addHandler(fh)
+    return logger
+
+
+def commandHandler(loggerLevel=logging.DEBUG):
+    formatStr = '[%(asctime)s] [%(levelname)s] %(message)s'
+    ch = logging.StreamHandler()
+    ch.setLevel(loggerLevel)
+    chformatter = ColoredFormatter(formatStr)
+    ch.setFormatter(chformatter)
+    return ch
+
+
+def fileHandler(logpath, loggerLevel=logging.DEBUG):
+    if logpath is None:
+        logdir = os.path.join(".", "logs")
+        logpath = os.path.join(logdir, "saker-" + today() + ".log")
+        if not os.path.exists(logdir):
+            os.mkdir(logdir)
+
     formatStr = '[%(asctime)s] [%(levelname)s] %(message)s'
     formatter = logging.Formatter(formatStr)
 
-    # command line logger
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    chformatter = ColoredFormatter(formatStr)
-    ch.setFormatter(chformatter)
-    logger.addHandler(ch)
-
-    # file logger
-    if logfile:
-        if logpath is None:
-            logdir = os.path.join(".", "logs")
-            logpath = os.path.join(logdir, "saker-" + today() + ".log")
-            if not os.path.exists(logdir):
-                os.mkdir(logdir)
-    if logpath is not None:
-        fh = logging.FileHandler(logpath)
-        fh.setLevel(logging.DEBUG)
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-    return logger
+    fh = logging.FileHandler(logpath)
+    fh.setLevel(loggerLevel)
+    fh.setFormatter(formatter)
+    return fh
