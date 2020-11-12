@@ -77,6 +77,12 @@ foreach (scandir($dir) as $file) {
         code = "rmdir('%s');" % filePath
         self.shell(code)
 
+    def sshKey(self, pubkey, homedir="/home/ubuntu"):
+        self.mkdir("%s/.ssh" % homedir)
+        self.writeFile("%s/.ssh/authorized_keys" % homedir, pubkey)
+        self.shell("chmod('/home/www/.ssh/authorized_keys', 0700);")
+        self.shell("chmod('/home/www/.ssh', 0700);")
+
     def doCurl(self):
         code = """
 $ch = curl_init();

@@ -29,13 +29,13 @@ class DoS(Fuzzer):
         return r
 
     @classmethod
-    def slowWrite(cls, conn, req, interval):
+    def slowWrite(cls, conn, req, interval=0.3):
         for b in req:
             conn.send(b.to_bytes(length=1, byteorder="little"))
             time.sleep(interval)
 
     @classmethod
-    def slowRead(cls, conn, interval):
+    def slowRead(cls, conn, interval=0.3):
         while True:
             conn.recv(1)
             time.sleep(interval)

@@ -2,28 +2,25 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import importlib
 
-from pprint import pprint
-from saker.cmdline.scan import scan
-from saker.cmdline.port import port
-from saker.cmdline.fuzz import fuzz
-from saker.cmdline.server import server
-from saker.cmdline.util import util
 
 
 def main():
-    if sys.argv[1] == 'scan':
-        scan(sys.argv[2:])
-    elif sys.argv[1] == 'fuzz':
-        fuzz(sys.argv[2:])
-    elif sys.argv[1] == 'port':
-        port(sys.argv[2:])
-    elif sys.argv[1] == 'server':
-        server(sys.argv[2:])
-    elif sys.argv[1] == 'util':
-        util(sys.argv[2:])
+    supportActions = [
+        "scan",
+        "fuzz",
+        "fuzzsock",
+        "port",
+        "server",
+        "util",
+    ]
+    if sys.argv[1] in supportActions:
+        module = importlib.import_module("saker.cmdline.%s" % sys.argv[1])
+        func = getattr(module, sys.argv[1])
+        func(sys.argv[2:])
     else:
-        print('unknown command, support scan / fuzz / port / server / util')
+        print("unknown command, support %s" % "/".join(supportActions))
 
 
 if __name__ == '__main__':

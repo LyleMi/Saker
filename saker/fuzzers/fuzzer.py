@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import random
 import string
 
@@ -51,6 +52,10 @@ class Fuzzer(object):
     @classmethod
     def randomCStr(cls, length=random.randint(1, 100)):
         return cls.randomStr(string.letters + string.digits, length)
+
+    @classmethod
+    def randomBytes(cls, length=random.randint(1, 100)):
+        return os.urandom(length)
 
     @classmethod
     def randomDict(cls, length=random.randint(1, 10)):

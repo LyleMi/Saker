@@ -49,3 +49,11 @@ class udpSock(Sock):
 
     def recv(self, len=4096):
         return self.sock.recvfrom(len)
+
+
+def autoSock(addr, port, type):
+    if type == "tcp":
+        sock = tcpSock(addr, port)
+    else:
+        sock = udpSock(addr, port)
+    return sock

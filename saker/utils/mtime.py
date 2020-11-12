@@ -49,3 +49,15 @@ def time2str(t):
 
 def weekday():
     return datetime.datetime.now().isoweekday()
+
+
+class Timer(object):
+
+    def __init__(self):
+        super(Timer, self).__init__()
+
+    def start(self):
+        self.starttime = time.time()
+
+    def end(self):
+        print(time.time() - self.starttime)

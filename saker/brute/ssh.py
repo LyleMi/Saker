@@ -24,11 +24,13 @@ class SSH(Brute):
         try:
             client = paramiko.SSHClient()
             client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            client.connect(hostname=self.addr,
-                           port=self.port,
-                           username=user,
-                           password=pwd,
-                           timeout=20)
+            client.connect(
+                hostname=self.addr,
+                port=self.port,
+                username=user,
+                password=pwd,
+                timeout=20
+            )
             res.append(arg)
             return True
         except Exception as e:
