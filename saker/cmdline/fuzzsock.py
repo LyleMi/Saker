@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
 import random
 import argparse
 
@@ -44,5 +45,6 @@ def fuzzsock(args):
         hexdump(data)
         sock.send(data)
         # DoS.slowWrite(sock, data)
-        print(sock.recv(1024))
+        hexdump(sock.recv(1024))
         t.end()
+        time.sleep(1)

@@ -1,3 +1,4 @@
+import ssl
 import socket
 
 
@@ -22,11 +23,13 @@ class Sock(object):
 
 class tcpSock(Sock):
 
-    def __init__(self, addr, port):
+    def __init__(self, addr, port, ssl=False):
         super(tcpSock, self).__init__(addr, port)
         self.sock = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )
+        if ssl:
+            self.sock = wrapSSL(self.sock)
         self.sock.connect((addr, port))
 
     def send(self, data):
@@ -54,6 +57,20 @@ class udpSock(Sock):
 def autoSock(addr, port, type):
     if type == "tcp":
         sock = tcpSock(addr, port)
-    else:
+    elif type == "udp":
         sock = udpSock(addr, port)
     return sock
+
+
+def wrapSSL(conn):
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_1)
+    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context.verify_mode = ssl.CERT_NONE
+    conn = context.wrap_socket(
+        conn,
+        server_side=False,
+    )
+    # conn = context.wrap_socket(conn, server_hostname=url.hostname)
+    # conn = context.wrap_socket(conn, server_hostname="vpn.safeapp.com.cn")
+    return conn
