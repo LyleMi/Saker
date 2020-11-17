@@ -208,3 +208,7 @@ class Sess(object):
         prepared.url = url
         r = s.send(prepared)
         return r
+
+    def dump(self, filepath):
+        with open(filepath, "wb") as fh:
+            fh.write(self.lastr.content)
