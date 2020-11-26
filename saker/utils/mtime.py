@@ -14,7 +14,7 @@ def now():
 
 def today():
     # 返回今天的时间
-    return time.strftime('%Y-%m-%d', time.localtime(time.time()))
+    return time.strftime("%Y-%m-%d", time.localtime(time.time()))
 
 
 def nowdate():
@@ -39,12 +39,12 @@ def unixtoday():
     return int(str2time(today()))
 
 
-def str2time(s):
-    return time.mktime(time.strptime(s, "%Y-%m-%d"))
+def str2time(s, timeFormat="%Y-%m-%d %H:%M:%S"):
+    return time.mktime(time.strptime(s, timeFormat))
 
 
-def time2str(t):
-    return time.strftime(ISOTIMEFORMAT, time.localtime(t))
+def time2str(t, timeFormat=ISOTIMEFORMAT):
+    return time.strftime(timeFormat, time.localtime(t))
 
 
 def weekday():

@@ -23,6 +23,6 @@ class ShodanAPI(object):
         ret = self.api.scan(ips, force=force)
         return ret
 
-    def scan_status(self, scanid)
+    def scan_status(self, scanid):
         ret = self.api.scan_status(scanid)
         return ret
