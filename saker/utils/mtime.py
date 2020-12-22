@@ -36,7 +36,7 @@ def unixnow():
 
 
 def unixtoday():
-    return int(str2time(today()))
+    return int(str2time(today(), "%Y-%m-%d"))
 
 
 def str2time(s, timeFormat="%Y-%m-%d %H:%M:%S"):
@@ -44,6 +44,11 @@ def str2time(s, timeFormat="%Y-%m-%d %H:%M:%S"):
 
 
 def time2str(t, timeFormat=ISOTIMEFORMAT):
+    if isinstance(t, str):
+        t = float(t)
+    if t > 10000000000:
+        # 过大可能是毫秒为单位
+        t /= 1000
     return time.strftime(timeFormat, time.localtime(t))
 
 

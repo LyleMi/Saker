@@ -27,6 +27,10 @@ def b64d(s):
     return base64.b64decode(s)
 
 
+def decodeURL(s):
+    return unquote(s)
+
+
 def doubleURL(s):
     return quote(quote(s))
 
