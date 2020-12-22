@@ -47,3 +47,6 @@ class Serializer(object):
         with open(self.getPath(identifier), self.readMode) as fh:
             data = self.serializer.load(fh)
         return data
+
+    def remove(self, identifier):
+        os.unlink(self.getPath(identifier))

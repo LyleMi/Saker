@@ -1,6 +1,11 @@
 import ssl
 import socket
 
+try:
+    import socks
+except Exception as e:
+    print("PySocks not installed")
+
 
 class SockType:
 
@@ -74,3 +79,12 @@ def wrapSSL(conn):
     # conn = context.wrap_socket(conn, server_hostname=url.hostname)
     # conn = context.wrap_socket(conn, server_hostname="vpn.safeapp.com.cn")
     return conn
+
+
+def setProxy(addr, port, username=None, password=None, proxy_type=socks.SOCKS5):
+    # pip install PySocks
+    socks.set_default_proxy(
+        proxy_type, addr=addr, port=port,
+        username=username, password=password
+    )
+    socket.socket = socks.socksocket

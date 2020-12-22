@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from saker.utils.common import randua
-
 
 class HeaderHandler(object):
 
@@ -22,7 +20,7 @@ class HeaderHandler(object):
         self.headers["Content-type"] = "application/json"
 
     def setua(self, UA=""):
-        self.headers["User-Agent"] = UA if UA else randua()
+        self.headers["User-Agent"] = UA
 
     def setajax(self):
         self.headers["X-Requested-With"] = "XMLHttpRequest"

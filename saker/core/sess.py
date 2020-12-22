@@ -4,6 +4,7 @@
 import os
 import json
 import pickle
+import random
 import requests
 
 from saker.handler.headerHandler import HeaderHandler
@@ -11,6 +12,7 @@ from saker.utils.url import normalizeUrl
 from saker.utils.hash import md5
 from saker.utils.logger import getLogger
 from saker.utils.datatype import AttribDict
+from saker.utils.paths import Paths
 
 
 class Sess(object):
@@ -162,8 +164,7 @@ class Sess(object):
     def setUA(self, UA=""):
         """set default User Agent
         """
-        from saker.utils.common import randua
-        ua = UA if UA else randua()
+        ua = UA if UA else self.randua()
         self.setHeader("User-Agent", ua)
 
     def setXFF(self, ip="1.1.1.1", setAll=False):
@@ -213,3 +214,8 @@ class Sess(object):
     def dump(self, filepath):
         with open(filepath, "wb") as fh:
             fh.write(self.lastr.content)
+
+    def randua(self):
+        with open(Paths.uas) as fp:
+            ua = random.choice([i.strip("\n") for i in fp])
+        return ua

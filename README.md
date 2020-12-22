@@ -87,7 +87,7 @@ pip install Saker
 add /path/to/saker to PYTHONPATH
 
 ```bash
-export PYTHONPATH=/path/to/saker
+export PYTHONPATH=/path/to/saker:$PYTHONPATH
 ```
 
 ## Example Cases
