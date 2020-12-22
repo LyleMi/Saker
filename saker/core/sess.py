@@ -6,6 +6,7 @@ import json
 import pickle
 import requests
 
+from saker.handler.headerHandler import HeaderHandler
 from saker.utils.url import normalizeUrl
 from saker.utils.hash import md5
 from saker.utils.logger import getLogger

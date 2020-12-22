@@ -3,6 +3,10 @@ from saker.core.sess import Sess
 
 class PHPShell(Sess):
 
+    """
+    Code set for executing commands in restricted environments
+    """
+
     def shell(self, cmd):
         raise Exception("implement here")
 
