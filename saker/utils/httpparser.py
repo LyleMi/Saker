@@ -1,6 +1,9 @@
 import socket
 import struct
+
 from urllib import parse as urlparse
+from http.cookies import SimpleCookie
+
 from saker.utils.url import parseQuery
 
 
@@ -21,6 +24,15 @@ HTTP_PARSER_STATE_COMPLETE = 6
 CHUNK_PARSER_STATE_WAITING_FOR_SIZE = 1
 CHUNK_PARSER_STATE_WAITING_FOR_DATA = 2
 CHUNK_PARSER_STATE_COMPLETE = 3
+
+
+def loadCookie(rawdata):
+    cookie = SimpleCookie()
+    cookie.load(rawdata)
+    cookies = {}
+    for key, morsel in cookie.items():
+        cookies[key] = morsel.value
+    return cookies
 
 
 class ChunkParser(object):
