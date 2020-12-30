@@ -4,6 +4,7 @@
 import os
 import random
 import string
+import bisect
 
 
 class Fuzzer(object):
@@ -31,11 +32,14 @@ class Fuzzer(object):
         "\t",
     ]
 
+    r = random
+    choice = random.choice
+
     def __init__(self):
         super(Fuzzer, self).__init__()
 
     @classmethod
-    def intFuzz(cls):
+    def int(cls):
         for i in cls.ints:
             yield i
         for i in range(10):
@@ -75,6 +79,16 @@ class Fuzzer(object):
     @classmethod
     def randomAscii(cls, length=random.randint(1, 100)):
         return cls.randomStr([chr(i) for i in xrange(256)], length)
+
+    @classmethod
+    def weightRandom(cls, weight):
+        sumList = []
+        weightSum = 0
+        for w in weight:
+            weightSum += w
+            sumList.append(weightSum)
+        pick = random.randint(0, weightSum - 1)
+        return bisect.bisect_right(sumList, pick)
 
     @classmethod
     def fuzz(cls):

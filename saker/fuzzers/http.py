@@ -79,12 +79,20 @@ _verbs = [
     'DELETE',
 ]
 
+_versions = [
+    "HTTP/0.9",
+    "HTTP/1.0",
+    "HTTP/1.1",
+]
+
 
 class HTTPFuzzer(Fuzzer):
 
     '''HTTPFuzzer'''
 
     status_code = _status_code
+    verbs = _verbs
+    versions = _versions
 
     def __init__(self):
         super(HTTPFuzzer, self).__init__()
@@ -112,3 +120,17 @@ class HTTPFuzzer(Fuzzer):
         raw HTTP connection
         '''
         pass
+
+    @classmethod
+    def verb(cls, pro=0.95):
+        if cls.r.random() > pro:
+            return cls.randomStr()
+        else:
+            return cls.choice(cls.verbs)
+
+    @classmethod
+    def version(cls, pro=0.99):
+        if cls.r.random() > pro:
+            return cls.randomStr()
+        else:
+            return cls.choice(cls.versions)

@@ -50,4 +50,4 @@ def hex(s):
 
 
 def unhex(s):
-    return bytes.fromhex(s).decode()
+    return bytes.fromhex(s)

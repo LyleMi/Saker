@@ -3,6 +3,7 @@ import argparse
 from saker.utils.geoip import GeoIP
 from saker.utils.encode import decodeURL
 from saker.utils.encode import b64d
+from saker.utils.encode import unhex
 
 def util(args):
     parser = argparse.ArgumentParser(
@@ -28,6 +29,8 @@ def util(args):
         g = GeoIP()
         info = g.lookup(opts.params)
         print(info)
+    elif opts.tool == "unhex":
+        print(unhex(remains[0]))
     elif opts.tool == "b64d":
         print(b64d(remains[0]))
     elif opts.tool == "urld":
