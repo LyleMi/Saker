@@ -42,12 +42,12 @@ Saker是一个辅助测试Web站点的工具，有信息收集、渗透测试、
 - 三方API集成
   - censys
   - crtsh
-  - dns dumper
   - fofa
   - github
   - shodan
   - sqlmap
   - threadcrowd
+  - ...
 
 ## 安装
 

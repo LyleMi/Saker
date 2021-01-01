@@ -30,7 +30,7 @@ Saker is a flexible penetrate testing auxiliary suite.
 
 ## Features
 
-brief support features:
+brief introduction for support features:
 
 - scan website
   - infomation gathering
@@ -55,12 +55,12 @@ brief support features:
 - third party api integration
   - censys
   - crtsh
-  - dns dumper
   - fofa
   - github
   - shodan
   - sqlmap
   - threadcrowd
+  - ...
 
 ## Quick Setup
 

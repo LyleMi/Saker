@@ -14,7 +14,7 @@ class XSSHandler(tornado.web.RequestHandler):
         self.write()
 
 
-def start(host=r".*$", port=8888, handlers=[(r"/xss", SSRFHandler)]):
+def start(host=r".*$", port=8888, handlers=[(r"/xss", XSSHandler)]):
     app = getApp()
     app.add_handlers(host, handlers)
     baseStart(app, port)
