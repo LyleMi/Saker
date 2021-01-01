@@ -78,7 +78,7 @@ class Fuzzer(object):
 
     @classmethod
     def randomAscii(cls, length=random.randint(1, 100)):
-        return cls.randomStr([chr(i) for i in xrange(256)], length)
+        return cls.randomStr([chr(i) for i in range(256)], length)
 
     @classmethod
     def weightRandom(cls, weight):

@@ -31,15 +31,14 @@ Referer: http://web.test.com/action.php?action=login
 Cookie: csrftoken=37a35c64931a61e2fb4051035a94f7ff
 Upgrade-Insecure-Requests: 1
 
-username=1&pass=223
-"""
+username=1&pass=223"""
         data = data.replace("\n", "\r\n")
         http = parseHTTP(data)
         self.assertEqual(http.method, "POST")
         self.assertEqual(http.url.path, "/action.php")
         self.assertEqual(http.version, "HTTP/1.1")
         self.assertEqual(http.build_url(), "/action.php?action=login&code=2")
-        self.assertEqual(http.body, "username=1&pass=223\r\n")
+        self.assertEqual(http.body, "username=1&pass=223")
         self.assertEqual(http.state, 6)
         # print(http.build())
 
@@ -49,6 +48,17 @@ username=1&pass=223
         http = parseHTTP(data)
         http.url = http.url._replace(path="/test.php")
         self.assertEqual(http.build(), data_new)
+
+    def test_auto_length(self):
+        data = """POST /action.php?action=login&code=2 HTTP/1.1
+Content-Length: 11
+Connection: close
+
+username=1&pass=223"""
+        data = data.replace("\n", "\r\n")
+        http = parseHTTP(data)
+        http = parseHTTP(http.build())
+        self.assertEqual(int(http.headers["content-length"][1]), 19)
 
     def test_wrong(self):
         data = "test"

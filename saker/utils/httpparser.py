@@ -7,9 +7,9 @@ from http.cookies import SimpleCookie
 from saker.utils.url import parseQuery
 
 
-CRLF = '\r\n'
-COLON = ':'
-SP = ' '
+CRLF = "\r\n"
+COLON = ":"
+SP = " "
 
 HTTP_REQUEST_PARSER = 1
 HTTP_RESPONSE_PARSER = 2
@@ -42,8 +42,8 @@ class ChunkParser(object):
 
     def __init__(self):
         self.state = CHUNK_PARSER_STATE_WAITING_FOR_SIZE
-        self.body = ''
-        self.chunk = ''
+        self.body = ""
+        self.chunk = ""
         self.size = None
 
     def parse(self, data):
@@ -67,7 +67,7 @@ class ChunkParser(object):
                     self.state = CHUNK_PARSER_STATE_COMPLETE
                 else:
                     self.state = CHUNK_PARSER_STATE_WAITING_FOR_SIZE
-                self.chunk = ''
+                self.chunk = ""
                 self.size = None
         return len(data) > 0, data
 
@@ -84,8 +84,8 @@ class HTTP(object):
         self.state = HTTP_PARSER_STATE_INITIALIZED
         self.type = ptype if ptype else HTTP_REQUEST_PARSER
 
-        self.raw = ''
-        self.buffer = ''
+        self.raw = ""
+        self.buffer = ""
 
         self.headers = dict()
         self.body = None
@@ -104,7 +104,7 @@ class HTTP(object):
 
         self.raw += data
         data = self.buffer + data
-        self.buffer = ''
+        self.buffer = ""
 
         more = True if len(data) > 0 else False
         while more:
@@ -115,15 +115,15 @@ class HTTP(object):
         if self.state >= HTTP_PARSER_STATE_HEADERS_COMPLETE and \
                 (self.method == "POST" or self.type == HTTP_RESPONSE_PARSER):
             if not self.body:
-                self.body = ''
+                self.body = ""
 
-            if 'content-length' in self.headers:
+            if "content-length" in self.headers:
                 self.state = HTTP_PARSER_STATE_RCVING_BODY
                 self.body += data
-                if len(self.body) >= int(self.headers['content-length'][1]):
+                if len(self.body) >= int(self.headers["content-length"][1]):
                     self.state = HTTP_PARSER_STATE_COMPLETE
-            elif 'transfer-encoding' in self.headers and \
-                    self.headers['transfer-encoding'][1].lower() == 'chunked':
+            elif "transfer-encoding" in self.headers and \
+                    self.headers["transfer-encoding"][1].lower() == "chunked":
                 if not self.chunker:
                     self.chunker = ChunkParser()
                 self.chunker.parse(data)
@@ -131,7 +131,7 @@ class HTTP(object):
                     self.body = self.chunker.body
                     self.state = HTTP_PARSER_STATE_COMPLETE
 
-            return False, ''
+            return False, ""
 
         line, data = self.split(data)
         # print line, data
@@ -160,7 +160,7 @@ class HTTP(object):
         else:
             self.version = line[0]
             self.code = line[1]
-            self.reason = ' '.join(line[2:])
+            self.reason = " ".join(line[2:])
         self.state = HTTP_PARSER_STATE_LINE_RCVD
 
     def process_header(self, data):
@@ -178,15 +178,15 @@ class HTTP(object):
 
     def build_url(self):
         if not self.url:
-            return '/None'
+            return "/None"
 
         url = self.url.path
-        if url == '':
-            url = '/'
-        if not self.url.query == '':
-            url += '?' + self.url.query
-        if not self.url.fragment == '':
-            url += '#' + self.url.fragment
+        if url == "":
+            url = "/"
+        if not self.url.query == "":
+            url += "?" + self.url.query
+        if not self.url.fragment == "":
+            url += "#" + self.url.fragment
         return url
 
     def build_header(self, k, v):
@@ -203,6 +203,10 @@ class HTTP(object):
     def build(self, del_headers=None, add_headers=None):
         req = " ".join([self.method, self.build_url(), self.version])
         req += CRLF
+        # may change body in some case
+        if "content-length" in self.headers:
+            if self.headers["content-length"][1] != len(self.body):
+                self.headers["content-length"] = ("Content-Length", str(len(self.body)))
 
         if not del_headers:
             del_headers = []
@@ -227,13 +231,13 @@ class HTTP(object):
         return tmp
 
     def dictcookies(self):
-        if 'cookie' not in self.headers:
+        if "cookie" not in self.headers:
             return {}
         tmp = {}
-        cookie = self.headers['cookie'][1]
-        cookie = cookie.split('; ')
+        cookie = self.headers["cookie"][1]
+        cookie = cookie.split("; ")
         for c in cookie:
-            tmp[c.split('=')[0]] = c.split('=')[1]
+            tmp[c.split("=")[0]] = c.split("=")[1]
         return tmp
 
     def json(self):
@@ -258,11 +262,6 @@ class HTTP(object):
 
 
 def parseHTTP(request):
-    h = HTTP()
-    h.parse(request)
-    return h
-
-
-if __name__ == '__main__':
-    h = HTTP()
-    h.parse('GET /')
+    http = HTTP()
+    http.parse(request)
+    return http
