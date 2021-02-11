@@ -7,19 +7,19 @@ from saker.utils.encode import unhex
 
 def util(args):
     parser = argparse.ArgumentParser(
-        description='Saker Command Line Utils',
-        usage='[options]',
-        epilog='Saker Command Line Utils'
+        description="Saker Command Line Utils",
+        usage="[options]",
+        epilog="Saker Command Line Utils"
     )
     parser.add_argument(
-        '-t', '--tool', metavar='tool',
-        default='',
-        help='tool name'
+        "-t", "--tool", metavar="tool",
+        default="",
+        help="tool name, support geo/unhex/b64d/urld now"
     )
     parser.add_argument(
-        '-p', '--params', metavar='params',
-        default='',
-        help='tool params'
+        "-p", "--params", metavar="params",
+        default="",
+        help="tool params"
     )
     # opts = parser.parse_args(args)
     opts, remains = parser.parse_known_args()

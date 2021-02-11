@@ -289,6 +289,6 @@ If you face any issue, you can create a new issue in the [Issues Tab](https://gi
 
 ## License
 
-Copyright © 2019-2020 [Lyle](https://github.com/lylemi).
+Copyright © 2019-2021 [Lyle](https://github.com/lylemi).
 
 This project is [GPLv3](https://github.com/lylemi/saker/blob/master/LICENSE) licensed.

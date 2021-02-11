@@ -7,6 +7,7 @@ import psycopg2
 def crtsh(domain):
     '''
     get subdomain info via certificate identity by crt.sh's database
+    psql -hcrt.sh -Uguest certwatch
     '''
     HOST = 'crt.sh'
     NAME = 'certwatch'

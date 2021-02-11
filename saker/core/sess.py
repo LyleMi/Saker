@@ -96,6 +96,8 @@ class Sess(object):
         """
         if self.lastr is None:
             return
+        print(self.lastr.request.url)
+        print(self.lastr.request.body)
         HeaderHandler(self.lastr.request.headers).show()
         HeaderHandler(self.lastr.headers).show()
         print(self.lastr.text)
