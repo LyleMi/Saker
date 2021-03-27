@@ -27,10 +27,15 @@ class HTMLHandler(object):
 
     def __init__(self, content):
         super(HTMLHandler, self).__init__()
+        if isinstance(content, bytes):
+            content = self.chardecode(content)
         self.content = content
 
     def chardecode(self, string):
-        return string.decode(chardet.detect(string)['encoding'])
+        encoding = chardet.detect(string)['encoding']
+        if encoding is None:
+            return string.decode(errors="ignore")
+        return string.decode(encoding, errors="ignore")
 
     @property
     def title(self):

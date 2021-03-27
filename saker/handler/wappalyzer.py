@@ -150,7 +150,7 @@ class Wappalyzer(object):
         def __get_implied_apps(apps):
             _implied_apps = set()
             for app in apps:
-                if 'implies' in self.apps[app]:
+                if 'implies' in self.apps.get(app, ""):
                     _implied_apps.update(set(self.apps[app]['implies']))
             return _implied_apps
 
