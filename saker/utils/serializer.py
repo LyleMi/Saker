@@ -15,11 +15,13 @@ class Serializer(object):
             self.serializer = json
             self.saveMode = "w"
             self.readMode = "r"
+            self.encoding = "utf-8"
         elif serializer == "pickle":
             self.suffix = "pkl"
             self.saveMode = "wb"
             self.readMode = "rb"
             self.serializer = pickle
+            self.encoding = None
         self.dir = os.path.abspath(savepath)
         if not os.path.exists(self.dir):
             os.mkdir(self.dir)
@@ -34,8 +36,11 @@ class Serializer(object):
         :param identifier: str. the identifier of variable
         :return: bool. status of save
         """
-        with open(self.getPath(identifier), self.saveMode) as fh:
-            self.serializer.dump(val, fh)
+        with open(self.getPath(identifier), self.saveMode, encoding=self.encoding) as fh:
+            if self.suffix == "json":
+                self.serializer.dump(val, fh, ensure_ascii=False)
+            else:
+                self.serializer.dump(val, fh)
         return True
 
     def load(self, identifier):
@@ -44,7 +49,7 @@ class Serializer(object):
         :param identifier: str. the identifier of variable
         :return: variable
         """
-        with open(self.getPath(identifier), self.readMode) as fh:
+        with open(self.getPath(identifier), self.readMode, encoding=self.encoding) as fh:
             data = self.serializer.load(fh)
         return data
 

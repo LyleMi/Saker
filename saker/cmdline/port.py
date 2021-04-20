@@ -25,6 +25,10 @@ def port(args):
         help="run port scanner in background with unix daemon, only support unix platform"
     )
     parser.add_argument(
+        "-n", "--nmap", action="store_true",
+        help="use nmap"
+    )
+    parser.add_argument(
         "-p", "--port",
         dest="port", help="scan port scope"
     )

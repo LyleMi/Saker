@@ -28,14 +28,18 @@ class Sock(object):
 
 class tcpSock(Sock):
 
-    def __init__(self, addr, port, ssl=False):
+    def __init__(self, addr, port, ssl=False, init=True):
         super(tcpSock, self).__init__(addr, port)
         self.sock = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM
         )
         if ssl:
             self.sock = wrapSSL(self.sock)
-        self.sock.connect((addr, port))
+        if init:
+            self.conn()
+
+    def conn(self):
+        self.sock.connect((self.addr, self.port))
 
     def send(self, data):
         return self.sock.send(data)

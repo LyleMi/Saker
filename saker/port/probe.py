@@ -10,10 +10,16 @@ class Probe(object):
     knownPorts = {
         21: "tcp",
         22: "ssh",
+        23: "telnet",
         80: "http",
         111: "rpcbind",
+        135: "smb",
         443: "https",
         2049: "nfs",
+        3306: "mysql",
+        3389: "rdp",
+        8080: "http",
+        6379: "redis",
     }
 
     banners = {
@@ -39,7 +45,7 @@ class Probe(object):
             return ret
         else:
             print("not https, continue")
-        self.normalTcp(addr, port)
+        return self.normalTcp(addr, port)
 
     def http(self, addr, port):
         url = "http://%s:%s" % (addr, port)
@@ -79,6 +85,7 @@ class Probe(object):
         try:
             recv = cli.recv(4096)
             print(recv)
+            return True
         except socket.timeout as e:
             return None
         except Exception as e:
