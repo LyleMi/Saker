@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import time
 from saker.fuzzers.url import URL
 from saker.fuzzers.bof import BOF

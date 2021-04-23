@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import time
 import requests
 from saker.utils.color import red, cyan, green

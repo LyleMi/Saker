@@ -12,10 +12,11 @@ def main():
         "fuzz",
         "fuzzsock",
         "port",
+        "poc",
         "server",
         "util",
     ]
-    if sys.argv[1] in supportActions:
+    if len(sys.argv) > 1 and sys.argv[1] in supportActions:
         module = importlib.import_module("saker.cmdline.%s" % sys.argv[1])
         func = getattr(module, sys.argv[1])
         func(sys.argv[2:])
