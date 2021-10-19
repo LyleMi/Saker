@@ -8,7 +8,7 @@ import requests
 class Probe(object):
 
     knownPorts = {
-        21: "tcp",
+        21: "ftp",
         22: "ssh",
         23: "telnet",
         80: "http",

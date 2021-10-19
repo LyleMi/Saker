@@ -44,3 +44,15 @@ class JSON(Fuzzer):
 
     def __init__(self):
         super(JSON, self).__init__()
+
+    def max_depth(self, depth):
+        return  '{"0":' * depth + "{}" + "}" * depth
+
+    def max_array_length(self, length):
+        return [0] * length
+
+    def max_object_count(self, length):
+        obj = {}
+        for i in range(length):
+            obj[i] = i
+        return obj
