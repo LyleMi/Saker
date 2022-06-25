@@ -1,6 +1,7 @@
 import argparse
 
 from saker.utils.geoip import GeoIP
+from saker.utils.geoip import GeoLite
 from saker.utils.encode import decodeURL
 from saker.utils.encode import b64d
 from saker.utils.encode import unhex
@@ -29,6 +30,15 @@ def util(args):
         g = GeoIP()
         info = g.lookup(opts.params)
         print(info)
+    elif opts.tool == "geofile":
+        g = GeoIP()
+        glite = GeoLite()
+        with open(opts.params, "r", encoding="utf-8") as fp:
+            for line in fp:
+                ip = line.strip()
+                info = g.lookup(ip)
+                city_name = glite.city_name(ip)
+                print(ip, info, city_name)
     elif opts.tool == "unhex":
         print(unhex(remains[0]))
     elif opts.tool == "b64d":

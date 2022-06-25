@@ -14,8 +14,14 @@ charset = string.printable[:-5]
 
 def md5(s):
     if isinstance(s, str):
-        s = s.encode('utf-8')
+        s = s.encode("utf-8")
     return hashlib.md5(s).hexdigest()
+
+
+def sha512(s):
+    if isinstance(s, str):
+        s = s.encode("utf-8")
+    return hashlib.sha512(s).hexdigest()
 
 
 def collision(prefix, suffix='', salt='', pepper='', func=md5):
@@ -26,4 +32,3 @@ def collision(prefix, suffix='', salt='', pepper='', func=md5):
             if h.startswith(prefix) and h.endswith(suffix):
                 return s
     return False
-

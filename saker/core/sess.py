@@ -26,7 +26,7 @@ class Sess(object):
     """
 
     # 'Mozilla/<version> (<system-information>) <platform> (<platform-details>) <extensions>'
-    ffua = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101 Firefox/68.0'
+    ffua = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:95.0) Gecko/20100101 Firefox/95.0'
 
     def __init__(
             self, url="", verify=False,

@@ -48,7 +48,7 @@ def cidrize(ipstr):
         # b段
         parts = ipstr.split('.')
         temp = parts[2].split("-")
-        for i in range(int(temp[0]), int(temp[1])+1):
+        for i in range(int(temp[0]), int(temp[1]) + 1):
             parts[2] = str(i)
             ips.append(".".join(parts))
         return ips
@@ -162,5 +162,10 @@ def isInternal(seed, stype):
 
     if stype == "NETBLOCK":
         return isInternalIp(seed.split("/")[0])
-
     return False
+
+
+def get_domain(domain):
+    import tldextract
+    r = tldextract.extract(domain)
+    return "%s.%s" % (r.domain, r.suffix)

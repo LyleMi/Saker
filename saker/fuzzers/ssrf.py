@@ -77,6 +77,11 @@ class SSRF(Fuzzer):
         "ftp://user:pwd@127.0.0.1",
     ]
 
+    cloud_payloads = [
+        # k8s
+        "http://metadata-db",
+    ]
+
     def __init__(self):
         super(SSRF, self).__init__()
 

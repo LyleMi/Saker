@@ -9,6 +9,7 @@ import importlib
 def main():
     supportActions = [
         "scan",
+        "file",
         "fuzz",
         "fuzzsock",
         "port",

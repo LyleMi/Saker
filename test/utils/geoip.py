@@ -11,6 +11,10 @@ class GeoTest(unittest.TestCase):
         self.assertEqual(g.lookup("8.8.8.8")[0], "美国")
         self.assertEqual(g.lookup("1.1.1.1")[0], "美国")
 
+    def test_city(self):
+        g = GeoLite()
+        self.assertEqual(g.city("8.8.8.8"), "")
+
     def test_city_name(self):
         g = GeoLite()
         self.assertEqual(g.city_name("8.8.8.8"), "")

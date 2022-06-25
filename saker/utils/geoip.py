@@ -27,6 +27,12 @@ class GeoLite(object):
         mmdb = os.path.join(os.path.dirname(os.path.abspath(__file__)), "GeoLite2-City.mmdb")
         self.reader = geoip2.database.Reader(mmdb)
 
+    def country(self, ip):
+        try:
+            return self.reader.country(ip)
+        except geoip2.errors.AddressNotFoundError as e:
+            return None
+
     def city(self, ip):
         try:
             return self.reader.city(ip)
@@ -35,7 +41,16 @@ class GeoLite(object):
 
     def city_name(self, ip, lang="zh-CN"):
         city_info = self.city(ip)
-        if not city_info.city.names:
+        if city_info is None:
+            return ""
+        elif not city_info.city.names:
             return ""
         else:
             return city_info.city.names.get(lang, "")
+
+    def country_name(self, ip, lang="zh-CN"):
+        city_info = self.city(ip)
+        if city_info is None:
+            return ""
+        else:
+            return city_info.country.names.get(lang, "")
