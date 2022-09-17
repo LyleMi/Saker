@@ -12,16 +12,22 @@ except Exception as e:
 charset = string.printable[:-5]
 
 
-def md5(s):
+def ensure_bytes(s):
     if isinstance(s, str):
         s = s.encode("utf-8")
-    return hashlib.md5(s).hexdigest()
+    return s
+
+
+def md5(s):
+    return hashlib.md5(ensure_bytes(s)).hexdigest()
+
+
+def sha1(s):
+    return hashlib.sha1(ensure_bytes(s)).hexdigest()
 
 
 def sha512(s):
-    if isinstance(s, str):
-        s = s.encode("utf-8")
-    return hashlib.sha512(s).hexdigest()
+    return hashlib.sha512(ensure_bytes(s)).hexdigest()
 
 
 def collision(prefix, suffix='', salt='', pepper='', func=md5):

@@ -67,7 +67,7 @@ def fileHandler(logpath, loggerLevel=logging.DEBUG):
     formatStr = '[%(asctime)s] [%(levelname)s] %(message)s'
     formatter = logging.Formatter(formatStr)
 
-    fh = logging.FileHandler(logpath)
+    fh = logging.FileHandler(logpath, encoding="utf-8")
     fh.setLevel(loggerLevel)
     fh.setFormatter(formatter)
     return fh

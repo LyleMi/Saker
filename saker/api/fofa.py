@@ -9,7 +9,7 @@ from saker.utils.encode import b64e
 
 class Fofa(object):
 
-    url = "https://fofa.so/api/"
+    url = "https://fofa.info/api/"
 
     def __init__(self, email, key):
         super(Fofa, self).__init__()
@@ -17,7 +17,10 @@ class Fofa(object):
         self.email = email
         self.key = key
 
-    def search(self, query, page=1, size=100, full="false"):
+    def search(self, query, page=1, size=100, full="false", fields=""):
+        """
+        fields 默认host,ip,port
+        """
         qbase64 = b64e(query)
         api = "v1/search/all"
         params = {
@@ -28,6 +31,8 @@ class Fofa(object):
             "email": self.email,
             "key": self.key,
         }
+        if fields:
+            params["fields"] = fields
         r = self.s.get(self.url + api, params=params)
         data = json.loads(r.text)
         return data

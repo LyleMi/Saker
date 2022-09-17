@@ -38,6 +38,9 @@ class GeoLite(object):
             return self.reader.city(ip)
         except geoip2.errors.AddressNotFoundError as e:
             return None
+        except ValueError as e:
+            # not valid ip address
+            return None
 
     def city_name(self, ip, lang="zh-CN"):
         city_info = self.city(ip)
