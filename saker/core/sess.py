@@ -26,7 +26,7 @@ class Sess(object):
     """
 
     # 'Mozilla/<version> (<system-information>) <platform> (<platform-details>) <extensions>'
-    ffua = 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:95.0) Gecko/20100101 Firefox/95.0'
+    ffua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:107.0) Gecko/20100101 Firefox/107.0'
 
     def __init__(
             self, url="", verify=False,
@@ -48,6 +48,25 @@ class Sess(object):
         self.lastr = None
         self.s.verify = verify
         self.setUA(self.ffua)
+
+    @property
+    def jsonr(self):
+        """
+        json format response
+        """
+        if self.lastr is None:
+            return {}
+        try:
+            if self.lastr.text.startswith("{"):
+                return AttribDict(json.loads(self.lastr.text))
+            else:
+                # 处理数组类型的返回
+                return json.loads(self.lastr.text)
+        except json.decoder.JSONDecodeError as e:
+            pass
+        except Exception as e:
+            print(repr(e))
+        return {}
 
     def get(self, path="", *args, **kwargs):
         self.lastr = self.s.get(self.url + path, *args, **kwargs)
@@ -107,21 +126,7 @@ class Sess(object):
     def _callback(self):
         """Request Callback
         """
-        if 'Content-Type' in self.lastr.headers and self.lastr.headers['Content-Type'].startswith('application/json;'):
-            self.jsonLoadr()
-
-    def jsonLoadr(self):
-        """load json response
-        """
-        if self.lastr is None:
-            return
-        try:
-            self.jsonr = AttribDict(json.loads(self.lastr.text))
-            return self.jsonr
-        except json.decoder.JSONDecodeError as e:
-            pass
-        except Exception as e:
-            print(repr(e))
+        pass
 
     def loadCookie(self, pkl='.cookie.pkl'):
         """load saved cookie
@@ -156,6 +161,9 @@ class Sess(object):
                 "http": proxies,
                 "https": proxies,
             }
+
+    def setAuth(self, username, password):
+        self.s.auth = (username, password)
 
     def setHeader(self, key, value):
         self.s.headers[key] = value

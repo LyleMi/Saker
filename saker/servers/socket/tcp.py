@@ -1,7 +1,7 @@
 import socketserver
 
 
-class CustomTCPHandler(socketserver.BaseRequestHandler):
+class EchoHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
         self.data = self.request.recv(1024).strip()
@@ -12,7 +12,7 @@ class CustomTCPHandler(socketserver.BaseRequestHandler):
 
 class TCPServer(socketserver.TCPServer):
 
-    def __init__(self, host, port, handler=CustomTCPHandler):
+    def __init__(self, host, port, handler=EchoHandler):
         super(TCPServer, self).__init__(
             (host, port), handler
         )
