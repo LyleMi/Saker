@@ -1,5 +1,6 @@
 import os
 import qqwry
+import requests
 import geoip2.errors
 import geoip2.database
 
@@ -25,6 +26,11 @@ class GeoLite(object):
 
     def __init__(self):
         mmdb = os.path.join(os.path.dirname(os.path.abspath(__file__)), "GeoLite2-City.mmdb")
+        url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-City.mmdb"
+        if not os.path.exists(mmdb):
+            r = requests.get(url)
+            with open(mmdb, "wb") as fp:
+                fp.write(r.content)
         self.reader = geoip2.database.Reader(mmdb)
 
     def country(self, ip):

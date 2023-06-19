@@ -11,9 +11,13 @@ class Fofa(object):
 
     url = "https://fofa.info/api/"
 
-    def __init__(self, email, key):
+    def __init__(self, email=None, key=None):
         super(Fofa, self).__init__()
         self.s = requests.Session()
+        if email is None:
+            email = os.getenv("FOFA_EMAIL")
+        if key is None:
+            key = os.getenv("FOFA_KEY")
         self.email = email
         self.key = key
 
